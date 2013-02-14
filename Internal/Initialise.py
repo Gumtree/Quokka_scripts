@@ -5,23 +5,31 @@ from org.gumtree.gumnix.sics.io import SicsProxyListenerAdapter
 from org.eclipse.swt.events import DisposeListener
 from org.eclipse.swt.widgets import TypedListener
 #from org.gumtree.util.messaging import EventHandler
-from Gumtree_Workspace.Internal import sicsext
-from Gumtree_Workspace.Internal.sicsext import *
+import sys, os
+sys.path.append(str(os.path.dirname(get_project_path('Internal'))))
+from Internal import sicsext
+from Internal.sicsext import *
 from au.gov.ansto.bragg.nbi.ui.scripting import ConsoleEventHandler
 from org.eclipse.swt.widgets import Display
 from java.lang import Runnable
 from java.lang import System
 from java.io import File
 from time import strftime, localtime
-import traceback, sys
+import traceback
 
 sics.ready = False
 __script__.title = 'Initialised'
 __script__.version = ''
-__script__.dict_path = gumtree_root + '/Gumtree_Workspace/Internal/path_table'
+__script__.dict_path = get_absolute_path('/Internal/path_table')
 __data_folder__ = 'Z:/quokka/maintenance/test'
 __export_folder__ = 'W:/data/current/reports'
+__buffer_log_file__ = __export_folder__
 System.setProperty('sics.data.path', __data_folder__)
+
+try:
+    __dispose_all__(None)
+except:
+    pass
 
 def get_prof_value(name):
     value = __UI__.getPreference(name)
@@ -36,8 +44,6 @@ def set_prof_value(name, value):
         value = ''
     __UI__.setPreference(name, value)
 
-__buffer_log_file__ = __export_folder__ + '/exp' + get_prof_value('quokka.experiment.id')
-    
 fi = File(__buffer_log_file__)
 if not fi.exists():
     if not fi.mkdir():
@@ -52,11 +58,6 @@ while sics.getSicsController() == None:
     time.sleep(1)
 
 time.sleep(3)
-
-try:
-    __dispose_all__(None)
-except:
-    pass
 
 __scan_status_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/feedback/status')
 __scan_variable_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/scan_variable')
@@ -124,7 +125,7 @@ __save_count_node__.addComponentListener(__saveCountListener__)
 
 def update_buffer_log_folder():
     global __buffer_log_file__, __export_folder__, __buffer_logger__, __history_log_file__, __history_logger__
-    __buffer_log_file__ = __export_folder__ + '/exp' + get_prof_value('quokka.experiment.id')
+    __buffer_log_file__ = __export_folder__
     fi = File(__buffer_log_file__)
     if not fi.exists():
         if not fi.mkdir():

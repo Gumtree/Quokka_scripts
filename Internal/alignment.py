@@ -9,7 +9,6 @@ from Gumtree_Workspace.Internal import sicsext
 # script info
 __script__.title = 'Device Alignment'
 __script__.version = ''
-__script__.dict_path = gumtree_root + '/Gumtree_Workspace/Internal/path_table'
 __cur_scan_filename__ = None
 #pact = Act('previous_step()', '<- Previous Step')
     

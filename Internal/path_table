@@ -1,0 +1,165 @@
+######################################################
+# Please do not use key words listed here
+#	axes
+# 	err, error
+#	location
+#	name
+#	ndim
+#	size
+#	shape
+# 	title
+#	units
+#	var
+#	norm_value
+#	norm_attr
+######################################################
+
+flip_on                  = $entry/instrument/flipper/flip_on
+sample_theta             = $entry/sample/sample_theta
+section_8                = $entry/instrument/collimator/section_8
+aspeed                   = $entry/instrument/velocity_selector/aspeed
+sample_x                 = $entry/sample/sample_x
+bs4                      = $entry/instrument/detector/bs4
+mode                     = $entry/monitor/mode
+key                      = $entry/instrument/status/key
+description              = $entry/sample/description
+run_number               = $entry/instrument/run_number
+bm1_counts               = $entry/monitor/bm1_counts
+program_name             = $entry/program_name
+section_5                = $entry/instrument/collimator/section_5
+pc4                      = $entry/instrument/collimator/pc4
+bs3                      = $entry/instrument/detector/bs3
+pc1                      = $entry/instrument/collimator/pc1
+section_4                = $entry/instrument/collimator/section_4
+bm1_event_rate           = $entry/monitor/bm1_event_rate
+file_name                = $entry/experiment/file_name
+bm3_time                 = $entry/monitor/bm3_time
+att                      = $entry/instrument/collimator/att
+VelSelCoordScheme        = $entry/instrument/velocity_selector/geometry/position/VelSelCoordScheme
+sics_release             = $entry/sics_release
+flip_current             = $entry/instrument/flipper/flip_current
+EApShape                 = $entry/instrument/parameters/EApShape
+section_3                = $entry/instrument/collimator/section_3
+bm2_counts               = $entry/monitor/bm2_counts
+sampleNum                = $entry/sample/sampleNum
+save_count               = $entry/experiment/save_count
+VelSelPosY               = $entry/instrument/velocity_selector/geometry/position/VelSelPosY
+L2                       = $entry/instrument/parameters/L2
+wavelength_spread_nominal = $entry/instrument/velocity_selector/wavelength_spread_nominal
+cns_flow_temp            = $entry/instrument/source/cns_flow_temp
+section_6                = $entry/instrument/collimator/section_6
+max_binrate              = $entry/instrument/detector/max_binrate
+relay                    = $entry/instrument/status/relay
+guide_current            = $entry/instrument/flipper/guide_current
+cns_inlet_temp           = $entry/instrument/source/cns_inlet_temp
+section_2                = $entry/instrument/collimator/section_2
+wavelength_spread        = $entry/instrument/velocity_selector/wavelength_spread
+DataType                 = $entry/data/DataType
+SamYOffset               = $entry/instrument/parameters/SamYOffset
+time_stamp               = $entry/time_stamp
+run_mode                 = $entry/run_mode
+short_title              = $entry/sample/short_title
+VelSelPosX               = $entry/instrument/velocity_selector/geometry/position/VelSelPosX
+pc9                      = $entry/instrument/collimator/pc9
+start                    = $entry/experiment/start
+dummy_motor              = $entry/instrument/dummy_motor
+apx                      = $entry/instrument/collimator/apx
+sics_suid                = $entry/data/sics_suid
+detector_x               = $entry/instrument/detector/detector_x
+access                   = $entry/instrument/status/access
+pc10                     = $entry/instrument/collimator/pc10
+detector_y               = $entry/instrument/detector/detector_y
+flip_frequency           = $entry/instrument/flipper/flip_frequency
+magnetic_field           = $entry/sample/magnetic_field
+srce                     = $entry/instrument/collimator/srce
+bsx                      = $entry/instrument/detector/bsx
+section_1                = $entry/instrument/collimator/section_1
+EndFacePosY              = $entry/instrument/parameters/EndFacePosY
+start_time               = $entry/instrument/detector/start_time
+EApPosY                  = $entry/instrument/parameters/EApPosY
+ttang                    = $entry/instrument/velocity_selector/ttang
+file_status              = $entry/experiment/file_status
+autosaveIndex            = $entry/instrument/autosaveIndex
+secondary                = $entry/instrument/status/secondary
+section_9                = $entry/instrument/collimator/section_9
+Transmission             = $entry/instrument/parameters/Transmission
+bm2_status               = $entry/monitor/bm2_status
+section_7                = $entry/instrument/collimator/section_7
+pc7                      = $entry/instrument/collimator/pc7
+cg123He_temp             = $entry/instrument/source/cg123He_temp
+ready                    = $entry/instrument/status/ready
+tertiary                 = $entry/instrument/status/tertiary
+dc                       = $entry/instrument/status/dc
+pc3                      = $entry/instrument/collimator/pc3
+experiment_title         = $entry/experiment/title
+total_counts             = $entry/instrument/detector/total_counts
+active_height            = $entry/instrument/detector/active_height
+flip_voltage             = $entry/instrument/flipper/flip_voltage
+AttFactor                = $entry/instrument/parameters/AttFactor
+cns_outlet_temp          = $entry/instrument/source/cns_outlet_temp
+motioncontrol            = $entry/instrument/status/motioncontrol
+thickness                = $entry/instrument/flipper/thickness
+rspeed                   = $entry/instrument/velocity_selector/rspeed
+TransmissionFlag         = $entry/sample/TransmissionFlag
+data                     = $entry/monitor/data
+bm3_counts               = $entry/monitor/bm3_counts
+time                     = $entry/monitor/time
+bm3_event_rate           = $entry/monitor/bm3_event_rate
+GuideConfig              = $entry/instrument/parameters/GuideConfig
+BeamStop                 = $entry/instrument/parameters/BeamStop
+BeamCenterX              = $entry/instrument/parameters/BeamCenterX
+daq_dirname              = $entry/instrument/detector/daq_dirname
+pc5                      = $entry/instrument/collimator/pc5
+file_set                 = $entry/experiment/file_set
+bm2_time                 = $entry/monitor/bm2_time
+operate                  = $entry/instrument/status/operate
+bs5                      = $entry/instrument/detector/bs5
+pent                     = $entry/instrument/collimator/pent
+stop_time                = $entry/instrument/detector/stop_time
+total_maprate            = $entry/instrument/detector/total_maprate
+bm2_event_rate           = $entry/monitor/bm2_event_rate
+phone                    = $entry/user/phone
+power                    = $entry/instrument/source/power
+comp_current             = $entry/instrument/flipper/comp_current
+end_time                 = $entry/end_time
+x_pixel_offset           = $entry/instrument/detector/x_pixel_offset
+pc2                      = $entry/instrument/collimator/pc2
+BSdiam                   = $entry/instrument/parameters/BSdiam
+user_name                = $entry/user/name
+exit                     = $entry/instrument/status/exit
+fault                    = $entry/instrument/status/fault
+x_bin                    = $entry/instrument/detector/x_bin
+Plex                     = $entry/instrument/parameters/Plex
+y_pixel_offset           = $entry/instrument/detector/y_pixel_offset
+preset                   = $entry/monitor/preset
+y_bin                    = $entry/instrument/detector/y_bin
+bm1_time                 = $entry/monitor/bm1_time
+BeamCenterZ              = $entry/instrument/parameters/BeamCenterZ
+bs2                      = $entry/instrument/detector/bs2
+time_of_flight           = $entry/instrument/detector/time_of_flight
+sample_y                 = $entry/sample/sample_y
+email                    = $entry/user/email
+pc8                      = $entry/instrument/collimator/pc8
+SampleThickness          = $entry/sample/SampleThickness
+rhSpeed                  = $entry/sample/rhSpeed
+bs6                      = $entry/instrument/detector/bs6
+L1                       = $entry/instrument/parameters/L1
+simulation               = $entry/instrument/status/simulation
+wavelength_nominal       = $entry/instrument/velocity_selector/wavelength_nominal
+pc6                      = $entry/instrument/collimator/pc6
+active_width             = $entry/instrument/detector/active_width
+diameter                 = $entry/sample/diameter
+bsz                      = $entry/instrument/detector/bsz
+DetPosYOffset            = $entry/instrument/parameters/DetPosYOffset
+EApX                     = $entry/instrument/parameters/EApX
+hmm_xy                   = $entry/instrument/detector/hmm_xy
+bm1_status               = $entry/monitor/bm1_status
+currpoint                = $entry/experiment/currpoint
+VelSelPosZ               = $entry/instrument/velocity_selector/geometry/position/VelSelPosZ
+sample_z                 = $entry/sample/sample_z
+bm3_status               = $entry/monitor/bm3_status
+bs1                      = $entry/instrument/detector/bs1
+EApZ                     = $entry/instrument/parameters/EApZ
+trip                     = $entry/instrument/status/trip
+wavelength               = $entry/instrument/velocity_selector/wavelength
+

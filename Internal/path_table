@@ -162,4 +162,6 @@ bs1                      = $entry/instrument/detector/bs1
 EApZ                     = $entry/instrument/parameters/EApZ
 trip                     = $entry/instrument/status/trip
 wavelength               = $entry/instrument/velocity_selector/wavelength
-
+samx                 	 = $entry/sample/sample_x
+samy                 	 = $entry/sample/sample_y
+samz                 	 = $entry/sample/sample_z

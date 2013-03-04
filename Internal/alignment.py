@@ -4,7 +4,7 @@ import time
 import math
 from gumpy.nexus.fitting import Fitting, GAUSSIAN_FITTING
 from gumpy.commons import sics
-from Gumtree_Workspace.Internal import sicsext
+from Internal import sicsext
 # Script control setup area
 # script info
 __script__.title = 'Device Alignment'
@@ -29,8 +29,8 @@ def scan_device():
     except:
         pass
     axis_name.value = aname
-    print 'runscan ' + str(device_name.value) + ' ' + str(scan_start.value) + ' ' + str(scan_stop.value) \
-                    + ' ' + str(number_of_points.value) + ' ' + str(scan_mode.value) + ' ' + str(scan_preset.value)
+    slog('runscan ' + str(device_name.value) + ' ' + str(scan_start.value) + ' ' + str(scan_stop.value) \
+                    + ' ' + str(number_of_points.value) + ' ' + str(scan_mode.value) + ' ' + str(scan_preset.value))
     sicsext.runscan(device_name.value, scan_start.value, scan_stop.value, number_of_points.value, 
                     scan_mode.value, scan_preset.value, load_experiment_data, True)
 #    exec('sicsext.runscan(\'' + aname + '\', ' + scan.value + ', 0, \'call_back()\')')
@@ -79,12 +79,9 @@ def load_experiment_data():
     __cur_scan_filename__ = fullname
     ds = df[fullname]
     dname = str(data_name.value)
-    if dname == 'total_counts':
-        data = ds.sum(0)
-    else:
-        data = ds[dname]
+    data = SimpleData(ds[dname])
 #    data = ds[str(data_name.value)]
-    axis = ds[str(axis_name.value)]
+    axis = SimpleData(ds[str(axis_name.value)])
     if data.size > axis.size:
         data = data[:axis.size]
     ds2 = Dataset(data, axes=[axis])
@@ -120,7 +117,8 @@ def __std_run_script__(fns):
             ds = df[fn]
             dname = str(data_name.value)
             if dname == 'total_counts':
-                data = ds.sum(0)
+#                data = ds.sum(0)
+                data = ds[dname]
             else:
                 data = ds[dname]
             qm = ds[str(axis_name.value)]

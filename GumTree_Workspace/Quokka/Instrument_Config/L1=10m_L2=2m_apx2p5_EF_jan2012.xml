@@ -1,0 +1,32 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>L1=10m_L2=2m_apx2p5_EF_jan2012</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(1200,0)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to g8&#xd;
+driveGuide(guideConfig.g8)&#xd;
+# Drive entrance aperture to 180 (for guide g4)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 2.5 mm&#xd;
+sics.drive(&apos;apx&apos;, 0)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 95.36)&#xd;
+sics.set(&apos;beamcenterz&apos;, 96.45)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(41, 100)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(270)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(41, 0)&#xd;
+driveBsz(262)</preScatteringScript>
+  <startingAtteunation>270</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\GumTree_Workspace\Quokka\Instrument_Config\L1=10m_L2=2m_apx2p5_EF_jan2012.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

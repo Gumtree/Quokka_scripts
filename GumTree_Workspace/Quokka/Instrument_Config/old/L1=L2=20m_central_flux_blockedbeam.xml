@@ -1,0 +1,25 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>L1=L2=20m_central_flux_blockedbeam</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(19300,0)&#xd;
+# Drive guide to ga config&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 240 (for blocked beam)&#xd;
+driveEntRotAp(240)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(37.75, 100)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(270)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(37.75, 0)&#xd;
+driveBsz(252.5)</preScatteringScript>
+  <startingAtteunation>330</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\L1=L2=20m_central_flux_blockedbeam.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

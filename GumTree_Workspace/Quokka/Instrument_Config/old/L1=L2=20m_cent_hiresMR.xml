@@ -1,0 +1,27 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>L1=L2=20m_cent_hiresMR</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(19280,0)&#xd;
+# Drive guide to ga config&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 150  50mmEAp&#xd;
+driveEntRotAp(150)&#xd;
+#set sample ap to 7.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -47)&#xd;
+# Drive beamstops up&#xd;
+selBs(2)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(39, 100)&#xd;
+# Drive attenuator to 240&#xd;
+driveAtt(240)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(39, 0)&#xd;
+driveBsz(258.5)</preScatteringScript>
+  <startingAtteunation>210</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\L1=L2=20m_cent_hiresMR.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

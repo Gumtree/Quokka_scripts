@@ -1,0 +1,25 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>ga_19280_WAH</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(19280,0)&#xd;
+# Drive guide to ga config&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 150 (for ga)&#xd;
+driveEntRotAp(150)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(17, 100)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(210)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(17, 0)&#xd;
+driveBsz(252.0)</preScatteringScript>
+  <startingAtteunation>0</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\ga_19280_WAH.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

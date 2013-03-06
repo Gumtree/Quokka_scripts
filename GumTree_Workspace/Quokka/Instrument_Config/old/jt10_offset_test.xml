@@ -1,0 +1,30 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>jt10_offset_test</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(9200,300)&#xd;
+# Drive guide to g4 config&#xd;
+driveGuide(guideConfig.g4)&#xd;
+# Drive entrance aperture to 180 (for g4)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 12.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -98)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)&#xd;
+#set beamcenter&#xd;
+sics.execute(&apos;beamcenterx 10&apos;)&#xd;
+sics.execute(&apos;beamcenterz 20&apos;)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(40, 100)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(270)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(40, 0)&#xd;
+driveBsz(257)</preScatteringScript>
+  <startingAtteunation>210</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\GumTree_Workspace\Quokka\Instrument_Config\jt10_offset_test.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

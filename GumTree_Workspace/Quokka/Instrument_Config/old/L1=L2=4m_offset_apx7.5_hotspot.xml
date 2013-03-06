@@ -1,0 +1,31 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>L1=L2=4m_offset_apx7.5_hotspot</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(3200,300)&#xd;
+# Drive guide to g7&#xd;
+driveGuide(guideConfig.g7)&#xd;
+# Drive entrance aperture to 180 (for guide g7)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 10 mm&#xd;
+sics.drive(&apos;apx&apos;, -47)&#xd;
+# Drive beamstops up - commented out&#xd;
+#selBs(1)&#xd;
+# set beamcentres&#xd;
+#beamcenterx 96.9&#xd;
+#beamcenterz 96.2</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(21, 150)&#xd;
+# Drive attenuator to 300&#xd;
+driveAtt(300)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(21, 0)&#xd;
+driveBsz(258)</preScatteringScript>
+  <startingAtteunation>300</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\GumTree_Workspace\Quokka\Instrument_Config\L1=L2=4m_offset_apx7.5_hotspot.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

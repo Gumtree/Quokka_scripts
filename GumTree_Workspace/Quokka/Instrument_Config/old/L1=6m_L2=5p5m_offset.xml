@@ -1,0 +1,25 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>L1=6m_L2=5p5m_offset</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(4700,300)&#xd;
+# Drive guide to g6 config&#xd;
+driveGuide(guideConfig.g6)&#xd;
+# Drive entrance aperture to 180 (for g5)&#xd;
+driveEntRotAp(180)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(20, 100)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(270)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(20, 0)&#xd;
+driveBsz(257)</preScatteringScript>
+  <startingAtteunation>330</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\L1=6m_L2=5p5m_offset.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

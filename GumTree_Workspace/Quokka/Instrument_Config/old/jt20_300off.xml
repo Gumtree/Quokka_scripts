@@ -1,0 +1,27 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>jt20_300off</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(18900,300)&#xd;
+# Drive guide to ga config&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 150 (50mm circ EAp for ga)&#xd;
+driveEntRotAp(150)&#xd;
+#set sample ap to 12.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -98)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(40, 100)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(270)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(40, 0)&#xd;
+driveBsz(257)</preScatteringScript>
+  <startingAtteunation>210</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\jt20_300off.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

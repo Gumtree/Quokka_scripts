@@ -1,0 +1,27 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>g7_4500_340_240609</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(3675,340)&#xd;
+# Drive guide to g7&#xd;
+driveGuide(guideConfig.g7)&#xd;
+# Drive entrance aperture to 180 (for guide g7)&#xd;
+driveEntRotAp(180)&#xd;
+# Drive beamstops up&#xd;
+driveBs([2], action.up)&#xd;
+# Drive beamstops down&#xd;
+driveBs([1,4,5], action.down)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(-87, 100)&#xd;
+# Drive attenuator to 240&#xd;
+driveAtt(240)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(-74.5, 0)&#xd;
+driveBsz(33)</preScatteringScript>
+  <startingAtteunation>330</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\g7_4500_340_240609.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

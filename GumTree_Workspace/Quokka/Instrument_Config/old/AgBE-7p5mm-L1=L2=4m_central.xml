@@ -1,0 +1,25 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>AgBE-7p5mm-L1=L2=4m_central</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(3200,0)&#xd;
+# Drive guide to g7&#xd;
+driveGuide(guideConfig.g7)&#xd;
+# Drive entrance aperture to 180 (for guide g7)&#xd;
+driveEntRotAp(180)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(40.25, 100)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(270)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(40.25, 0)&#xd;
+driveBsz(262.5)</preScatteringScript>
+  <startingAtteunation>240</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\AgBE-7p5mm-L1=L2=4m_central.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

@@ -1,0 +1,26 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>L1=6m_L2=1.3m_central</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(5000,0)&#xd;
+# Drive guide to g6&#xd;
+driveGuide(guideConfig.g6)&#xd;
+# Drive entrance aperture to 180 (for guide g7)&#xd;
+driveEntRotAp(180)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(26, 100)&#xd;
+# Drive attenuator to 300&#xd;
+driveAtt(300)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(26, 0)&#xd;
+driveBsz(262.5)</preScatteringScript>
+  <startingAtteunation>300</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\GumTree_Workspace\Quokka\Instrument_Config\L1=6m_L2=1.3m_central.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

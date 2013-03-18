@@ -21,7 +21,8 @@ sics.ready = False
 __script__.title = 'Initialised'
 __script__.version = ''
 #__script__.dict_path = get_absolute_path('/Internal/path_table')
-__data_folder__ = 'Z:/testing/quokka'
+#__data_folder__ = 'Z:/testing/quokka'
+#__data_folder__ = 'W:/data/current'
 __export_folder__ = 'W:/data/current/reports'
 __buffer_log_file__ = __export_folder__
 Dataset.__dicpath__ = get_absolute_path('/Internal/path_table')
@@ -214,6 +215,9 @@ def __std_run_script__(fns):
             peak_pos.value = float('NaN')
             fit_curve()
             
+def __dataset_added__(fns = None):
+    pass
+    
 def __std_fit_curve__():
     global Plot1
     ds = Plot1.ds

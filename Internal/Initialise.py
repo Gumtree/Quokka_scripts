@@ -22,7 +22,7 @@ __script__.title = 'Initialised'
 __script__.version = ''
 #__script__.dict_path = get_absolute_path('/Internal/path_table')
 #__data_folder__ = 'Z:/testing/quokka'
-#__data_folder__ = 'W:/data/current'
+__data_folder__ = 'W:/data/current'
 __export_folder__ = 'W:/data/current/reports'
 __buffer_log_file__ = __export_folder__
 Dataset.__dicpath__ = get_absolute_path('/Internal/path_table')
@@ -56,10 +56,10 @@ __buffer_logger__ = open(__buffer_log_file__, 'a')
 __history_logger__ = open(__history_log_file__, 'a')
 
 print 'Waiting for SICS connection'
-while sics.getSicsController() == None:
+while sics.getSicsController() == None or sics.getSicsController().findComponentController('/experiment/file_name') == None:
     time.sleep(1)
 
-time.sleep(3)
+time.sleep(2)
 
 __scan_status_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/feedback/status')
 __scan_variable_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/scan_variable')
@@ -97,6 +97,7 @@ def add_dataset():
 class __SaveCountListener__(DynamicControllerListenerAdapter):
     
     def __init__(self):
+        global __save_count_node__
         self.saveCount = __save_count_node__.getValue().getIntData()
         pass
     

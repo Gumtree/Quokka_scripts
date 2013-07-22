@@ -61,6 +61,14 @@ while sics.getSicsController() == None or sics.getSicsController().findComponent
 
 time.sleep(2)
 
+wait_count = 0
+while sics.getSicsController().findComponentController('/experiment/file_name') == None and wait_count < 10 :
+    time.sleep(1)
+    wait_count += 1
+
+if wait_count >= 10:
+    raise Exception, 'Timeout connecting with SICS. Please click on Reload button to try again.'
+
 __scan_status_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/feedback/status')
 __scan_variable_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/scan_variable')
 __save_count_node__ = sics.getSicsController().findComponentController('/experiment/save_count')

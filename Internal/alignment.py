@@ -13,7 +13,7 @@ __script__.version = ''
 #pact = Act('previous_step()', '<- Previous Step')
     
 G1 = Group('Scan on device')
-device_name = Par('string', 'dummy_motor', options = ['dummy_motor'], command = 'update_axis_name()')
+device_name = Par('string', 'samx', options = ['dummy_motor'], command = 'update_axis_name()')
 scan_start = Par('float', 0)
 scan_stop = Par('float', 0)
 number_of_points = Par('int', 0)
@@ -48,9 +48,9 @@ def update_axis_name():
 G1.add(device_name, scan_start, scan_stop, number_of_points, scan_mode, scan_preset, act1)
 
 G2 = Group('Fitting')
-data_name = Par('string', 'bm2_counts', \
+data_name = Par('string', 'total_counts', \
                options = ['total_counts', 'bm1_counts', 'bm2_counts'])
-normalise = Par('bool', True)
+normalise = Par('bool', False)
 axis_name = Par('string', '')
 axis_name.enabled = True
 auto_fit = Par('bool', False)

@@ -2,6 +2,8 @@ import inspect
 from java.lang import System
 import time
 import math
+import sys, os
+sys.path.append(str(os.path.dirname(get_project_path('Internal'))))
 from gumpy.nexus.fitting import Fitting, GAUSSIAN_FITTING
 from gumpy.commons import sics
 from Internal import sicsext
@@ -10,8 +12,13 @@ from java.lang import Double
 # script info
 __script__.title = 'Device Alignment'
 __script__.version = ''
+Dataset.__dicpath__ = get_absolute_path('/Internal/path_table')
+
 #pact = Act('previous_step()', '<- Previous Step')
     
+def slog(text):
+    logln(text + '\n')
+        
 G1 = Group('Scan on device')
 device_name = Par('string', 'samx', options = ['dummy_motor'], command = 'update_axis_name()')
 scan_start = Par('float', 0)

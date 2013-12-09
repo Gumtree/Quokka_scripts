@@ -16,6 +16,7 @@ from java.lang import System
 from java.io import File
 from time import strftime, localtime
 import traceback
+from bragg.quokka.quokka import *
 
 sics.ready = False
 __script__.title = 'Initialised'
@@ -56,18 +57,23 @@ __buffer_logger__ = open(__buffer_log_file__, 'a')
 __history_logger__ = open(__history_log_file__, 'a')
 
 print 'Waiting for SICS connection'
-while sics.getSicsController() == None or sics.getSicsController().findComponentController('/experiment/file_name') == None:
+while sics.getSicsController() == None or sics.getSicsController().getServerStatus() == 'UNKNOWN':
     time.sleep(1)
 
-time.sleep(2)
+print 'connected ...'
+time.sleep(7)
 
 wait_count = 0
-while sics.getSicsController().findComponentController('/experiment/file_name') == None and wait_count < 10 :
-    time.sleep(1)
-    wait_count += 1
+while wait_count < 10 :
+    try:
+        sics.getSicsController().findComponentController('/experiment/file_status').getValue().getStringData()
+        break
+    except:
+        time.sleep(1)
+        wait_count += 1
 
 if wait_count >= 10:
-    raise Exception, 'Timeout connecting with SICS. Please click on Reload button to try again.'
+    raise Exception, 'Timeout with initialising. Please click on Reload button to try again.'
 
 __scan_status_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/feedback/status')
 __scan_variable_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/scan_variable')
@@ -76,6 +82,7 @@ __file_name_node__ = sics.getSicsController().findComponentController('/experime
 __file_status_node__ = sics.getSicsController().findComponentController('/experiment/file_status')
 #saveCount = int(saveCountNode.getValue().getIntData())
 __cur_status__ = str(__scan_status_node__.getValue().getStringData())
+
 __file_name__ = str(__file_name_node__.getValue().getStringData())
 
 class __Display_Runnable__(Runnable):
@@ -299,12 +306,12 @@ class BatchStatusListener(SicsProxyListenerAdapter):
     def messageSent(self, message, channelId):
         pass
 
-try:
-    sics.SicsCore.getSicsManager().proxy().removeProxyListener(__batch_status_listener__)
-except:
-    pass
-__batch_status_listener__ = BatchStatusListener()
-sics.SicsCore.getSicsManager().proxy().addProxyListener(__batch_status_listener__)
+#try:
+#    sics.SicsCore.getSicsManager().proxy().removeProxyListener(__batch_status_listener__)
+#except:
+#    pass
+#__batch_status_listener__ = BatchStatusListener()
+#sics.SicsCore.getSicsManager().proxy().addProxyListener(__batch_status_listener__)
 
 
 class SICSConsoleEventHandler(ConsoleEventHandler):
@@ -330,13 +337,13 @@ class __Dispose_Listener__(DisposeListener):
         pass
     
 def __dispose_all__(event):
-    global __batch_status_listener__
+#    global __batch_status_listener__
     global __sics_console_event_handler_sent__
     global __sics_console_event_handler_received__
     global __statusListener__
     global __save_count_node__
     global __saveCountListener__
-    sics.SicsCore.getSicsManager().proxy().removeProxyListener(__batch_status_listener__)
+#    sics.SicsCore.getSicsManager().proxy().removeProxyListener(__batch_status_listener__)
     __sics_console_event_handler_sent__.deactivate()
     __sics_console_event_handler_received__.deactivate()
     __save_count_node__.removeComponentListener(__saveCountListener__)

@@ -75,7 +75,7 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
                     scanpoint = currentPoint
                     if currentPoint > 0 :
                         try:
-                            print '%4d \t %.4f' % (scanpoint, countsController.getValue().getFloatData())
+                            print '%4d' % (scanpoint)
                         except:
                             pass
                         if not comm is None:
@@ -92,7 +92,7 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
                 except:
                     pass
             try:
-                print '%4d \t %.4f' % (scanpoint + 1, countsController.getValue().getFloatData())
+                print '%4d' % (scanpoint + 1)
             except:
                 pass
             logger.log('Scan completed')

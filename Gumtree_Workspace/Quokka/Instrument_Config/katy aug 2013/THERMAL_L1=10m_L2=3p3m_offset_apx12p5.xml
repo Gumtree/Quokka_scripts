@@ -1,0 +1,35 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>THERMAL_L1=10m_L2=3p3m_offset_apx12p5</name>
+  <description></description>
+  <initScript>import time&#xd;
+# Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5)&#xd;
+# Drive detector to short position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(2500,300)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to g4&#xd;
+driveGuide(guideConfig.g4)&#xd;
+# Drive entrance aperture to 180 (for guide g4)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 12.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -98)&#xd;
+# Drive beamstops up&#xd;
+selBs(4)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 38.42)&#xd;
+sics.set(&apos;beamcenterz&apos;, 96.44)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(41, 100)&#xd;
+# Drive attenuator to 330&#xd;
+driveAtt(330)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(41, 0)&#xd;
+driveBsz(264)</preScatteringScript>
+  <startingAttenuation>90</startingAttenuation>
+  <file>H:\git\Gumtree\Quokka_scripts\GumTree_Workspace\Quokka\Instrument_Config\katy aug 2013\THERMAL_L1=10m_L2=3p3m_offset_apx12p5.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

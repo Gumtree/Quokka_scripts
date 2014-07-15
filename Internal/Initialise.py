@@ -16,12 +16,13 @@ from java.lang import System
 from java.io import File
 from time import strftime, localtime
 import traceback
+from bragg.quokka.quokka import *
 
 sics.ready = False
 __script__.title = 'Initialised'
 __script__.version = ''
 #__script__.dict_path = get_absolute_path('/Internal/path_table')
-#__data_folder__ = 'Y:/testing/quokka'
+#__data_folder__ = 'Z:/testing/quokka'
 __data_folder__ = 'W:/data/current'
 __export_folder__ = 'W:/data/current/reports'
 __buffer_log_file__ = __export_folder__
@@ -55,7 +56,34 @@ __buffer_log_file__ += '/LogFile.txt'
 __buffer_logger__ = open(__buffer_log_file__, 'a')
 __history_logger__ = open(__history_log_file__, 'a')
 
+print 'Waiting for SICS connection'
+while sics.getSicsController() == None or sics.getSicsController().getServerStatus() == 'UNKNOWN':
+    time.sleep(1)
 
+print 'connected ...'
+time.sleep(7)
+
+wait_count = 0
+while wait_count < 10 :
+    try:
+        sics.getSicsController().findComponentController('/experiment/file_status').getValue().getStringData()
+        break
+    except:
+        time.sleep(1)
+        wait_count += 1
+
+if wait_count >= 10:
+    raise Exception, 'Timeout with initialising. Please click on Reload button to try again.'
+
+__scan_status_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/feedback/status')
+__scan_variable_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/scan_variable')
+__save_count_node__ = sics.getSicsController().findComponentController('/experiment/save_count')
+__file_name_node__ = sics.getSicsController().findComponentController('/experiment/file_name')
+__file_status_node__ = sics.getSicsController().findComponentController('/experiment/file_status')
+#saveCount = int(saveCountNode.getValue().getIntData())
+__cur_status__ = str(__scan_status_node__.getValue().getStringData())
+
+__file_name__ = str(__file_name_node__.getValue().getStringData())
 
 class __Display_Runnable__(Runnable):
     
@@ -67,6 +95,51 @@ class __Display_Runnable__(Runnable):
         global __dispose_listener__
         __UI__.addDisposeListener(__dispose_listener__)
 
+__file_to_add__ = None
+__newfile_enabled__ = True
+def add_dataset():
+    global __newfile_enabled__
+    if not __newfile_enabled__ :
+        return
+    if __file_to_add__ is None:
+        return
+    global __DATASOURCE__
+    try:
+        __DATASOURCE__.addDataset(__file_to_add__, True)
+    except:
+        print 'error in adding dataset: ' + __file_to_add__
+    
+class __SaveCountListener__(DynamicControllerListenerAdapter):
+    
+    def __init__(self):
+        global __save_count_node__
+        self.saveCount = __save_count_node__.getValue().getIntData()
+        pass
+    
+    def valueChanged(self, controller, newValue):
+        global __file_to_add__
+        newCount = int(newValue.getStringData());
+        if newCount != self.saveCount:
+            self.saveCount = newCount;
+            try:
+                axis_name.value = __scan_variable_node__.getValue().getStringData()
+            except:
+                pass
+            try:
+                checkFile = File(__file_name_node__.getValue().getStringData());
+                checkFile = File(__data_folder__ + "/" + checkFile.getName());
+                __file_to_add__ = checkFile.getAbsolutePath();
+                if not checkFile.exists():
+                    print "The target file :" + __file_to_add__ + " can not be found";
+                    return
+                runnable = __Display_Runnable__()
+                runnable.run = add_dataset
+                Display.getDefault().asyncExec(runnable)
+            except: 
+                print 'failed to add dataset ' + __file_to_add__
+                    
+__saveCountListener__ = __SaveCountListener__()
+__save_count_node__.addComponentListener(__saveCountListener__)
 
 def update_buffer_log_folder():
     global __buffer_log_file__, __export_folder__, __buffer_logger__, __history_log_file__, __history_logger__
@@ -89,8 +162,23 @@ def __run_script__(dss):
     pass
 
 
+class __State_Monitor__(IStateMonitorListener):
+    def __init__(self):
+        pass
+
+    def stateChanged(state, infoMessage):
+        print state
+        print infoMessage
+        pass
+
+
 def __dispose__():
     pass
+#    __scan_status_node__.removeComponentListener(__statusListener__)
+#    __m2_node__.removeComponentListener(__m2_listener__)
+#    __s1_node__.removeComponentListener(__s1_listener__)
+#    __s2_node__.removeComponentListener(__s2_listener__)
+#    __a2_node__.removeComponentListener(__a2_listener__)
 
 def __load_experiment_data__():
     basename = sicsext.getBaseFilename()
@@ -197,7 +285,48 @@ def slog(text):
     logln(text + '\n')
     logBook(text)
 
+class BatchStatusListener(SicsProxyListenerAdapter):
+    
+    def __init__(self):
+        pass
+    
+    def proxyConnected(self):
+        pass
 
+    def proxyConnectionReqested(self):
+        pass
+
+    def proxyDisconnected(self):
+        pass
+
+    def messageReceived(self, message, channelId):
+        if str(channelId) == 'rawBatch':
+            logBook(message)
+
+    def messageSent(self, message, channelId):
+        pass
+
+#try:
+#    sics.SicsCore.getSicsManager().proxy().removeProxyListener(__batch_status_listener__)
+#except:
+#    pass
+#__batch_status_listener__ = BatchStatusListener()
+#sics.SicsCore.getSicsManager().proxy().addProxyListener(__batch_status_listener__)
+
+
+class SICSConsoleEventHandler(ConsoleEventHandler):
+    
+    def __init__(self, topic):
+        ConsoleEventHandler.__init__(self, topic)
+    
+    def handleEvent(self, event):
+        data = str(event.getProperty('sentMessage'))
+        logBook(data)
+
+__sics_console_event_handler_sent__ = SICSConsoleEventHandler('org/gumtree/ui/terminal/telnet/sent')
+__sics_console_event_handler_received__ = SICSConsoleEventHandler('org/gumtree/ui/terminal/telnet/received')
+__sics_console_event_handler_sent__.activate()
+__sics_console_event_handler_received__.activate()
 
 class __Dispose_Listener__(DisposeListener):
     
@@ -208,6 +337,16 @@ class __Dispose_Listener__(DisposeListener):
         pass
     
 def __dispose_all__(event):
+#    global __batch_status_listener__
+    global __sics_console_event_handler_sent__
+    global __sics_console_event_handler_received__
+    global __statusListener__
+    global __save_count_node__
+    global __saveCountListener__
+#    sics.SicsCore.getSicsManager().proxy().removeProxyListener(__batch_status_listener__)
+    __sics_console_event_handler_sent__.deactivate()
+    __sics_console_event_handler_received__.deactivate()
+    __save_count_node__.removeComponentListener(__saveCountListener__)
     if __buffer_logger__:
         __buffer_logger__.close()
     if __history_logger__:
@@ -220,13 +359,6 @@ __dispose_listener__.widgetDisposed = __dispose_all__
 
 __display_run__ = __Display_Runnable__()
 Display.getDefault().asyncExec(__display_run__)
-
-print 'Waiting for SICS connection'
-while sics.getSicsController() == None or sics.getSicsController().getServerStatus() == 'UNKNOWN':
-    time.sleep(1)
-
-print 'connected ...'
-time.sleep(2)
 
 sics.ready = True
 

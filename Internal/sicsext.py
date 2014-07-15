@@ -64,7 +64,7 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
             scanpoint = -1;
             scanPointController = sicsController.findComponentController(scanController, '/feedback/scanpoint')
             countsController = sicsController.findComponentController(scanController, '/feedback/scan_variable_value')
-            print '  NP  ' + '\t' + ' Device Position'
+            print '  NP  ' + '\t'
             while (scanController.getCommandStatus().equals(CommandStatus.BUSY)):
                 try:
                     currentPoint = scanPointController.getValue().getFloatData()
@@ -75,7 +75,7 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
                     scanpoint = currentPoint
                     if currentPoint > 0 :
                         try:
-                            print '%4d' % (scanpoint)
+                            print '%4d \t' % (scanpoint)
                         except:
                             pass
                         if not comm is None:
@@ -92,7 +92,7 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
                 except:
                     pass
             try:
-                print '%4d' % (scanpoint + 1)
+                print '%4d \t ' % (scanpoint + 1)
             except:
                 pass
             logger.log('Scan completed')

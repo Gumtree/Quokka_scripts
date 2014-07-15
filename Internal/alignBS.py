@@ -1,13 +1,28 @@
 import math
 # Script control setup area
 # script info
-__script__.title = '<Script Template>'
+__script__.title = 'Align Beam Stops'
 __script__.version = '1.0'
+
+DEFAULT_ATT = float('nan')
+ROUGH_BSX_SCAN_START = 10
+ROUGH_BSX_SCAN_STOP = 300
+ROUGH_BSX_SCAN_NUMBER_OF_STEPS = 21
+ROUGH_BSX_SCAN_TIME = 10
+
+BSZ_SCAN_START = 10
+BSZ_SCAN_STOP = 270
+BSZ_SCAN_NUMBER_OF_STEPS = 21
+BSZ_SCAN_TIME = 10
+
+DETAIL_BSX_SCAN_WIDTH = 10
+DETAIL_BSX_SCAN_NUMBER_OF_STEPS = 21
+DETAIL_BSX_SCAN_TIME = 10
 
 # Use below example to create parameters.
 # The type can be string, int, float, bool, file.
 
-att = Par('float', float('nan'))
+att = Par('float', DEFAULT_ATT)
 att.title = 'set appropriate att'
 att_set = False
 
@@ -36,13 +51,13 @@ def run_all():
     run_action(g3_run)
     open_information('Alignment is finished')
 
-g1_start = Par('float', 10)
+g1_start = Par('float', ROUGH_BSX_SCAN_START)
 g1_start.title = 'start'
-g1_stop = Par('float', 300)
+g1_stop = Par('float', ROUGH_BSX_SCAN_STOP)
 g1_stop.title = 'stop'
-g1_number_of_step = Par('float', 21)
+g1_number_of_step = Par('float', ROUGH_BSX_SCAN_NUMBER_OF_STEPS)
 g1_number_of_step.title = 'number of steps'
-g1_counting_time = Par('int', 10)
+g1_counting_time = Par('int', ROUGH_BSX_SCAN_TIME)
 g1_counting_time.title = 'counting time'
 
 # Use below example to create a button
@@ -66,11 +81,12 @@ def drive_bsx(centre_par):
     if not math.isnan(value):
         slog('drive bsx to ' + str(value))
         sics.drive('bsx', value)
-        start = value - 10
+        half_width = DETAIL_BSX_SCAN_WIDTH / 2.0
+        start = value - half_width
         if start < 10:
             start = 10
         g3_start.value = start
-        stop = value + 10
+        stop = value + half_width
         if stop > 270:
             stop = 270
         g3_stop.value = stop
@@ -80,13 +96,13 @@ g_bsx1 = Group('Scan on bsx roughly')
 g_bsx1.add(g1_start, g1_stop, g1_number_of_step, \
            g1_counting_time, g1_run, g1_estimate_x, g1_drive)
 
-g2_start = Par('float', 10)
+g2_start = Par('float', BSZ_SCAN_START)
 g2_start.title = 'start'
-g2_stop = Par('float', 270)
+g2_stop = Par('float', BSZ_SCAN_STOP)
 g2_stop.title = 'stop'
-g2_number_of_step = Par('float', 21)
+g2_number_of_step = Par('float', BSZ_SCAN_NUMBER_OF_STEPS)
 g2_number_of_step.title = 'number of steps'
-g2_counting_time = Par('int', 10)
+g2_counting_time = Par('int', BSZ_SCAN_TIME)
 g2_counting_time.title = 'counting time'
 
 # Use below example to create a button
@@ -117,9 +133,9 @@ g3_start = Par('float', 0)
 g3_start.title = 'start'
 g3_stop = Par('float', 0)
 g3_stop.title = 'stop'
-g3_number_of_step = Par('float', 21)
+g3_number_of_step = Par('float', DETAIL_BSX_SCAN_NUMBER_OF_STEPS)
 g3_number_of_step.title = 'number of steps'
-g3_counting_time = Par('int', 10)
+g3_counting_time = Par('int', DETAIL_BSX_SCAN_TIME)
 g3_counting_time.title = 'counting time'
 
 # Use below example to create a button

@@ -1,5 +1,9 @@
 # Script control setup area
 # script info
+import time
+from bragg.quokka import quokka
+from org.gumtree.gumnix.sics.control import ServerStatus
+
 __script__.title = 'Scan Device'
 __script__.version = '0.1'
 
@@ -18,10 +22,20 @@ def scan_device():
     np = int(number_of_points.value)
     if np <= 0:
         return
-    step_size = float(scan_stop.value - scan_start.value) / np
+    if np == 1:
+        step_size = 0
+    else :
+        step_size = float(scan_stop.value - scan_start.value) / (np - 1)
     slog('runscan ' + str(device_name.value) + ' ' + str(scan_start.value) + ' ' + str(scan_stop.value) \
                     + ' ' + str(number_of_points.value) + ' ' + str(scan_mode.value) + ' ' + str(scan_preset.value))
     for p in xrange(np):
+        if not fix_attenuation.value:
+            quokka.driveAtt(330)
+            att = quokka.findSafeAttenuation(330)
+            if att is not None:
+                while not sics.getSicsController().getServerStatus().equals(ServerStatus.EAGER_TO_EXECUTE):
+                    time.sleep(0.1)
+                quokka.driveAtt(att)
         slog('drive ' + aname + ' ' + str(scan_start.value + step_size * p))
         sics.drive(str(aname), scan_start.value + step_size * p)
         sicsext.runscan('dummy_motor', 0, 0, 1, 
@@ -30,6 +44,9 @@ def scan_device():
         slog('finished NP ' + str(p))
         time.sleep(1)
     
+    if not fix_attenuation.value:
+        quokka.driveAtt(330)
+    
 devices = sicsext.getDrivables()
 device_name.options = devices
 def update_axis_name():
@@ -37,6 +54,9 @@ def update_axis_name():
         
 G1.add(device_name, scan_start, scan_stop, number_of_points, scan_mode, scan_preset, act1)
 
+G2 = Group('Extra Configuration')
+fix_attenuation = Par('bool', False)
+G2.add(fix_attenuation)
 
 # Use below example to create a new Plot
 # Plot4 = Plot(title = 'new plot')

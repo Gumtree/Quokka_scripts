@@ -168,6 +168,12 @@ samy                 	=	 	 $entry/sample/sample_y
 SamYOffset               	=	 $entry/instrument/parameters/SamYOffset	
 samz                 	=	 	 $entry/sample/sample_z
 save_count               	=	 $entry/experiment/save_count	
+samphi						=	 $entry/sample/sample_phi
+samchi						=	 $entry/sample/sample_chi
+samthet						=	 $entry/sample/sample_theta
+sample_phi					=	 $entry/sample/sample_phi
+sample_chi					=	 $entry/sample/sample_chi
+sample_thet					=	 $entry/sample/sample_theta
 scanStep	=	$entry/data/stth	
 secondary                	=	 $entry/instrument/status/secondary	
 section_1                	=	 $entry/instrument/collimator/section_1	
@@ -220,3 +226,4 @@ x_pixel_offset           	=	 $entry/instrument/detector/x_pixel_offset
 y_bin                    	=	 $entry/instrument/detector/y_bin	
 y_pixel_offset           	=	 $entry/instrument/detector/y_pixel_offset	
 
+hez							=	$entry/instrument/collimator/hez

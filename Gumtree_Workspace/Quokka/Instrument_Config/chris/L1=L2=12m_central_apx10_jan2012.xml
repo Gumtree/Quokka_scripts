@@ -1,18 +1,18 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=L2=12m_central_apx10_jan2012</name>
-  <description></description>
+  <description>rheo_12M_10mmapx</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 #sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
 # Drive detector to short position&#xd;
 sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
 driveDet(11200,0)&#xd;
-# Drive guide to g2 config&#xd;
+# Drive guide to g3 config&#xd;
 driveGuide(guideConfig.g3)&#xd;
 # Drive entrance aperture to 180 (for g3)&#xd;
 driveEntRotAp(180)&#xd;
 #set sample ap to 10 mm&#xd;
-sics.drive(&apos;apx&apos;, -72)&#xd;
+sics.drive(&apos;apx&apos;, -16.37)&#xd;
 # Drive beamstops up&#xd;
 selBs(1)&#xd;
 sics.set(&apos;beamcenterx&apos;, 97.8)&#xd;
@@ -27,5 +27,5 @@ driveAtt(330)&#xd;
 driveBsx(32, 0)&#xd;
 driveBsz(254.0)</preScatteringScript>
   <startingAttenuation>120</startingAttenuation>
-  <file>H:\git\Gumtree\Quokka_scripts\GumTree_Workspace\Quokka\Instrument_Config\chris\L1=L2=12m_central_apx10_jan2012.xml</file>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=12m_central_apx10_jan2012.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

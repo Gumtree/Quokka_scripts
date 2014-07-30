@@ -1,0 +1,5 @@
+sics.run('bsx',32)
+sics.run('bsz',250)
+slog('run')
+sics.drive('bsx',32)
+sics.drive('bsz',250)

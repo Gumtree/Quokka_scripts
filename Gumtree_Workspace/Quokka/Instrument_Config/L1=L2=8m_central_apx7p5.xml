@@ -1,6 +1,6 @@
-<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=L2=8m_central_apx7p5</name>
-  <description></description>
+  <description>epg 22/2/14</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 #sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
@@ -15,17 +15,17 @@ driveEntRotAp(180)&#xd;
 sics.drive(&apos;apx&apos;, -47)&#xd;
 # Drive beamstops up&#xd;
 selBs(1)&#xd;
-sics.set(&apos;beamcenterx&apos;, 97.88)&#xd;
-sics.set(&apos;beamcenterz&apos;, 95.77)</initScript>
+sics.set(&apos;beamcenterx&apos;, 97.6277)&#xd;
+sics.set(&apos;beamcenterz&apos;, 96.0245)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(32.5, 100)&#xd;
+driveBsx(35.0, 100)&#xd;
 # Drive attenuator to 270&#xd;
 driveAtt(270)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(32.5, 0)&#xd;
+driveBsx(35.0, 0)&#xd;
 driveBsz(258.0)</preScatteringScript>
-  <startingAtteunation>270</startingAtteunation>
-  <file>H:\Application Data\GumTree\releases\quokka\workspace\GumTree_Workspace\Quokka\Instrument_Config\L1=L2=8m_central_apx7p5.xml</file>
-</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <startingAttenuation>270</startingAttenuation>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\L1=L2=8m_central_apx7p5.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

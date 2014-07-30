@@ -3,7 +3,8 @@
   <description>offset</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
-#sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 5.0)&#xd;
 # Drive detector to longest position&#xd;
 sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
 driveDet(19250,300)&#xd;
@@ -25,7 +26,7 @@ driveAtt(240)</preTransmissionScript>
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
 driveBsx(32, 0)&#xd;
-driveBsz(250.0)</preScatteringScript>
+driveBsz(254.0)</preScatteringScript>
   <startingAttenuation>240</startingAttenuation>
-  <file>H:\git\Gumtree\Quokka_scripts\GumTree_Workspace\Quokka\Instrument_Config\chris\L1=L2=20m_offset_apx10_jan2012.xml</file>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=20m_offset_apx10_jan2012.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

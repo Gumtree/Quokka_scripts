@@ -1,6 +1,6 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=L2=20m_central_flux_apx10_jan2012</name>
-  <description></description>
+  <description>140225_20m_CJG</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 #sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
@@ -11,12 +11,12 @@ driveDet(19250,0)&#xd;
 driveGuide(guideConfig.ga)&#xd;
 # Drive entrance aperture to 150 (for ga)&#xd;
 driveEntRotAp(150)&#xd;
-#set sample ap to 2.5 mm&#xd;
-sics.drive(&apos;apx&apos;,0 )&#xd;
+#set sample ap to 10 mm&#xd;
+sics.drive(&apos;apx&apos;,-72 )&#xd;
 # Drive beamstops up&#xd;
 selBs(1)&#xd;
-sics.set(&apos;beamcenterx&apos;, 98.2)&#xd;
-sics.set(&apos;beamcenterz&apos;, 94.7)</initScript>
+sics.set(&apos;beamcenterx&apos;, 97.8)&#xd;
+sics.set(&apos;beamcenterz&apos;, 94.9)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
 driveBsx(32, 100)&#xd;
 # Drive attenuator to 240&#xd;
@@ -27,5 +27,5 @@ driveAtt(330)&#xd;
 driveBsx(32, 0)&#xd;
 driveBsz(250.0)</preScatteringScript>
   <startingAttenuation>240</startingAttenuation>
-  <file>H:\git\Gumtree\Quokka_scripts\GumTree_Workspace\Quokka\Instrument_Config\chris\L1=L2=20m_central_flux_apx10_jan2012.xml</file>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=20m_central_flux_apx10_jan2012.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

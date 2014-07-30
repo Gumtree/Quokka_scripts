@@ -1,0 +1,34 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=20m_L2=6m_tang_rheo</name>
+  <description>tang rheo July 2014&#xd;
+</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+#sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+# Drive detector to short position&#xd;
+driveDet(5800,0)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to ga&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 180 (for guide g4)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 0.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -138.3)&#xd;
+# Drive beamstops up&#xd;
+selBs(3)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 38.6144)&#xd;
+sics.set(&apos;beamcenterz&apos;, 96.0854)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(32, 100)&#xd;
+# Drive attenuator to 330&#xd;
+driveAtt(330)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(40, 0)&#xd;
+driveBsz(260)</preScatteringScript>
+  <startingAttenuation>210</startingAttenuation>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=20m_L2=6m_tang_rheo.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

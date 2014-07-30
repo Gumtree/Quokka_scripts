@@ -1,0 +1,32 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=12m_L2=2m_offset_apx12p5</name>
+  <description>epg 300514</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(1200,300)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to g3&#xd;
+driveGuide(guideConfig.g3)&#xd;
+# Drive entrance aperture to 180 (for guide g3)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 12.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -98)&#xd;
+# Drive beamstops up&#xd;
+selBs(4)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 34.8448)&#xd;
+sics.set(&apos;beamcenterz&apos;, 97.0269)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(40, 100)&#xd;
+# Drive attenuator to 330&#xd;
+driveAtt(330)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(40, 0)&#xd;
+driveBsz(266)</preScatteringScript>
+  <startingAttenuation>180</startingAttenuation>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\L1=12m_L2=2m_offset_apx12p5.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

@@ -1,0 +1,33 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=L2=20m_apx0</name>
+  <description>20m flux feb14</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 5)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength_spread&apos;, 0.10)&#xd;
+# Drive detector to position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(19250,0)&#xd;
+# Drive guide to ga&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 120 (for ga)&#xd;
+driveEntRotAp(120)&#xd;
+#set sample ap to 2.5 mm&#xd;
+sics.drive(&apos;apx&apos;, 0)&#xd;
+# Drive beamstops up&#xd;
+selBs(3)&#xd;
+sics.set(&apos;beamcenterx&apos;, 97.31)&#xd;
+sics.set(&apos;beamcenterz&apos;, 94.95)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(44, 100)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(270)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(22.5,0)&#xd;
+driveBsz(261)</preScatteringScript>
+  <startingAttenuation>60</startingAttenuation>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=L2=20m_apx0.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

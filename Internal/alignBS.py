@@ -38,6 +38,8 @@ def run_att():
     if ac:
           sics.drive('att', att.value)
           att_set = True
+    else:
+        raise Exception, 'Automatic scan cancelled'
 
 run_all_act = Act('run_all()', 'run alignment automatically')
 
@@ -71,6 +73,8 @@ def scan_bsx():
     if ac:
         g1_estimate_x.value = peak_pos.value
         run_action(g1_drive)
+    else:
+        raise Exception, 'Automatic scan cancelled'
         
     
 g1_estimate_x = Par('float', float('nan'))
@@ -116,6 +120,8 @@ def scan_bsz():
     if ac:
         g2_estimate_z.value = peak_pos.value
         run_action(g2_drive)
+    else:
+        raise Exception, 'Automatic scan cancelled'
     
 g2_estimate_z = Par('float', float('nan'))
 g2_estimate_z.title = 'estimated z centre'

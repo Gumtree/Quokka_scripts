@@ -1,6 +1,7 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=10m_L2=1.3m_offset</name>
-  <description>central</description>
+  <description>offset Garnier&#xd;
+</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 #sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
@@ -20,14 +21,14 @@ selBs(4)&#xd;
 sics.set(&apos;beamcenterx&apos;, 38.6144)&#xd;
 sics.set(&apos;beamcenterz&apos;, 96.0854)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(40, 100)&#xd;
+driveBsx(38, 100)&#xd;
 # Drive attenuator to 330&#xd;
 driveAtt(330)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(40, 0)&#xd;
-driveBsz(263)</preScatteringScript>
-  <startingAttenuation>210</startingAttenuation>
-  <file>H:\git\Gumtree\Quokka_scripts\GumTree_Workspace\Quokka\Instrument_Config\chris\L1=10m_L2=1.3m_offset.xml</file>
+driveBsx(38, 0)&#xd;
+driveBsz(265)</preScatteringScript>
+  <startingAttenuation>300</startingAttenuation>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=10m_L2=1.3m_offset.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

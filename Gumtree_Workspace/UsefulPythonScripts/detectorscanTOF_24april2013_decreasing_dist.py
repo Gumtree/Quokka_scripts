@@ -42,10 +42,10 @@ def run():
 	# We collect the first set of data
 	#x = 3280
 	x = 7200
-	while x <= 19250:
+	while x <= 1900:
 		sics.set('/instrument/detector/detector_y/speed', 53)
 		driveDet(x, getDetOffsetValue())
 		quokka.scan(scanMode.time, dataType.HISTOGRAM_XY, 600, 'true', saveType.nosave)
-		saveHM('TOF_zerotilt_NVS40_min3_ga_apx2p5_80Hz_27072013_' + str(x) + '.hdf')
+		saveHM('TOF_zerotilt_NVS40_zero_ga_apx2p5_80Hz_010414_' + str(x) + '.hdf')
 		x = x - 2000
 

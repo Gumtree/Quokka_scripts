@@ -1,10 +1,10 @@
-<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>ga_19280_apx10_240910</name>
   <description></description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Drive detector to short position&#xd;
-driveDet(19280,0)&#xd;
+driveDet(19250,0)&#xd;
 # Drive guide to ga config&#xd;
 driveGuide(guideConfig.ga)&#xd;
 #set sample ap to 10 mm&#xd;
@@ -22,6 +22,6 @@ driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
 driveBsx(40, 0)&#xd;
 driveBsz(249)</preScatteringScript>
-  <startingAtteunation>180</startingAtteunation>
-  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\ga_19280_apx10_240910.xml</file>
-</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <startingAttenuation>180</startingAttenuation>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\GA Configs\ga_19280_apx10_240910.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

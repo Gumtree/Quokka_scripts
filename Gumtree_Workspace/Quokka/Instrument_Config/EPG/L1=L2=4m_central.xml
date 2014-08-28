@@ -23,14 +23,14 @@ selBs(1)&#xd;
 sics.set(&apos;beamcenterx&apos;, 92.9322)&#xd;
 sics.set(&apos;beamcenterz&apos;, 97.4939)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(12, 100)&#xd;
-# Drive attenuator to 270&#xd;
+driveBsx(28, 100)&#xd;
+# Drive attenuator to 300&#xd;
 driveAtt(300)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(12, 0)&#xd;
-driveBsz(266)</preScatteringScript>
-  <startingAttenuation>180</startingAttenuation>
-  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=L2=4m_central.xml</file>
+driveBsx(28, 0)&#xd;
+driveBsz(252)</preScatteringScript>
+  <startingAttenuation>60</startingAttenuation>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\L1=L2=4m_central.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

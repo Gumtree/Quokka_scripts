@@ -22,6 +22,14 @@ DETAIL_BSX_SCAN_TIME = 10
 # Use below example to create parameters.
 # The type can be string, int, float, bool, file.
 
+bs_id = Par('int', 1)
+bs_id.title = 'select a beam stop'
+bs_act = Act('select_bs()', 'select beam stop')
+
+def select_bs():
+    id = bs_id.value
+    selBs(id)
+
 att = Par('float', DEFAULT_ATT)
 att.title = 'set appropriate att'
 att_set = False

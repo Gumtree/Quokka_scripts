@@ -13,8 +13,8 @@ driveDet(11200,300)&#xd;
 driveGuide(guideConfig.g3)&#xd;
 # Drive entrance aperture to 180 (for g3)&#xd;
 driveEntRotAp(180)&#xd;
-#set sample ap to 10 mm&#xd;
-sics.drive(&apos;apx&apos;, -72)&#xd;
+#set sample ap to 12.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -98)&#xd;
 # Drive beamstops up&#xd;
 selBs(1)&#xd;
 sics.set(&apos;beamcenterx&apos;, 97.8)&#xd;
@@ -29,5 +29,5 @@ driveAtt(330)&#xd;
 driveBsx(32, 0)&#xd;
 driveBsz(254.0)</preScatteringScript>
   <startingAttenuation>120</startingAttenuation>
-  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=12m_offset_apx10_8A_apr2014.xml</file>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=12m_offset_apx10_8A_apr2014.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

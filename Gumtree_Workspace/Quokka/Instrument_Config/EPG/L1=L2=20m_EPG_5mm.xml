@@ -15,17 +15,17 @@ driveEntRotAp(150)&#xd;
 sics.drive(&apos;apx&apos;, -23)&#xd;
 # Drive beamstops up&#xd;
 selBs(2)&#xd;
-sics.set(&apos;beamcenterx&apos;, 93.7969)&#xd;
-sics.set(&apos;beamcenterz&apos;, 94.4265)</initScript>
+sics.set(&apos;beamcenterx&apos;, 94.6478)&#xd;
+sics.set(&apos;beamcenterz&apos;, 94.5575)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(32, 100)&#xd;
+driveBsx(39, 100)&#xd;
 # Drive attenuator to 240&#xd;
 driveAtt(240)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(32, 0)&#xd;
+driveBsx(39, 0)&#xd;
 driveBsz(252.0)</preScatteringScript>
-  <startingAttenuation>60</startingAttenuation>
-  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\L1=L2=20m_EPG_5mm.xml</file>
+  <startingAttenuation>150</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\L1=L2=20m_EPG_5mm.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

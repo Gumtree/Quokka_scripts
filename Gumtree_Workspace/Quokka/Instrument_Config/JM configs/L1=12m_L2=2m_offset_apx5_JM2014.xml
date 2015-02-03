@@ -1,0 +1,32 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=12m_L2=2m_offset_apx5_JM2014</name>
+  <description>JM_141105</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(1200,300)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to g3&#xd;
+driveGuide(guideConfig.g3)&#xd;
+# Drive entrance aperture to 180 (for guide g3)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 5 mm&#xd;
+sics.drive(&apos;apx&apos;, -23)&#xd;
+# Drive beamstops up&#xd;
+selBs(3)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 34.64)&#xd;
+sics.set(&apos;beamcenterz&apos;, 96.64)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(32, 100)&#xd;
+# Drive attenuator to 330&#xd;
+driveAtt(330)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(32, 0)&#xd;
+driveBsz(264)</preScatteringScript>
+  <startingAttenuation>210</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\JM configs\L1=12m_L2=2m_offset_apx5_JM2014.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

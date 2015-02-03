@@ -1,0 +1,34 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=4m_L2=4m_central_small8A</name>
+  <description>8A small aperture</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 8)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 8)&#xd;
+# Drive detector to short position&#xd;
+driveDet(3200,0)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to g7&#xd;
+driveGuide(guideConfig.g7)&#xd;
+# Drive entrance aperture to 180 (for guide g7)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 5 mm&#xd;
+sics.drive(&apos;apx&apos;, -23)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 94)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.66)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(26, 100)&#xd;
+# Drive attenuator to 240&#xd;
+driveAtt(240)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(24,0)&#xd;
+driveBsz(258)</preScatteringScript>
+  <startingAttenuation>120</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=4m_L2=4m_central_small8A.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

@@ -1,9 +1,10 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=L2=14m_central_10apx_sept_2014</name>
-  <description>cjg 09/05/2102</description>
+  <description>cjg28/09/2102</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
-#sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;,5.0)&#xd;
 # Drive detector to short position&#xd;
 sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
 driveDet(13200,0)&#xd;
@@ -27,5 +28,5 @@ driveAtt(330)&#xd;
 driveBsx(20, 0)&#xd;
 driveBsz(256.0)</preScatteringScript>
   <startingAttenuation>240</startingAttenuation>
-  <file>W:\gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=14m_central_10apx_sept_2014.xml</file>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=14m_central_10apx_sept_2014.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

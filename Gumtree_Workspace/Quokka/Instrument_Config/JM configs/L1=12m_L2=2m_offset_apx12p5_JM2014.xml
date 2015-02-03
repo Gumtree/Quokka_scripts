@@ -1,6 +1,6 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=12m_L2=2m_offset_apx12p5_JM2014</name>
-  <description>JM_140918</description>
+  <description>JM_141111</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Drive detector to short position&#xd;
@@ -14,19 +14,19 @@ driveEntRotAp(180)&#xd;
 #set sample ap to 12.5 mm&#xd;
 sics.drive(&apos;apx&apos;, -98)&#xd;
 # Drive beamstops up&#xd;
-selBs(1)&#xd;
+selBs(3)&#xd;
 # set beamcentres&#xd;
-sics.set(&apos;beamcenterx&apos;, 35.08)&#xd;
-sics.set(&apos;beamcenterz&apos;, 95.91)</initScript>
+sics.set(&apos;beamcenterx&apos;, 34.64)&#xd;
+sics.set(&apos;beamcenterz&apos;, 96.64)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(21, 100)&#xd;
+driveBsx(32, 100)&#xd;
 # Drive attenuator to 330&#xd;
-driveAtt(330)</preTransmissionScript>
+driveAtt(300)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(21, 0)&#xd;
-driveBsz(260)</preScatteringScript>
+driveBsx(32, 0)&#xd;
+driveBsz(264)</preScatteringScript>
   <startingAttenuation>210</startingAttenuation>
-  <file>W:\gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\JM configs\L1=12m_L2=2m_offset_apx12p5_JM2014.xml</file>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\JM configs\L1=12m_L2=2m_offset_apx12p5_JM2014.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

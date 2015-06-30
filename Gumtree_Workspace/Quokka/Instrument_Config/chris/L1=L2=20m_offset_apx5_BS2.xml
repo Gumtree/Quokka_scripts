@@ -1,6 +1,6 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=L2=20m_offset_apx5_BS2</name>
-  <description>20m 2/10/2014</description>
+  <description>20m 2/04/2015</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
@@ -25,8 +25,8 @@ driveAtt(240)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(28, 0)&#xd;
-driveBsz(250.0)</preScatteringScript>
-  <startingAttenuation>60</startingAttenuation>
+driveBsx(40, 0)&#xd;
+driveBsz(252.0)</preScatteringScript>
+  <startingAttenuation>90</startingAttenuation>
   <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=20m_offset_apx5_BS2.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

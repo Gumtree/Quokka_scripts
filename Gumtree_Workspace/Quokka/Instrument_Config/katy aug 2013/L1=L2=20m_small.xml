@@ -17,17 +17,17 @@ driveEntRotAp(150)&#xd;
 sics.drive(&apos;apx&apos;, -23)&#xd;
 # Drive beamstops up&#xd;
 selBs(1)&#xd;
-sics.set(&apos;beamcenterx&apos;, 93.7)&#xd;
-sics.set(&apos;beamcenterz&apos;, 92.2)</initScript>
+sics.set(&apos;beamcenterx&apos;, 95.07)&#xd;
+sics.set(&apos;beamcenterz&apos;, 92.03)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(25, 120)&#xd;
+driveBsx(30, 120)&#xd;
 # Drive attenuator to 150&#xd;
 driveAtt(150)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(25,0)&#xd;
-driveBsz(240)</preScatteringScript>
+driveBsx(30,0)&#xd;
+driveBsz(238.5)</preScatteringScript>
   <startingAttenuation>150</startingAttenuation>
   <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=L2=20m_small.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

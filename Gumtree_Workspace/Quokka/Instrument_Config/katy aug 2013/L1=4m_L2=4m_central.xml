@@ -1,10 +1,10 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=4m_L2=4m_central</name>
-  <description>4.505</description>
+  <description>5A</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
-sics.drive(&apos;nvs_lambda&apos;, 4.505)&#xd;
-sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 4.505)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 5)&#xd;
 # Drive detector to short position&#xd;
 driveDet(3200,0)&#xd;
 # Drive entrance aperture to 50 mm square&#xd;
@@ -13,8 +13,8 @@ driveEntRotAp(180)&#xd;
 driveGuide(guideConfig.g7)&#xd;
 # Drive entrance aperture to 180 (for guide g7)&#xd;
 driveEntRotAp(180)&#xd;
-#set sample ap to 15 mm&#xd;
-sics.drive(&apos;apx&apos;, -125)&#xd;
+#set sample ap to 7.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -47)&#xd;
 # Drive beamstops up&#xd;
 selBs(1)&#xd;
 # set beamcentres&#xd;

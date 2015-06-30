@@ -1,10 +1,10 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=L2=20m_lens_medium1</name>
-  <description>lens april 2014</description>
+  <description>cjg 22042015</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
-sics.drive(&apos;nvs_lambda&apos;, 8.1)&#xd;
-sics.set(&apos;/instrument/velocity_selector/wavelength&apos;,7.7)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 8.0)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;,8.0)&#xd;
 # Drive detector to short position&#xd;
 sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
 driveDet(19250,0)&#xd;
@@ -12,21 +12,21 @@ driveDet(19250,0)&#xd;
 driveGuide(guideConfig.lens)&#xd;
 # Drive entrance aperture to 30 (for lens)&#xd;
 driveEntRotAp(30)&#xd;
-#set sample ap to 12.5 mm&#xd;
+#set sample ap to 20 mm&#xd;
 sics.drive(&apos;apx&apos;, -98)&#xd;
 # Drive beamstops up&#xd;
 selBs(5)&#xd;
-sics.set(&apos;beamcenterx&apos;, 96.0983)&#xd;
-sics.set(&apos;beamcenterz&apos;, 92.8463)</initScript>
+sics.set(&apos;beamcenterx&apos;, 94.6784)&#xd;
+sics.set(&apos;beamcenterz&apos;, 92.4764)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(47.5, 100)&#xd;
-# Drive attenuator to 210&#xd;
-driveAtt(180)</preTransmissionScript>
+driveBsx(44, 100)&#xd;
+# Drive attenuator to 150&#xd;
+driveAtt(150)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(47.5, 0)&#xd;
-driveBsz(245.4)</preScatteringScript>
-  <startingAttenuation>60</startingAttenuation>
-  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=20m_lens_medium1.xml</file>
+driveBsx(44, 0)&#xd;
+driveBsz(243)</preScatteringScript>
+  <startingAttenuation>90</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=L2=20m_lens_medium1.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

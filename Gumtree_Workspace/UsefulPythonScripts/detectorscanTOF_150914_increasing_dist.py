@@ -12,7 +12,7 @@ port = 8081
 type = 'TOTAL_HISTOGRAM_T'
 user = 'Gumtree'
 password = 'Gumtree'
-directory = 'U:/data/proposal/00100/2014/TOF_Oct2014'
+directory = 'U:/data/proposal/00100/2015/NVS_Calibration_april2015'
 
 # Fetch data from the HM server via HTTP
 def saveHM(filename):
@@ -46,6 +46,6 @@ def run():
 		sics.set('/instrument/detector/detector_y/speed', 53)
 		driveDet(x, getDetOffsetValue())
 		quokka.scan(scanMode.time, dataType.HISTOGRAM_XY, 600, 'true', saveType.nosave)
-		saveHM('TOF_0tilt_25477_NVS40_ga_apx2p5_80Hz_141010_' + str(x) + '.hdf')
+		saveHM('TOF_0tilt_aftercal2_5A_NVS40_ga_apx2p5_80Hz_21apr15_' + str(x) + '.hdf')
 		x = x + 1500
 

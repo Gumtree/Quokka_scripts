@@ -26,7 +26,7 @@ driveAtt(330)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(50, 0)&#xd;
+driveBsx(50, 5)&#xd;
 driveBsz(260)</preScatteringScript>
   <startingAttenuation>330</startingAttenuation>
   <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=10m_L2=1.3m_central_jan2015.xml</file>

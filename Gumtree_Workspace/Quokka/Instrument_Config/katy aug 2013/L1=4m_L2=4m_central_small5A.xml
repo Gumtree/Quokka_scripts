@@ -16,19 +16,19 @@ driveEntRotAp(180)&#xd;
 #set sample ap to 5 mm&#xd;
 sics.drive(&apos;apx&apos;, -23)&#xd;
 # Drive beamstops up&#xd;
-selBs(3)&#xd;
+selBs(1)&#xd;
 # set beamcentres&#xd;
-sics.set(&apos;beamcenterx&apos;, 94.74)&#xd;
-sics.set(&apos;beamcenterz&apos;, 96.11)</initScript>
+sics.set(&apos;beamcenterx&apos;, 94.83)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.63)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
 driveBsx(26, 100)&#xd;
-# Drive attenuator to 330&#xd;
-driveAtt(330)</preTransmissionScript>
+# Drive attenuator to 300&#xd;
+driveAtt(300)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(26,0)&#xd;
-driveBsz(261)</preScatteringScript>
+driveBsx(29,0)&#xd;
+driveBsz(258)</preScatteringScript>
   <startingAttenuation>120</startingAttenuation>
   <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=4m_L2=4m_central_small5A.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

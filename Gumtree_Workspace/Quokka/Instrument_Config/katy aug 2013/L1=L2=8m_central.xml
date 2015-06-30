@@ -1,6 +1,6 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=L2=8m_central</name>
-  <description>kt july 14</description>
+  <description>kt june 15</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
@@ -12,21 +12,21 @@ driveDet(7200,0)&#xd;
 driveGuide(guideConfig.g5)&#xd;
 # Drive entrance aperture to 180 (for g5)&#xd;
 driveEntRotAp(180)&#xd;
-#set sample ap to 10 mm&#xd;
-sics.drive(&apos;apx&apos;, -72)&#xd;
+#set sample ap to 12.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -98)&#xd;
 # Drive beamstops up&#xd;
-selBs(1)&#xd;
-sics.set(&apos;beamcenterx&apos;, 92.57)&#xd;
-sics.set(&apos;beamcenterz&apos;, 96.92)</initScript>
+selBs(2)&#xd;
+sics.set(&apos;beamcenterx&apos;, 93.7)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.4)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(13, 100)&#xd;
+driveBsx(26, 100)&#xd;
 # Drive attenuator to 300&#xd;
 driveAtt(300)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(13,0)&#xd;
-driveBsz(264)</preScatteringScript>
-  <startingAttenuation>90</startingAttenuation>
-  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=L2=8m_central.xml</file>
+driveBsx(41,0)&#xd;
+driveBsz(256)</preScatteringScript>
+  <startingAttenuation>120</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=L2=8m_central.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

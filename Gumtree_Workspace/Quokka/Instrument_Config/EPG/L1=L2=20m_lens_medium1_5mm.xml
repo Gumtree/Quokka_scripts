@@ -1,0 +1,32 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=L2=20m_lens_medium1_5mm</name>
+  <description>epg 220415</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 8.1)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 8.1)&#xd;
+# Drive detector to short position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(19250,0)&#xd;
+# Drive guide to lens config&#xd;
+driveGuide(guideConfig.lens)&#xd;
+# Drive entrance aperture to 30 (for lens)&#xd;
+driveEntRotAp(30)&#xd;
+#set sample ap to 5 mm&#xd;
+sics.drive(&apos;apx&apos;, -23)&#xd;
+# Drive beamstops up&#xd;
+selBs(5)&#xd;
+sics.set(&apos;beamcenterx&apos;, 94.6784)&#xd;
+sics.set(&apos;beamcenterz&apos;, 92.4764)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(46, 100)&#xd;
+# Drive attenuator to 150&#xd;
+driveAtt(150)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(46, 0)&#xd;
+driveBsz(243)</preScatteringScript>
+  <startingAttenuation>120</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\L1=L2=20m_lens_medium1_5mm.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

@@ -4,7 +4,7 @@
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
-sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 5)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 5.0)&#xd;
 sics.set(&apos;/instrument/velocity_selector/wavelength_spread&apos;, 0.1)&#xd;
 # Drive detector to short position&#xd;
 driveDet(510,300)&#xd;
@@ -19,17 +19,17 @@ sics.drive(&apos;apx&apos;, -72)&#xd;
 # Drive beamstops up&#xd;
 selBs(3)&#xd;
 # set beamcentres&#xd;
-sics.set(&apos;beamcenterx&apos;, 34.91)&#xd;
-sics.set(&apos;beamcenterz&apos;, 96.71)</initScript>
+sics.set(&apos;beamcenterx&apos;, 35.6)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.7)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(30, 100)&#xd;
+driveBsx(38, 100)&#xd;
 # Drive attenuator to 300&#xd;
 driveAtt(300)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(30, 0)&#xd;
-driveBsz(264.5)</preScatteringScript>
+driveBsx(38, 0)&#xd;
+driveBsz(260)</preScatteringScript>
   <startingAttenuation>120</startingAttenuation>
-  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=12m_L2=1.3m_offset.xml</file>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=12m_L2=1.3m_offset.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

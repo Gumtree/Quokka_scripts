@@ -1,6 +1,6 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=L2=4m_central_apx12p5</name>
-  <description>EPG 050115</description>
+  <description>EPG 070415</description>
   <initScript>import time&#xd;
 # Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
@@ -20,17 +20,17 @@ sics.drive(&apos;apx&apos;, -98)&#xd;
 # Drive beamstops up&#xd;
 selBs(2)&#xd;
 # set beamcentres&#xd;
-sics.set(&apos;beamcenterx&apos;, 94.0318)&#xd;
-sics.set(&apos;beamcenterz&apos;, 95.8926)</initScript>
+sics.set(&apos;beamcenterx&apos;, 94.2807)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.4274)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(36, 100)&#xd;
+driveBsx(42, 100)&#xd;
 # Drive attenuator to 300&#xd;
 driveAtt(300)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(36, 0)&#xd;
+driveBsx(42, 0)&#xd;
 driveBsz(258)</preScatteringScript>
-  <startingAttenuation>180</startingAttenuation>
+  <startingAttenuation>120</startingAttenuation>
   <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\L1=L2=4m_central_apx12p5.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

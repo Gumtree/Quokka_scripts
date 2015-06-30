@@ -3,6 +3,7 @@ from java.lang import System
 import time
 import math
 from gumpy.nexus.fitting import Fitting, GAUSSIAN_FITTING
+from gumpy.commons.logger import n_logger
 from gumpy.commons import sics
 from Internal import sicsext
 from java.lang import Double
@@ -41,7 +42,10 @@ def scan_device():
         fit_curve()
     
 devices = sicsext.getDrivables()
-device_name.options = devices
+footer = 'POS_OF_PEAK=' + str(peak_pos.value) + '; ' \
+        + 'FWHM=' + str(FWHM.value)
+n_logger.log_plot(Plot1, footer = footer)
+ice_name.options = devices
 def update_axis_name():
     axis_name.value = device_name.value
         

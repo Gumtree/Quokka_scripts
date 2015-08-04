@@ -40,10 +40,11 @@ def scan_device():
     FWHM.value = float('NaN')
     if auto_fit.value :
         fit_curve()
-    
-    footer = 'POS_OF_PEAK=' + str(peak_pos.value) + '; ' \
-            + 'FWHM=' + str(FWHM.value)
-    n_logger.log_plot(Plot1, footer = footer)
+        footer = 'POS_OF_PEAK=' + ('%.3f' % peak_pos.value) + '; ' \
+            + 'FWHM=' + ('%.3f' % FWHM.value)
+        n_logger.log_plot(Plot1, footer = footer)
+    else :
+        n_logger.log_plot(Plot1)
     
 devices = sicsext.getDrivables()
 device_name.options = devices
@@ -58,7 +59,7 @@ data_name = Par('string', 'total_counts', \
 normalise = Par('bool', True)
 axis_name = Par('string', '')
 axis_name.enabled = True
-auto_fit = Par('bool', False)
+auto_fit = Par('bool', True)
 fit_min = Par('float', 'NaN')
 fit_max = Par('float', 'NaN')
 peak_pos = Par('float', 'NaN')

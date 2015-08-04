@@ -1,6 +1,6 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
-  <name>L1=12m_L2=1.3m_offset</name>
-  <description>july14</description>
+  <name>L1=12m_L2=1.3m_apx5mm_offset</name>
+  <description>EPG 270715</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
@@ -14,8 +14,8 @@ driveEntRotAp(180)&#xd;
 driveGuide(guideConfig.g3)&#xd;
 # Drive entrance aperture to 180 (for guide g3)&#xd;
 driveEntRotAp(180)&#xd;
-#set sample ap to 10 mm&#xd;
-sics.drive(&apos;apx&apos;, -72)&#xd;
+#set sample ap to 5 mm&#xd;
+sics.drive(&apos;apx&apos;, -23)&#xd;
 # Drive beamstops up&#xd;
 selBs(3)&#xd;
 # set beamcentres&#xd;
@@ -31,5 +31,5 @@ driveAtt(330)&#xd;
 driveBsx(38, 0)&#xd;
 driveBsz(260)</preScatteringScript>
   <startingAttenuation>120</startingAttenuation>
-  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=12m_L2=1.3m_offset.xml</file>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\L1=12m_L2=1.3m_apx5mm_offset.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

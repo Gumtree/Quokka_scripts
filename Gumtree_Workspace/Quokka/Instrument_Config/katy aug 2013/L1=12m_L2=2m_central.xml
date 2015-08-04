@@ -1,6 +1,6 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=12m_L2=2m_central</name>
-  <description>jan15</description>
+  <description>July 15</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
@@ -18,7 +18,7 @@ sics.drive(&apos;apx&apos;, -72)&#xd;
 # Drive beamstops up&#xd;
 selBs(4)&#xd;
 # set beamcentres&#xd;
-sics.set(&apos;beamcenterx&apos;, 93.6)&#xd;
+sics.set(&apos;beamcenterx&apos;, 93.5)&#xd;
 sics.set(&apos;beamcenterz&apos;, 95.9)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
 driveBsx(50, 100)&#xd;

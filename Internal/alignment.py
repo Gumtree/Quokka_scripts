@@ -41,18 +41,19 @@ def scan_device():
     if auto_fit.value :
         fit_curve()
     
+    footer = 'POS_OF_PEAK=' + str(peak_pos.value) + '; ' \
+            + 'FWHM=' + str(FWHM.value)
+    n_logger.log_plot(Plot1, footer = footer)
+    
 devices = sicsext.getDrivables()
-footer = 'POS_OF_PEAK=' + str(peak_pos.value) + '; ' \
-        + 'FWHM=' + str(FWHM.value)
-n_logger.log_plot(Plot1, footer = footer)
-ice_name.options = devices
+device_name.options = devices
 def update_axis_name():
     axis_name.value = device_name.value
         
 G1.add(device_name, scan_start, scan_stop, number_of_points, scan_mode, scan_preset, act1)
 
 G2 = Group('Fitting')
-data_name = Par('string', 'bm2_counts', \
+data_name = Par('string', 'total_counts', \
                options = ['total_counts', 'bm1_counts', 'bm2_counts'])
 normalise = Par('bool', True)
 axis_name = Par('string', '')

@@ -1,6 +1,6 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=12m_L2=2m_offset_apx10_JM2015</name>
-  <description>JM_150620</description>
+  <description>JM_150723</description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
@@ -18,8 +18,8 @@ sics.drive(&apos;apx&apos;, -72)&#xd;
 # Drive beamstops up&#xd;
 selBs(2)&#xd;
 # set beamcentres&#xd;
-sics.set(&apos;beamcenterx&apos;, 34.6152)&#xd;
-sics.set(&apos;beamcenterz&apos;, 95.718)</initScript>
+sics.set(&apos;beamcenterx&apos;, 34.451)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.697)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
 driveBsx(39, 100)&#xd;
 # Drive attenuator to 300&#xd;
@@ -29,6 +29,6 @@ driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
 driveBsx(39, 0)&#xd;
 driveBsz(259)</preScatteringScript>
-  <startingAttenuation>90</startingAttenuation>
+  <startingAttenuation>180</startingAttenuation>
   <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\JM configs\L1=12m_L2=2m_offset_apx10_JM2015.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

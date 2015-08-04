@@ -17,8 +17,8 @@ sics.drive(&apos;apx&apos;, -72)&#xd;
 # Drive beamstops up&#xd;
 selBs(3)&#xd;
 # set beamcentres&#xd;
-sics.set(&apos;beamcenterx&apos;, 94.12)&#xd;
-sics.set(&apos;beamcenterz&apos;, 95.76)</initScript>
+sics.set(&apos;beamcenterx&apos;, 93.6866)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.5583)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
 driveBsx(40, 100)&#xd;
 # Drive attenuator to 330&#xd;
@@ -28,6 +28,6 @@ driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
 driveBsx(40, 0)&#xd;
 driveBsz(258)</preScatteringScript>
-  <startingAttenuation>180</startingAttenuation>
-  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=10m_L2=6m_centra.xml</file>
+  <startingAttenuation>210</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\Che_Yi\L1=10m_L2=6m_centra.xml</file>
 </au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

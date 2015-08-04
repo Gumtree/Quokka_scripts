@@ -1,6 +1,6 @@
 <au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
   <name>L1=L2=12m_central</name>
-  <description>kt jan15&#xd;
+  <description>July 15&#xd;
 </description>
   <initScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
@@ -17,16 +17,16 @@ driveEntRotAp(180)&#xd;
 sics.drive(&apos;apx&apos;, -98)&#xd;
 # Drive beamstops up&#xd;
 selBs(1)&#xd;
-sics.set(&apos;beamcenterx&apos;, 94.10)&#xd;
-sics.set(&apos;beamcenterz&apos;, 94.90)</initScript>
+sics.set(&apos;beamcenterx&apos;, 93.81)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.12)</initScript>
   <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(27, 100)&#xd;
-# Drive attenuator to 270&#xd;
-driveAtt(270)</preTransmissionScript>
+driveBsx(30, 100)&#xd;
+# Drive attenuator to 300&#xd;
+driveAtt(300)</preTransmissionScript>
   <preScatteringScript># Drive attenuator to safe value&#xd;
 driveAtt(330)&#xd;
 # Move the beamstop in&#xd;
-driveBsx(24,0)&#xd;
+driveBsx(30,0)&#xd;
 driveBsz(253.0)</preScatteringScript>
   <startingAttenuation>240</startingAttenuation>
   <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\katy aug 2013\L1=L2=12m_central.xml</file>

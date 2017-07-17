@@ -22,15 +22,17 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
     sicsController = getSicsController()
     scanController = sicsController.findComponentController(cpath)
     
-    execute('hset ' + cpath + '/scan_variable ' + str(scan_variable))
-    execute('hset ' + cpath + '/scan_start ' + str(scan_start))
-    execute('hset ' + cpath + '/scan_stop ' + str(scan_stop))
-    execute('hset ' + cpath + '/numpoints ' + str(numpoints))
-    execute('hset ' + cpath + '/mode ' + mode)
-    execute('hset ' + cpath + '/preset ' + str(preset))
-    execute('hset ' + cpath + '/datatype ' + datatype)
-    execute('hset ' + cpath + '/savetype ' + savetype)
-    execute('hset ' + cpath + '/force ' + str(force))
+    channel = 'scan'
+    
+    execute('hset ' + cpath + '/scan_variable ' + str(scan_variable), channel)
+    execute('hset ' + cpath + '/scan_start ' + str(scan_start), channel)
+    execute('hset ' + cpath + '/scan_stop ' + str(scan_stop), channel)
+    execute('hset ' + cpath + '/numpoints ' + str(numpoints), channel)
+    execute('hset ' + cpath + '/mode ' + mode, channel)
+    execute('hset ' + cpath + '/preset ' + str(preset), channel)
+    execute('hset ' + cpath + '/datatype ' + datatype, channel)
+    execute('hset ' + cpath + '/savetype ' + savetype, channel)
+    execute('hset ' + cpath + '/force ' + str(force), channel)
 
     # Monitor status
     while(scanController.getCommandStatus().equals(CommandStatus.BUSY)):
@@ -43,13 +45,12 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
     # Run scan
     print 'Scan started'
 #    scanController.asyncExecute()
-    execute('hset ' + cpath + ' start')
+    execute('hset ' + cpath + ' start', channel)
     
     # Monitor initial status change
     try:
         timeOut = False
         counter = 0;
-        print 'Waiting for scan to start'
         while (scanController.getCommandStatus().equals(CommandStatus.IDLE)):
             time.sleep(0.1)
             counter += 0.1
@@ -69,6 +70,7 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
                 try:
                     currentPoint = scanPointController.getValue().getFloatData()
                 except:
+                    traceback.print_exc(file=sys.stdout)
                     time.sleep(0.1)
                     continue
                 if ((scanpoint == -1 and  currentPoint == 0) or (scanpoint != -1 and currentPoint != scanpoint)):
@@ -82,7 +84,6 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
                             try:
 #                            if (float(scanpoint) / 3) == (int(scanpoint) /3) :
                                 comm()
-#                                print '\tupdate plot'
                             except:
                                 traceback.print_exc(file = sys.stdout)
                 time.sleep(0.1)
@@ -107,7 +108,7 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
         traceback.print_exc(file = sys.stdout)
         raise Exception, 'failed to run the scan'
 
-def rawscan(type, scan_variable, scan_start, scan_increment, NP, mode, preset, channel, comm):
+def rawscan(type, scan_variable, scan_start, scan_increment, NP, mode, preset, channel = 'general', comm = None):
     # Initialisation
     clearInterrupt()
 #    scan_variable = 'dummy_motor'
@@ -115,13 +116,13 @@ def rawscan(type, scan_variable, scan_start, scan_increment, NP, mode, preset, c
     sicsController = getSicsController()
     scanController = sicsController.findComponentController('/commands/scan/' + type)
     
-    execute('hset ' + cpath + '/scan_variable ' + str(scan_variable))
-    execute('hset ' + cpath + '/scan_start ' + str(scan_start))
-    execute('hset ' + cpath + '/scan_increment ' + str(scan_increment))
-    execute('hset ' + cpath + '/NP ' + str(NP))
-    execute('hset ' + cpath + '/mode ' + mode)
-    execute('hset ' + cpath + '/preset ' + str(preset))
-    execute('hset ' + cpath + '/channel ' + str(channel))
+    execute('hset ' + cpath + '/scan_variable ' + str(scan_variable), channel)
+    execute('hset ' + cpath + '/scan_start ' + str(scan_start), channel)
+    execute('hset ' + cpath + '/scan_increment ' + str(scan_increment), channel)
+    execute('hset ' + cpath + '/NP ' + str(NP), channel)
+    execute('hset ' + cpath + '/mode ' + mode, channel)
+    execute('hset ' + cpath + '/preset ' + str(preset), channel)
+    execute('hset ' + cpath + '/channel ' + str(channel), channel)
 
     # Monitor status
     while(scanController.getCommandStatus().equals(CommandStatus.BUSY)):
@@ -134,7 +135,7 @@ def rawscan(type, scan_variable, scan_start, scan_increment, NP, mode, preset, c
     # Run scan
     print 'Scan started'
 #    scanController.asyncExecute()
-    execute('hset ' + cpath + ' start')
+    execute('hset ' + cpath + ' start', channel)
     
     # Monitor initial status change
     try:
@@ -142,7 +143,6 @@ def rawscan(type, scan_variable, scan_start, scan_increment, NP, mode, preset, c
         counter = 0;
         while (scanController.getCommandStatus().equals(CommandStatus.IDLE)):
             time.sleep(0.1)
-            print 'IDLE'
             counter += 0.1
             if (counter >= 3):
                 timeOut = True
@@ -172,7 +172,6 @@ def rawscan(type, scan_variable, scan_start, scan_increment, NP, mode, preset, c
                             try:
 #                            if (float(scanpoint) / 3) == (int(scanpoint) /3) :
                                 comm()
-                                print '\tupdate plot'
                             except:
                                 traceback.print_exc(file = sys.stdout)
                 time.sleep(0.1)

@@ -1,0 +1,10 @@
+gumput cell depolarised
+
+set preset 8400000
+
+runscan dummy_motor 0 1 1 MONITOR_1 $preset datatype HISTOGRAM_XY
+
+::optics::guide g1
+
+runscan dummy_motor 0 1 1 MONITOR_1 $preset datatype HISTOGRAM_XY
+

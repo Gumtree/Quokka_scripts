@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="For High pressure" Group="JM configs/2017 New" Id="#0-1" Name="L1=12m_L2=2m_offset_apx5_JM2018" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 5&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 1200&#13;
+config.det_offset = 300&#13;
+config.srce = 180&#13;
+config.guide = 'g3'&#13;
+config.apx = -23&#13;
+config.bs = 3&#13;
+config.beamcenterx = 32.79&#13;
+config.beamcenterz = 95.83&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="270" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(36, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="210" Id="#0-3" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(36,0)&#13;
+
+driveBsz(260)</SetupScript>
+  </Scattering>
+</Configuration>

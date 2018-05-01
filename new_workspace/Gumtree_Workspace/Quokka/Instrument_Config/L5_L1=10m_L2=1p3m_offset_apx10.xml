@@ -1,0 +1,36 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L5_L1=10m_L2=1p3m_offset_apx10</name>
+  <description>kw, Dec &apos;13, flat nose cone, NVS tilt -8.5, &#xd;
+Lambda=5</description>
+  <initScript>import time&#xd;
+# Drive attenuator to safe value&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(510,450)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to g4&#xd;
+driveGuide(guideConfig.g4)&#xd;
+# Drive entrance aperture to 180 (for guide g4)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 10 mm&#xd;
+sics.drive(&apos;apx&apos;, -72)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 37.9225)&#xd;
+sics.set(&apos;beamcenterz&apos;, 96.1953)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(33, 100)&#xd;
+# Drive attenuator to 330&#xd;
+driveAtt(330)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(33, 0)&#xd;
+driveBsz(258)</preScatteringScript>
+  <startingAttenuation>300</startingAttenuation>
+  <file>H:\git\Gumtree\Quokka_scripts\GumTree_Workspace\Quokka\Instrument_Config\L5_L1=10m_L2=1p3m_offset_apx10.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

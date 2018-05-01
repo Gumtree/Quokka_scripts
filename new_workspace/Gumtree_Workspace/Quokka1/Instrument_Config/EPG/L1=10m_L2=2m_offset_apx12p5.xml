@@ -1,0 +1,35 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=10m_L2=2m_offset_apx12p5</name>
+  <description>EPG 240516</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 5.0)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength_spread&apos;, 0.1)&#xd;
+# Drive detector to short position&#xd;
+driveDet(1200,300)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to g3&#xd;
+driveGuide(guideConfig.g3)&#xd;
+# Drive entrance aperture to 180 (for guide g3)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 12.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -98)&#xd;
+# Drive beamstops up&#xd;
+selBs(2)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 93.8193)&#xd;
+sics.set(&apos;beamcenterz&apos;, 96.0546)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(40, 100)&#xd;
+# Drive attenuator to 300&#xd;
+driveAtt(300)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(40, 0)&#xd;
+driveBsz(260)</preScatteringScript>
+  <startingAttenuation>120</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\L1=10m_L2=2m_offset_apx12p5.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

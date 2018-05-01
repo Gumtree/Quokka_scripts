@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="EPG 081017" Group="EPG" Id="#0-1" Name="L1=L2=4m_central_NOAP" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>import time&#13;
+# Drive attenuator to safe value&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+sics.drive('nvs_lambda', 5.0)&#13;
+sics.set('/instrument/velocity_selector/wavelength', 5.0)&#13;
+# Drive detector to short position&#13;
+sics.set('/instrument/detector/detector_y/speed', 53)&#13;
+driveDet(3200,0)&#13;
+# Drive entrance aperture to 50 mm square&#13;
+driveEntRotAp(180)&#13;
+# Drive guide to g7&#13;
+driveGuide('g7')&#13;
+# Drive entrance aperture to 180 (for guide g7)&#13;
+driveEntRotAp(180)&#13;
+# Drive beamstops up&#13;
+selBs(2)&#13;
+# set beamcentres&#13;
+sics.set('beamcenterx', 34.2079)&#13;
+sics.set('beamcenterz', 95.2011)</SetupScript>
+  <Transmission Id="#0-2">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(36, 100)&#13;
+# Drive attenuator to 300&#13;
+driveAtt(300) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="120" Id="#0-3">
+    <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+# Move the beamstop in&#13;
+driveBsx(38, 0)&#13;
+driveBsz(261)</SetupScript>
+  </Scattering>
+</Configuration>

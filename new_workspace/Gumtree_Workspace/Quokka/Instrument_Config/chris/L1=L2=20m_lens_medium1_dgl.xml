@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="18/07/2016" Group="chris" Id="#0-1" Name="L1=L2=20m_lens_medium1_dgl" xmlns="http://www.gumtree.org/msw">
+  <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+sics.drive('nvs_lambda', 8.1)&#13;
+sics.set('/instrument/velocity_selector/wavelength', 8.1)&#13;
+# Drive detector to short position&#13;
+sics.set('/instrument/detector/detector_y/speed', 53)&#13;
+driveDet(19250,0)&#13;
+# Drive guide to lens config&#13;
+driveGuide('lens')&#13;
+# Drive entrance aperture to 30 (for lens)&#13;
+driveEntRotAp(30)&#13;
+#set sample ap to 12.5 mm&#13;
+sics.drive('apx', -98)&#13;
+# Drive beamstops up&#13;
+selBs(5)&#13;
+sics.set('beamcenterx', 92.8)&#13;
+sics.set('beamcenterz', 92.5)&#13;
+</SetupScript>
+  <Transmission Id="#0-2">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(42.5, 55)&#13;
+# Drive attenuator to 150&#13;
+driveAtt(150) # !!! Warning: it is not recommended to manually drive the attenuator</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="150" Id="#0-3">
+    <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+# Move the beamstop in&#13;
+driveBsx(44, 0)&#13;
+driveBsz(243)&#13;
+</SetupScript>
+  </Scattering>
+</Configuration>

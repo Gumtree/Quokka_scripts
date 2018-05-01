@@ -1,0 +1,31 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>Highq_highresolution_20mm_10mm</name>
+  <description>epg, 19/11/13</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+#sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+# Drive detector to short position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(510,300)&#xd;
+# Drive guide to ga config&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 90 (for ga)&#xd;
+driveEntRotAp(60)&#xd;
+#set sample ap to 10 mm&#xd;
+sics.drive(&apos;apx&apos;, -72)&#xd;
+# Drive beamstops up&#xd;
+selBs(4)&#xd;
+sics.set(&apos;beamcenterx&apos;, 37.947)&#xd;
+sics.set(&apos;beamcenterz&apos;, 96.316)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(42, 100)&#xd;
+# Drive attenuator to 240&#xd;
+driveAtt(270)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(42, 0)&#xd;
+driveBsz(264.0)</preScatteringScript>
+  <startingAttenuation>180</startingAttenuation>
+  <file>H:\git\Gumtree\Quokka_scripts\GumTree_Workspace\Quokka\Instrument_Config\Highq_highresolution_20mm_10mm.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

@@ -1,0 +1,28 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>UNPOL_SF_OFF_L1=6m_L2=1p7m</name>
+  <description></description>
+  <initScript>from time import sleep&#xd;
+&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(500,0)&#xd;
+# Drive guide to g6 config&#xd;
+driveGuide(guideConfig.g6)&#xd;
+# Drive entrance aperture to 180 (for g6)&#xd;
+driveEntRotAp(180)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)&#xd;
+# Drive flipper&#xd;
+driveFlipper(0)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(29, 200)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(210)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(29, 0)&#xd;
+driveBsz(251.5)</preScatteringScript>
+  <startingAtteunation>120</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\UNPOL_SF_OFF_L1=6m_L2=1p7m.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

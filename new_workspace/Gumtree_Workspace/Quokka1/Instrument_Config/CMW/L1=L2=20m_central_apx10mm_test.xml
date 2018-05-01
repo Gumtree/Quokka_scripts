@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="20160816_CMW apx_10, srec_50" Group="CMW" Id="#0-1" Name="L1=L2=20m_central_apx10mm_test" xmlns="http://www.gumtree.org/msw">
+  <SetupScript># Drive attenuator to safe value&#13;
+#config.att = 330&#13;
+config.wavelength = 5&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 6200&#13;
+config.det_offset = 0&#13;
+config.srce = 150&#13;
+config.guide = 'ga'&#13;
+config.apx = -72&#13;
+config.bs = 1&#13;
+config.beamcenterx = 94.6478&#13;
+config.beamcenterz = 94.5575 &#13;
+config.drive()</SetupScript>
+  <Transmission Id="#0-2">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(39, 100)&#13;
+# Drive attenuator to 240&#13;
+driveAtt(240)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3">
+    <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330)&#13;
+# Move the beamstop in&#13;
+driveBsx(39, 0)&#13;
+driveBsz(252.0)</SetupScript>
+  </Scattering>
+</Configuration>

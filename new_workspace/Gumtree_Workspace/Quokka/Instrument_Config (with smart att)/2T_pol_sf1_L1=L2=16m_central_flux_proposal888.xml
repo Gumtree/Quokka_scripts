@@ -1,0 +1,38 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>2T_pol_sf1_L1=L2=16m_central_flux_proposal888</name>
+  <description></description>
+  <initScript>import time&#xd;
+# Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5.76)&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(15250,0)&#xd;
+# Drive guide to p1 config&#xd;
+driveGuide(guideConfig.p1)&#xd;
+# Drive entrance aperture to 180 (for p1)&#xd;
+driveFlipper(1)&#xd;
+#time.sleep(210)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 7.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -47)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)&#xd;
+sics.set(&apos;beamcenterx&apos;, 95.8285)&#xd;
+sics.set(&apos;beamcenterz&apos;, 92.8861)&#xd;
+sics.execute(&apos;OxfordSetRate 0.8&apos;)&#xd;
+sics.execute(&apos;OxfordSetfield 2.0&apos;)&#xd;
+sics.execute(&apos;broadcast ready&apos;)&#xd;
+time.sleep(210)&#xd;
+sics.execute(&apos;broadcast ready&apos;)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(22, 100)&#xd;
+# Drive attenuator to 210&#xd;
+driveAtt(210)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(22, 0)&#xd;
+driveBsz(242.0)</preScatteringScript>
+  <startingAtteunation>0</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\GumTree_Workspace\Quokka\Instrument_Config\2T_pol_sf1_L1=L2=16m_central_flux_proposal888.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

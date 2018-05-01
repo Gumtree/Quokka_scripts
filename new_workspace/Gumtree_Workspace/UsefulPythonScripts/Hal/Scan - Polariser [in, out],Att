@@ -1,0 +1,21 @@
+	proc scanAtt { } {
+		set AttList {90 150 270}
+		set PresetList {3000000 3000000 7500000}
+		for {set k 0} {$k < [llength $AttList]} { incr k} {
+			gumput scanAtt: Set Att=[lindex $AttList $k] Preset=[lindex $PresetList $k]
+			drive att [lindex $AttList $k]
+			runscan dummy_motor 0 1 1 MONITOR_1 [lindex $PresetList $k] datatype HISTOGRAM_XY
+		}
+	}
+	
+	proc scanAttPolar { } {
+		gumput Polariser in
+		::optics::guide p1
+		scanAtt
+		gumput Polariser out
+		::optics::guide g1
+		scanAtt
+	}
+	
+	scanAttPolar
+gumput Done

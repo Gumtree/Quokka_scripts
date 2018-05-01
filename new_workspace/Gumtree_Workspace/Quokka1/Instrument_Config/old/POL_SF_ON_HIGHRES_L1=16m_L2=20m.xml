@@ -1,0 +1,29 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>POL_SF_ON_HIGHRES_L1=16m_L2=20m</name>
+  <description></description>
+  <initScript>from time import sleep&#xd;
+&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(19250,0)&#xd;
+# Drive guide to p1 config&#xd;
+driveGuide(guideConfig.p1)&#xd;
+# Drive entrance aperture to 90 (for p1)&#xd;
+driveEntRotAp(90)&#xd;
+# Drive beamstops up&#xd;
+selBs(3)&#xd;
+# Drive flipper&#xd;
+driveFlipper(1)&#xd;
+time.sleep(60)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(25, 200)&#xd;
+# Drive attenuator to 270&#xd;
+driveAtt(180)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(25.0, 0)&#xd;
+driveBsz(243.5)</preScatteringScript>
+  <startingAtteunation>0</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\POL_SF_ON_HIGHRES_L1=16m_L2=20m.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="New fast scripts" Group="dhv test" Id="#0-1" Name="det710_300" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>driveDet(710, 300)</SetupScript>
+  <Transmission Id="#0-2" MaxTime="1" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2"/>
+  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="210" Id="#0-3" MaxTime="1" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6"/>
+</Configuration>

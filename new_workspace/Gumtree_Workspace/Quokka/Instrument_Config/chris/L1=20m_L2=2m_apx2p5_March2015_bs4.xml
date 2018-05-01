@@ -1,0 +1,33 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=20m_L2=2m_apx2p5_March2015_bs4</name>
+  <description>conn_small_bs 25032015</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+# Drive detector to short position&#xd;
+driveDet(1200,0)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to ga&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 180 (for guide g4)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 0 mm&#xd;
+sics.drive(&apos;apx&apos;, 0)&#xd;
+# Drive beamstops up&#xd;
+selBs(4)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 94.44)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.81)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(41, 100)&#xd;
+# Drive attenuator to 240&#xd;
+driveAtt(240)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(48, 0)&#xd;
+driveBsz(260)</preScatteringScript>
+  <startingAttenuation>240</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=20m_L2=2m_apx2p5_March2015_bs4.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

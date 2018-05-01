@@ -1,0 +1,20 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>ga_1p3m_blocked_TK_20A_test</name>
+  <description>epg 060614</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(510,0)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(240)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(300, 0)&#xd;
+# Drive attenuator to 330&#xd;
+driveAtt(90)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(300, 0)</preScatteringScript>
+  <startingAttenuation>180</startingAttenuation>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\ga_1p3m_blocked_TK_20A_test.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

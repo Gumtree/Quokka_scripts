@@ -1,0 +1,28 @@
+proc scanFreq { } {
+	set freqList {388 389 390 391 392 393 394 395 396 397 398}
+	for {set j 0} {$j < [llength $freqList]} { incr j} {
+		gumput scanFreq: Flipper Freq = [lindex $freqList $j]
+		hset /instrument/flipper/set_frequency [lindex $freqList $j]
+		wait 5
+		runscan dummy_motor 0 1 1 MONITOR_1 1200000 datatype HISTOGRAM_XY
+			
+	}
+}
+
+proc scanCurrent { } {
+	set currentList {7.1}
+	for {set k 0} {$k < [llength $currentList]} { incr k} {
+		gumput scanCurrent: Flipper Current = [lindex $currentList $k]
+		hset /instrument/flipper/set_current [lindex $currentList $k]
+		#wait 60
+		scanFreq
+	}
+}
+
+
+#hset /instrument/flipper/set_flip_on 1
+#wait 60
+
+scanFreq
+
+gumput experiment finished

@@ -1,0 +1,26 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>CRYOMAGNET_20m_srce150</name>
+  <description>temp cryomagnet script</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(19250,0)&#xd;
+# Drive guide to ga config&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 150 (for ga)&#xd;
+driveEntRotAp(150)&#xd;
+sics.set(&apos;beamcenterx&apos;, 93.6977)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.4997)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(15, 100)&#xd;
+# Drive attenuator to 240&#xd;
+driveAtt(240)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(15, 0)&#xd;
+driveBsz(255.0)</preScatteringScript>
+  <startingAttenuation>0</startingAttenuation>
+  <file>D:\Gumtree\github\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\CRYOMAGNET_20m_srce150.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

@@ -1,0 +1,34 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>RHEO_RADIAL_g5_1p3m_offset</name>
+  <description>epg 141114</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+sics.set(&apos;/instrument/velocity_selector/wavelength&apos;, 5.0)&#xd;
+# Drive detector to short position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(510,300)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to g5 config&#xd;
+driveGuide(guideConfig.g5)&#xd;
+# Drive entrance aperture to 180 (for g5)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap for rheometer&#xd;
+sics.drive(&apos;apx&apos;, -164.82)&#xd;
+# Drive beamstops up&#xd;
+selBs(3)&#xd;
+sics.set(&apos;beamcenterx&apos;, 35.08)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.91)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(35, 100)&#xd;
+# Drive attenuator to 330&#xd;
+driveAtt(330)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(35, 0)&#xd;
+driveBsz(259)</preScatteringScript>
+  <startingAttenuation>120</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\EPG\RHEO_RADIAL_g5_1p3m_offset.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

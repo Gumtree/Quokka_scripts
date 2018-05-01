@@ -1,0 +1,28 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=4m_L2=1p3m_offset_apx7p5</name>
+  <description>20160816_CMW_apx_7p5_srec_50</description>
+  <initScript># Drive attenuator to safe value&#xd;
+config.att = 330&#xd;
+config.wavelength = 5&#xd;
+config.wavelength_spread = 0.1&#xd;
+config.det = 510&#xd;
+config.det_offset = 300&#xd;
+config.srce = 150&#xd;
+config.guide = &apos;g7&apos;&#xd;
+config.apx = -47&#xd;
+config.bs = 2&#xd;
+config.beamcenterx = 34.7079&#xd;
+config.beamcenterz = 95.7827 &#xd;
+config.drive()</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(39, 100)&#xd;
+# Drive attenuator to 300&#xd;
+driveAtt(330)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(39, 0)&#xd;
+driveBsz(258)</preScatteringScript>
+  <startingAttenuation>120</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\CMW\L1=4m_L2=1p3m_offset_apx7p5.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

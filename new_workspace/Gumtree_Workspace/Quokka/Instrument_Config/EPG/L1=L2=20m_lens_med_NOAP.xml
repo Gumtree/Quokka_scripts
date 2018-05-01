@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Group="EPG" Id="#0-1" Name="L1=L2=20m_lens_med_NOAP" xmlns="http://www.gumtree.org/msw">
+  <SetupScript># config.wavelength = 8.1&#13;
+# config.wavelength_spread = 0.1&#13;
+# config.det = 19250&#13;
+# config.det_offset = 0&#13;
+# config.srce = 30&#13;
+# config.guide = 'lens'&#13;
+# config.apx = -23&#13;
+# config.bs = 4&#13;
+# config.beamcenterx = 92.98&#13;
+# config.beamcenterz = 92.13&#13;
+&#13;
+# config.drive()&#13;
+# Drive attenuator to safe value&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+sics.drive('nvs_lambda', 8.1)&#13;
+sics.set('/instrument/velocity_selector/wavelength', 8.1)&#13;
+sics.set('/instrument/velocity_selector/wavelength_spread', 0.1)&#13;
+driveDet(19250, 0)&#13;
+driveEntRotAp(30)&#13;
+driveGuide('lens')&#13;
+selBs(4)&#13;
+sics.set('beamcenterx', 92.8225)&#13;
+sics.set('beamcenterz', 92.3852)</SetupScript>
+  <Transmission AttenuationAngle="120" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(53, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="3600" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(53,0)&#13;
+driveBsz(242)</SetupScript>
+  </Scattering>
+</Configuration>

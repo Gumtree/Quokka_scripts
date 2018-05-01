@@ -1,0 +1,28 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>AgBE_L2=4m_central</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to short position&#xd;
+driveDet(3200,0)&#xd;
+# Drive guide to g5&#xd;
+driveGuide(guideConfig.g5)&#xd;
+# Drive entrance aperture to 180 (for guide g7)&#xd;
+driveEntRotAp(180)&#xd;
+#beamstop command removed in this config&#xd;
+#selBs(1)&#xd;
+# set beamcentres&#xd;
+#beamcenterx 96.9&#xd;
+#beamcenterz 96.2</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(27.5, 100)&#xd;
+# Drive attenuator to 330&#xd;
+driveAtt(330)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(27.5, 0)&#xd;
+driveBsz(260)</preScatteringScript>
+  <startingAtteunation>60</startingAtteunation>
+  <file>H:\git\Gumtree\Quokka_scripts\GumTree_Workspace\Quokka\Instrument_Config\AgBE_L2=4m_central.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

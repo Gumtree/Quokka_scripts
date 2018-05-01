@@ -1,0 +1,11 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>Hallo123</name>
+  <description></description>
+  <initScript>Line1&#xd;
+Line2&#xd;
+Line3</initScript>
+  <preTransmissionScript></preTransmissionScript>
+  <preScatteringScript></preScatteringScript>
+  <startingAtteunation>60</startingAtteunation>
+  <file>H:\git\Gumtree\Quokka_scripts\GumTree_Workspace\Quokka\Instrument_Config\Hallo123.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

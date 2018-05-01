@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="wavelength 6A" Group="katy aug 2013" Id="#0-1" Name="L1=L2=8m_central_6A" xmlns="http://www.gumtree.org/msw">
+  <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330)&#13;
+sics.drive('nvs_lambda', 6.0)&#13;
+sics.set('/instrument/velocity_selector/wavelength', 6)&#13;
+sics.set('/instrument/velocity_selector/wavelength_spread', 0.1)&#13;
+# Drive detector to short position&#13;
+#sics.set('/instrument/detector/detector_y/speed', 53)&#13;
+driveDet(7200,0)&#13;
+# Drive guide to g5 config&#13;
+driveGuide("g5")&#13;
+# Drive entrance aperture to 180 (for g5)&#13;
+driveEntRotAp(180)&#13;
+#set sample ap to 12.5 mm&#13;
+sics.drive('apx', -98)&#13;
+# Drive beamstops up&#13;
+selBs(2)&#13;
+sics.set('beamcenterx', 93.0)&#13;
+sics.set('beamcenterz', 95.4)</SetupScript>
+  <Transmission Id="#0-2">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(42.5, 100)&#13;
+# Drive attenuator to 300&#13;
+driveAtt(300)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="210" Id="#0-3">
+    <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330)&#13;
+# Move the beamstop in&#13;
+driveBsx(50.5,0)&#13;
+driveBsz(262)</SetupScript>
+  </Scattering>
+</Configuration>

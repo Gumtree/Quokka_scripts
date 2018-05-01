@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Id="#0-1" Name="123JM" xmlns="http://www.gumtree.org/msw">
+  <Transmission Id="#0-2"/>
+  <Scattering Id="#0-3"/>
+</Configuration>

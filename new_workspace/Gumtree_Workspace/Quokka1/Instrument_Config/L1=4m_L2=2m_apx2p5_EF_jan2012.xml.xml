@@ -1,0 +1,9 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>L1=4m_L2=2m_apx2p5_EF_jan2012.xml</name>
+  <description></description>
+  <initScript></initScript>
+  <preTransmissionScript></preTransmissionScript>
+  <preScatteringScript></preScatteringScript>
+  <startingAtteunation>330</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\GumTree_Workspace\Quokka\Instrument_Config\L1=4m_L2=2m_apx2p5_EF_jan2012.xml.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

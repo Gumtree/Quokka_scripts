@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="New fast scripts" Group="JM configs/2017 New (seq)" Id="#0-1" Name="L1=12m_L2=1p3m_offset_apx10_JM2017" xmlns="http://www.gumtree.org/msw">
+  <SetupScript># config.wavelength = 5&#13;
+# config.wavelength_spread = 0.1&#13;
+# config.det = 510&#13;
+# config.det_offset = 300&#13;
+# config.srce = 180&#13;
+# config.guide = 'g3'&#13;
+# config.apx = -72&#13;
+# config.bs = 3&#13;
+# config.beamcenterx = 33.35&#13;
+# config.beamcenterz = 95.97&#13;
+&#13;
+# config.drive()&#13;
+# Drive attenuator to safe value&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+# sics.drive('nvs_lambda', 5.0)&#13;
+sics.drive('nvs_speed', 25476)&#13;
+sics.set('/instrument/velocity_selector/wavelength', 5.0)&#13;
+sics.set('/instrument/velocity_selector/wavelength_spread', 0.1)&#13;
+driveDet(510, 300)&#13;
+driveEntRotAp(180)&#13;
+driveGuide('g3')&#13;
+sics.drive('apx', -72)&#13;
+selBs(3)&#13;
+sics.set('beamcenterx', 33.35)&#13;
+sics.set('beamcenterz', 95.97)</SetupScript>
+  <Transmission Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(36, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="210" Id="#0-3" MaxTime="900" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(36,0)&#13;
+
+driveBsz(260)</SetupScript>
+  </Scattering>
+</Configuration>

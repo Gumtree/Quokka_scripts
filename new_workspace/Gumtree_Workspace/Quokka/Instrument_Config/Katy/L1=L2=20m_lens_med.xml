@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="New fast scripts" Group="Katy" Id="#0-1" Name="L1=L2=20m_lens_med" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 8.1&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 19250&#13;
+config.det_offset = 0&#13;
+config.srce = 30&#13;
+config.guide = 'lens'&#13;
+config.apx = -98&#13;
+config.bs = 5&#13;
+config.beamcenterx = 92.98&#13;
+config.beamcenterz = 92.16&#13;
+&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="150" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(51, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="120" Id="#0-3" MinTime="5" TargetDetectorCounts="300000" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(47,0)&#13;
+driveBsz(242)</SetupScript>
+  </Scattering>
+</Configuration>

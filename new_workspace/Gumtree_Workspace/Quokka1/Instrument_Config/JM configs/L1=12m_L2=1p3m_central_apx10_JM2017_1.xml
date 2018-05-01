@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="JM_170307" Group="JM configs" Id="#0-1" Name="L1=12m_L2=1p3m_central_apx10_JM2017_1" xmlns="http://www.gumtree.org/msw">
+  <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330)&#13;
+sics.drive('nvs_lambda', 5.0)&#13;
+sics.set('/instrument/velocity_selector/wavelength', 5)&#13;
+sics.set('/instrument/velocity_selector/wavelength_spread', 0.1)&#13;
+# Drive detector to short position&#13;
+driveDet(510,0)&#13;
+# Drive entrance aperture to 50 mm square&#13;
+driveEntRotAp(180)&#13;
+# Drive guide to g3&#13;
+driveGuide(guideConfig.g3)&#13;
+# Drive entrance aperture to 180 (for guide g3)&#13;
+driveEntRotAp(180)&#13;
+#set sample ap to 10 mm&#13;
+sics.drive('apx', -72)&#13;
+# Drive beamstops up&#13;
+selBs(3)&#13;
+# set beamcentres&#13;
+sics.set('beamcenterx', 93.9142)&#13;
+sics.set('beamcenterz', 96.6757)</SetupScript>
+  <Transmission Id="#0-2">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(45, 100)&#13;
+# Drive attenuator to 300&#13;
+driveAtt(330)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="120" Id="#0-3">
+    <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330)&#13;
+# Move the beamstop in&#13;
+driveBsx(45, 0)&#13;
+driveBsz(262)</SetupScript>
+  </Scattering>
+</Configuration>

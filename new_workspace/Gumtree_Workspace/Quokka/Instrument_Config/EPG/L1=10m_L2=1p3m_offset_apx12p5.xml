@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="epg 050917" Group="EPG" Id="#0-1" Name="L1=10m_L2=1p3m_offset_apx12p5" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 5&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 510&#13;
+config.det_offset = 300&#13;
+config.srce = 180&#13;
+config.guide = 'g4'&#13;
+config.apx = -98&#13;
+config.bs = 3&#13;
+config.beamcenterx = 33.35&#13;
+config.beamcenterz = 95.97&#13;
+&#13;
+config.drive()</SetupScript>
+  <Transmission Id="#0-2">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(41, 100)&#13;
+# Drive attenuator to 300&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="150" Id="#0-3">
+    <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+# Move the beamstop in&#13;
+driveBsx(41, 0)&#13;
+driveBsz(259)&#13;
+</SetupScript>
+  </Scattering>
+</Configuration>

@@ -1,0 +1,25 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>L1=L2=20m_8Alens</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Drive detector to long position&#xd;
+driveDet(19280,0)&#xd;
+# Drive guide to lens config&#xd;
+driveGuide(guideConfig.lens)&#xd;
+# Drive entrance aperture to 0 (for lens)&#xd;
+driveEntRotAp(0)&#xd;
+# Drive beamstops up&#xd;
+selBs(6)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(41.0, 100)&#xd;
+# Drive attenuator to 120&#xd;
+driveAtt(120)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(41.0, 0)&#xd;
+driveBsz(240.5)</preScatteringScript>
+  <startingAtteunation>240</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\.metadata\.plugins\au.gov.ansto.bragg.quokka2.ui\templates\L1=L2=20m_8Alens.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

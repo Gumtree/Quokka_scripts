@@ -1,0 +1,49 @@
+set freqlist {300 310 320 330 340 350 360 370 380 390}
+set currlist {4.5 6.1 7.1 7.1 7.1 7.1 7.1 6.6 5.1 4.1}
+
+set preset 8400000
+
+hset /instrument/flipper/set_current 0
+wait 60
+
+
+for {set i 0} {$i < [llength $freqlist]} {incr i} {
+gumput freq=[lindex $freqlist $i]  current=[lindex $currlist $i]
+
+hset /instrument/flipper/set_frequency [lindex $freqlist $i]
+wait 60
+hset /instrument/flipper/set_current [lindex $currlist $i]
+wait 60
+
+
+he3 analyser/spin 1
+wait 2
+he3 analyser/spin 0
+wait 2
+runscan dummy_motor 0 1 1 MONITOR_1 $preset datatype HISTOGRAM_XY
+
+he3 analyser/spin -1
+wait 2
+he3 analyser/spin 0
+wait 2
+runscan dummy_motor 0 1 1 MONITOR_1 $preset datatype HISTOGRAM_XY
+
+
+hset /instrument/flipper/set_current 0
+wait 60
+
+he3 analyser/spin 1
+wait 2
+he3 analyser/spin 0
+wait 2
+runscan dummy_motor 0 1 1 MONITOR_1 $preset datatype HISTOGRAM_XY
+
+he3 analyser/spin -1
+wait 2
+he3 analyser/spin 0
+wait 2
+runscan dummy_motor 0 1 1 MONITOR_1 $preset datatype HISTOGRAM_XY
+}
+
+
+gumput experiment finished

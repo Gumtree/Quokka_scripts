@@ -1,0 +1,31 @@
+<au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>
+  <name>L1=L2=20m_offset_flux_apx12p5_oct2011</name>
+  <description></description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+#sics.drive(&apos;nvs_lambda&apos;, 5.0)&#xd;
+# Drive detector to short position&#xd;
+sics.set(&apos;/instrument/detector/detector_y/speed&apos;, 53)&#xd;
+driveDet(19250,300)&#xd;
+# Drive guide to ga config&#xd;
+driveGuide(guideConfig.ga)&#xd;
+# Drive entrance aperture to 150 (for ga)&#xd;
+driveEntRotAp(150)&#xd;
+#set sample ap to 12.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -98)&#xd;
+# Drive beamstops up&#xd;
+selBs(1)&#xd;
+sics.set(&apos;beamcenterx&apos;, 98.28)&#xd;
+sics.set(&apos;beamcenterz&apos;, 94.66)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(34, 100)&#xd;
+# Drive attenuator to 210&#xd;
+driveAtt(210)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(34, 0)&#xd;
+driveBsz(255.0)</preScatteringScript>
+  <startingAtteunation>210</startingAtteunation>
+  <file>H:\Application Data\GumTree\releases\quokka\workspace\GumTree_Workspace\Quokka\Instrument_Config\L1=L2=20m_offset_flux_apx12p5_oct2011.xml</file>
+</au.gov.ansto.bragg.quokka2.experiment.model.InstrumentConfigTemplate>

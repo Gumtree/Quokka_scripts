@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Group="Katy/Fast" Id="#0-1" Name="L1=12m_L2=2m_offset" xmlns="http://www.gumtree.org/msw">
+  <SetupScript># Drive attenuator to safe value&#13;
+config.wavelength = 5&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 1200&#13;
+config.det_offset = 0&#13;
+config.srce = 180&#13;
+config.guide = 'g3'&#13;
+config.apx = -72&#13;
+config.bs = 4&#13;
+config.beamcenterx = 33.77&#13;
+config.beamcenterz = 95.94 &#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="240" Id="#0-2">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(39, 100)&#13;
+# Drive attenuator to 300&#13;
+driveAtt(300)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3">
+    <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330)&#13;
+# Move the beamstop in&#13;
+driveBsx(51.5, 0)&#13;
+driveBsz(261)</SetupScript>
+  </Scattering>
+</Configuration>

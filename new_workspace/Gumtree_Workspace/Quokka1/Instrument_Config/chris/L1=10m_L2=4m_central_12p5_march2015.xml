@@ -1,0 +1,33 @@
+<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+  <name>L1=10m_L2=4m_central_12p5_march2015</name>
+  <description>dumee kinetic</description>
+  <initScript># Drive attenuator to safe value&#xd;
+driveAtt(330)&#xd;
+#sics.drive(&apos;nvs_lambda&apos;, 4.86)&#xd;
+# Drive detector to short position&#xd;
+driveDet(3800,0)&#xd;
+# Drive entrance aperture to 50 mm square&#xd;
+driveEntRotAp(180)&#xd;
+# Drive guide to g4&#xd;
+driveGuide(guideConfig.g4)&#xd;
+# Drive entrance aperture to 180 (for guide g4)&#xd;
+driveEntRotAp(180)&#xd;
+#set sample ap to 12.5 mm&#xd;
+sics.drive(&apos;apx&apos;, -98)&#xd;
+# Drive beamstops up&#xd;
+selBs(3)&#xd;
+# set beamcentres&#xd;
+sics.set(&apos;beamcenterx&apos;, 94.60)&#xd;
+sics.set(&apos;beamcenterz&apos;, 95.63)</initScript>
+  <preTransmissionScript># Move the beamstop out&#xd;
+driveBsx(36, 100)&#xd;
+# Drive attenuator to 330&#xd;
+driveAtt(330)</preTransmissionScript>
+  <preScatteringScript># Drive attenuator to safe value&#xd;
+driveAtt(0)&#xd;
+# Move the beamstop in&#xd;
+driveBsx(38, 0)&#xd;
+driveBsz(260)</preScatteringScript>
+  <startingAttenuation>120</startingAttenuation>
+  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\chris\L1=10m_L2=4m_central_12p5_march2015.xml</file>
+</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>

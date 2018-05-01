@@ -1,0 +1,12 @@
+gumput cell empty
+
+drive att 240 
+
+set preset 4200000
+
+runscan dummy_motor 0 1 1 MONITOR_1 $preset datatype HISTOGRAM_XY
+
+::optics::guide p1
+
+runscan dummy_motor 0 1 1 MONITOR_1 $preset datatype HISTOGRAM_XY
+

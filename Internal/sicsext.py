@@ -145,9 +145,14 @@ def rawscan(type, scan_variable, scan_start, scan_increment, NP, mode, preset, c
             time.sleep(0.1)
             counter += 0.1
             if (counter >= 3):
-                timeOut = True
-                print 'Time out on running scan'
-                break
+                try:
+                    st = scanController.getStatusController().getValue(True)
+                except:
+                    pass
+                if counter > 30:
+                    timeOut = True
+                    print 'Time out on running scan'
+                    break
                 
         # Enter into normal sequence
         if (timeOut == False):

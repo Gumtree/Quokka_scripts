@@ -35,6 +35,8 @@ def repair():
             hds += ds
             hds.total_counts += ds.total_counts
             hds.detector_time += ds.detector_time
+            hds.time += ds.time
+            hds.data_counts += ds.data_counts
             hds.bm1_counts += ds.bm1_counts
             hds.bm1_time += ds.bm1_time
             if ds.bm1_time > 0:

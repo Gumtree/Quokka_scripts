@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="P8508" Group="CMW" Id="#0-1" Name="20200321_L1=L2=10m_center_apx10" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 6&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 9250&#13;
+config.det_offset = 0&#13;
+config.srce = 180&#13;
+config.guide = 'g4'&#13;
+config.apx = -72&#13;
+config.bs = 2&#13;
+config.beamcenterx = 90.6555&#13;
+config.beamcenterz = 96.42&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="60" Id="#0-2" MaxTime="300">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(38, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="1800" TargetDetectorCounts="1000000">
+    <SetupScript>driveBsx(38,0)&#13;
+driveBsz(258.0)</SetupScript>
+  </Scattering>
+</Configuration>

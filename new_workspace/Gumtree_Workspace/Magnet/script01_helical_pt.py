@@ -102,7 +102,7 @@ def scan_temp_field_FW(measurementList, mode, preset, tempSettleTime = 1, fieldS
    
 def scan_temp_helical_FW(tempList, mode, preset, tempSettleTime = 1, fieldSettleTime = 1):
     log('driving magnet1_driveable=' + str(0))
-    sics.drive('ma1_magnet_setpoint', 0) 
+    #sics.drive('ma1_magnet_setpoint', 0) 
     log('waiting for field to settle')
     sleep(fieldSettleTime)
     log('driving tc1_driveable=' +  str(lowTemp))
@@ -119,12 +119,12 @@ def scan_temp_helical_FW(tempList, mode, preset, tempSettleTime = 1, fieldSettle
         else:
             sleep(tempSettleTime)
         
-        for theta in [0.,6.]:
-            log('driving rotation=' + str(theta))
-            sics.drive('samthet', theta)
-            sleep(thetaSettleTime)
-            log('start counting')
-            quokka.scan(mode, preset)
+        #for theta in [0.,6.]:
+        #    log('driving rotation=' + str(theta))
+        #    sics.drive('samthet', theta)
+        #    sleep(thetaSettleTime)
+        log('start counting')
+        quokka.scan(mode, preset)
                      
             
 # list for measurements using the FC protocol

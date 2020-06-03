@@ -7,7 +7,7 @@
 # The type can be string, int, float, bool, file.
 guide_names = Par('string', 'ga,g1,g2,g3,g4,g5,g6,g7,g8,g9')
 count_mode = Par('string', 'time', options=['time', 'count'])
-count_preset = Par('float', 120)
+count_preset = Par('float', 30)
 att = Par('float', 270)
 
 # Use below example to create a button

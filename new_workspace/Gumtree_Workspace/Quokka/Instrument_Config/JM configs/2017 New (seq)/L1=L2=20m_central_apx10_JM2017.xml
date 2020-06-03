@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="msw.xsl"?>
-<Configuration Description="New fast scripts" Enabled="false" Group="JM configs/2017 New (seq)" Id="#0-1" Name="L1=L2=20m_central_apx10_JM2017" xmlns="http://www.gumtree.org/msw">
+<Configuration Description="New fast scripts" Group="JM configs/2017 New (seq)" Id="#0-1" Name="L1=L2=20m_central_apx10_JM2017" xmlns="http://www.gumtree.org/msw">
   <SetupScript># config.wavelength = 5&#13;
 # config.wavelength_spread = 0.1&#13;
 # config.det = 19250&#13;
@@ -15,8 +15,8 @@
 # config.drive()&#13;
 # Drive attenuator to safe value&#13;
 driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
-# sics.drive('nvs_lambda', 5.0)&#13;
-sics.drive('nvs_speed', 25476)&#13;
+sics.drive('nvs_lambda', 5.0)&#13;
+#sics.drive('nvs_speed', 25476)&#13;
 sics.set('/instrument/velocity_selector/wavelength', 5)&#13;
 sics.set('/instrument/velocity_selector/wavelength_spread', 0.1)&#13;
 driveDet(19250, 0)&#13;

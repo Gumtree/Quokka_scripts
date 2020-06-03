@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Group="chris/2019" Id="#0-1" Name="L1=L2=20m" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 5&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 19250&#13;
+config.det_offset = 0&#13;
+config.srce = 150&#13;
+config.guide = 'ga'&#13;
+config.apx = -72&#13;
+config.bs = 1&#13;
+config.beamcenterx = 90.44&#13;
+config.beamcenterz = 95.50</SetupScript>
+  <Transmission Id="#0-2">
+    <SetupScript>driveBsx(38, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="60" Id="#0-3">
+    <SetupScript>driveBsx(38,0)&#13;
+driveBsz(251)</SetupScript>
+  </Scattering>
+</Configuration>

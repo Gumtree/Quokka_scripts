@@ -26,7 +26,7 @@ def multi_run():
     sleep(0.1)
     #sics.drive('apx', -2.85)
     sleep(0.1)
-    scan_att_katy(300, 30, 2, [900, 3600])
+    scan_att_katy(300, 30, 2, [10, 10])
     #sics.drive('att', 300)
     
     #sics.drive('att', 330)

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="P7186" Group="CMW" Id="#0-1" Name="20190628_L1=10m_L2=1p3m_offset_apx12p5" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 6&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 510&#13;
+config.det_offset = 300&#13;
+config.srce = 150&#13;
+config.guide = 'g4'&#13;
+config.apx = -98&#13;
+config.bs = 2&#13;
+config.beamcenterx = 30.8476&#13;
+config.beamcenterz = 96.5102&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="60" Id="#0-2" MaxTime="150" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(37, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="2400" MinTime="5" TargetDetectorCounts="1000000" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(37,0)&#13;
+
+driveBsz(260)</SetupScript>
+  </Scattering>
+</Configuration>

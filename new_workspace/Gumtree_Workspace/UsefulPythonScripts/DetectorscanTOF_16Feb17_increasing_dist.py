@@ -7,7 +7,7 @@ from org.apache.commons.httpclient.auth import AuthScope
 from org.apache.commons.httpclient.methods import GetMethod
 
 # Initialisation
-host = 'das1-quokka.nbi.ansto.gov.au'
+host = 'das4-quokka.nbi.ansto.gov.au'
 port = 8081
 type = 'TOTAL_HISTOGRAM_T'
 user = 'Gumtree'

@@ -15,7 +15,7 @@ config.drive()</SetupScript>
   <Transmission AttenuationAngle="240" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
     <SetupScript>driveBsx(38, 100)</SetupScript>
   </Transmission>
-  <Scattering Id="#0-3" MaxTime="18900" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+  <Scattering Id="#0-3" MinTime="600" TargetDetectorCounts="7" TargetMonitorCounts="6">
     <SetupScript>driveBsx(38,0)&#13;
 driveBsz(251.0)</SetupScript>
   </Scattering>

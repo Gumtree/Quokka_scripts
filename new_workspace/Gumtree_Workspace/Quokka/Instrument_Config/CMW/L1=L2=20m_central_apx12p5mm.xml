@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="msw.xsl"?>
-<Configuration Description="20171207_CMW apx_12p5, srec_50" Group="CMW" Id="#0-1" Name="L1=L2=20m_central_apx12p5mm" xmlns="http://www.gumtree.org/msw">
+<Configuration Description="20200113_CMW apx_12p5, srec_50" Group="CMW" Id="#0-1" Name="L1=L2=20m_central_apx12p5mm" xmlns="http://www.gumtree.org/msw">
   <SetupScript>config.wavelength = 5&#13;
 config.wavelength_spread = 0.1&#13;
 config.det = 19250&#13;
@@ -9,20 +9,20 @@ config.srce = 150&#13;
 config.guide = 'ga'&#13;
 config.apx = -98&#13;
 config.bs = 2&#13;
-config.beamcenterx = 91.6833&#13;
-config.beamcenterz = 94.501&#13;
+config.beamcenterx = 90.3927&#13;
+config.beamcenterz = 94.9524&#13;
 config.drive()</SetupScript>
-  <Transmission Id="#0-2" MaxTime="300">
+  <Transmission Id="#0-2" MaxTime="600">
     <SetupScript># Move the beamstop out&#13;
-driveBsx(38, 100)&#13;
+driveBsx(37, 100)&#13;
 # Drive attenuator to 240&#13;
-driveAtt(240) # !!!</SetupScript>
+driveAtt(252) # !!!</SetupScript>
   </Transmission>
-  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="1800" TargetDetectorCounts="1000000" TargetDetectorCountsEnabled="true">
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="5700" TargetDetectorCounts="1000000" TargetDetectorCountsEnabled="true">
     <SetupScript># Drive attenuator to safe value&#13;
 driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
 # Move the beamstop in&#13;
-driveBsx(38, 0)&#13;
-driveBsz(254)</SetupScript>
+driveBsx(37, 0)&#13;
+driveBsz(252)</SetupScript>
   </Scattering>
 </Configuration>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="For Sensitivity" Group="JM configs/2019" Id="#0-1" Name="L1=L2=4_offset_apx10_JM2019" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 5&#13;
+config.wavelength_spread = 0.1&#13;
+#config.wavelength_spread = 0.064&#13;
+config.det = 3200&#13;
+config.det_offset = 300&#13;
+config.srce = 180&#13;
+config.guide = 'g7'&#13;
+config.apx = -72&#13;
+config.bs = 2&#13;
+config.beamcenterx = 30.29&#13;
+config.beamcenterz = 96.17&#13;
+config.drive()</SetupScript>
+  <Transmission Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(37, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="30" Id="#0-3" MaxTime="9000" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(37,0)&#13;
+
+driveBsz(259)</SetupScript>
+  </Scattering>
+</Configuration>

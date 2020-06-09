@@ -25,26 +25,25 @@ def scan_device():
         step_size = float(scan_stop.value - scan_start.value) / (np - 1)
     slog('runscan ' + str(device_name) + ' ' + str(scan_start.value) + ' ' + str(scan_stop.value) \
                     + ' ' + str(number_of_points.value) + ' ' + str(scan_mode.value) + ' ' + str(scan_preset.value))
-    if str(scan_mode.value) == 'time' :
-        mode = quokka.hmMode.time
-    elif str(scan_mode.value) == 'count':
-        mode = quokka.hmMode.monitor
-    else:
-        mode = quokka.hmMode.time
-    sics.run_command('newfile HISTOGRAM_XY')
-    org_z = sicsext.getStableValue('samz').getFloatData()
-    time.sleep(1)
+#    if str(scan_mode.value) == 'time' :
+#        mode = quokka.hmMode.time
+#    elif str(scan_mode.value) == 'count':
+#        mode = quokka.hmMode.monitor
+#    else:
+#        mode = 'time'
+    mode = str(scan_mode.value)
+    control.send_command('newfile HISTOGRAM_XY')
+    org_z = control.get_value('samz')
     for p in xrange(np):
         samphi = scan_start.value + step_size * p
         slog('drive ' + aname + ' ' + str(samphi))
-        sics.drive('samphi', scan_start.value + step_size * p)
+        control.drive('samphi', scan_start.value + step_size * p)
         samz = calc_samz(samphi, arm_length.value, org_z)
         slog('drive samz ' + str(samz))
-        sics.drive('samz', samz)
-        quokka.driveHistmem(mode, scan_preset.value)
-        sics.run_command('save ' + str(p))
+        control.drive('samz', samz)
+        control.histmem('start', mode, scan_preset.value)
+        control.send_command('save ' + str(p))
         slog('finished NP ' + str(p))
-        time.sleep(1)
     
 G1.add(arm_length, scan_start, scan_stop, number_of_points, scan_mode, scan_preset, act1)
 

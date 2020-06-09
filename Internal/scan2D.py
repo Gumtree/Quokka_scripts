@@ -4,8 +4,8 @@ import time
 import math
 from gumpy.nexus.fitting import Fitting, GAUSSIAN_FITTING
 from gumpy.commons.logger import n_logger
-from gumpy.commons import sics
-from Internal import sicsext
+from gumpy.control import control
+#from Internal import sicsext
 from java.lang import Double
 # Script control setup area
 # script info
@@ -76,25 +76,24 @@ def scan_device():
     for i in xrange(np1):
         pos1 = start1 + i * step1
         slog('drive ' + motor1  + ' ' + str(pos1))
-        sics.drive(motor1, pos1)
+        control.drive(motor1, pos1)
         for j in xrange(np2):
             if rev:
                 pos2 = stop2 - j * step2
             else:
                 pos2 = start2 + j * step2
             slog('drive ' + motor2  + ' ' + str(pos2))
-            sics.drive(motor2, pos2)
+            control.drive(motor2, pos2)
             
             slog('collect data with ' + motor1 + '=' + str(pos1) + ' and ' + 
                  motor2 + '=' + str(pos2) + ' on "' + mode + '" for preset of ' + 
                  str(preset))
-            sicsext.runscan('dummy_motor', 0, 0, 1, 
-                            mode, preset, None, True, \
-                            'HISTOGRAM_XY')
+            control.runscan('dummy_motor', 0, 0, 1, 
+                            mode, preset)
         rev = not rev
     slog('*********** scan finished ***********')    
     
-devices = sicsext.getDrivables()
+devices = control.get_drivables()
 device1_name.options = devices
 device2_name.options = devices
         
@@ -106,7 +105,7 @@ def __run_script__(fns):
     __std_run_script__(fns)
 
 def load_experiment_data():
-    basename = sicsext.getBaseFilename()
+    basename = control.get_base_filename()
     fullname = str(System.getProperty('sics.data.path') + '/' + basename)
     df.datasets.clear()
     ds = df[fullname]

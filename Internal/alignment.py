@@ -4,8 +4,9 @@ import time
 import math
 from gumpy.nexus.fitting import Fitting, GAUSSIAN_FITTING
 from gumpy.commons.logger import n_logger
-from gumpy.commons import sics
-from Internal import sicsext
+#from gumpy.commons import sics
+from gumpy.control import control
+#from Internal import sicsext
 from java.lang import Double
 # Script control setup area
 # script info
@@ -32,10 +33,10 @@ def scan_device():
     axis_name.value = aname
     slog('runscan ' + str(device_name.value) + ' ' + str(scan_start.value) + ' ' + str(scan_stop.value) \
                     + ' ' + str(number_of_points.value) + ' ' + str(scan_mode.value) + ' ' + str(scan_preset.value))
-    sicsext.runscan(device_name.value, scan_start.value, scan_stop.value, number_of_points.value, 
-                    scan_mode.value, scan_preset.value, load_experiment_data, True, \
-                    'HISTOGRAM_XY')
-    time.sleep(2)
+    control.runscan(device_name.value, scan_start.value, scan_stop.value, number_of_points.value, 
+                    scan_mode.value, scan_preset.value, 'HISTOGRAM_XY', True, 
+                    save_cmd = load_experiment_data)
+    control.sleep(1)
     peak_pos.value = float('NaN')
     FWHM.value = float('NaN')
     if auto_fit.value :
@@ -46,7 +47,7 @@ def scan_device():
     else :
         n_logger.log_plot(Plot1)
     
-devices = sicsext.getDrivables()
+devices = control.get_drivables()
 device_name.options = devices
 def update_axis_name():
     axis_name.value = device_name.value
@@ -100,7 +101,7 @@ def scan(dname, start, stop, np, mode, preset):
 def fit_curve():
     global Plot1
     ds = Plot1.ds
-    if len(ds) == 0:
+    if ds is None or len(ds) == 0:
         log('Error: no curve to fit in Plot1.\n')
         return
     for d in ds:
@@ -140,9 +141,19 @@ def __run_script__(fns):
 #    __std_run_script__(fns)
     __std_run_script__(fns)
 
+def get_base_filename():
+    return os.path.basename(str(control.get_filename()))
+
 def load_experiment_data():
-    basename = sicsext.getBaseFilename()
+    log('load experiment data')
+    basename = get_base_filename()
     fullname = str(System.getProperty('sics.data.path') + '/' + basename)
+    log(str(fullname))
+    global __DATASOURCE__
+    try:
+        __DATASOURCE__.addDataset(fullname, False)
+    except:
+        print 'error in adding dataset: ' + fullname
     df.datasets.clear()
     ds = df[fullname]
     dname = str(data_name.value)

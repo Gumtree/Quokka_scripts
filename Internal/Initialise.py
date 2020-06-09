@@ -57,7 +57,7 @@ __buffer_logger__ = open(__buffer_log_file__, 'a')
 __history_logger__ = open(__history_log_file__, 'a')
 
 print 'Waiting for SICS connection'
-while sics.getSicsController() == None or sics.getSicsController().getServerStatus() == 'UNKNOWN':
+while not sics.is_connected() :
     time.sleep(1)
 
 print 'connected ...'
@@ -66,7 +66,7 @@ time.sleep(7)
 wait_count = 0
 while wait_count < 10 :
     try:
-        sics.getSicsController().findComponentController('/experiment/file_status').getValue().getStringData()
+        sics.get_model()
         break
     except:
         time.sleep(1)
@@ -75,15 +75,15 @@ while wait_count < 10 :
 if wait_count >= 10:
     raise Exception, 'Timeout with initialising. Please click on Reload button to try again.'
 
-__scan_status_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/feedback/status')
-__scan_variable_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/scan_variable')
-__save_count_node__ = sics.getSicsController().findComponentController('/experiment/save_count')
-__file_name_node__ = sics.getSicsController().findComponentController('/experiment/file_name')
-__file_status_node__ = sics.getSicsController().findComponentController('/experiment/file_status')
+__scan_status_node__ = sics.getDeviceController('/commands/scan/runscan/feedback/status')
+__scan_variable_node__ = sics.getDeviceController('/commands/scan/runscan/scan_variable')
+__save_count_node__ = sics.getDeviceController('/experiment/save_count')
+__file_name_node__ = sics.getDeviceController('/experiment/file_name')
+__file_status_node__ = sics.getDeviceController('/experiment/file_status')
 #saveCount = int(saveCountNode.getValue().getIntData())
-__cur_status__ = str(__scan_status_node__.getValue().getStringData())
+__cur_status__ = str(__scan_status_node__.getValue())
 
-__file_name__ = str(__file_name_node__.getValue().getStringData())
+__file_name__ = str(__file_name_node__.getValue())
 
 class __Display_Runnable__(Runnable):
     
@@ -109,25 +109,25 @@ def add_dataset():
     except:
         print 'error in adding dataset: ' + __file_to_add__
     
-class __SaveCountListener__(DynamicControllerListenerAdapter):
+class __SaveCountListener__(sics.ControllerListener):
     
     def __init__(self):
         global __save_count_node__
-        self.saveCount = __save_count_node__.getValue().getIntData()
+        self.saveCount = __save_count_node__.getValue()
         pass
     
-    def valueChanged(self, controller, newValue):
+    def updateValue(self, oldValue, newValue):
         global __file_to_add__
         newCount = int(newValue.getStringData());
         if newCount != self.saveCount:
             self.saveCount = newCount;
             try:
-                axis_name.value = __scan_variable_node__.getValue().getStringData()
+                axis_name.value = __scan_variable_node__.getValue()
             except:
                 pass
             try:
-                checkFile = File(__file_name_node__.getValue().getStringData());
-                checkFile = File(__data_folder__ + "/" + checkFile.getName());
+                checkFile = File(__file_name_node__.getValue())
+                checkFile = File(__data_folder__ + "/" + checkFile.getName())
                 __file_to_add__ = checkFile.getAbsolutePath();
                 if not checkFile.exists():
                     print "The target file :" + __file_to_add__ + " can not be found";
@@ -139,7 +139,7 @@ class __SaveCountListener__(DynamicControllerListenerAdapter):
                 print 'failed to add dataset ' + __file_to_add__
                     
 __saveCountListener__ = __SaveCountListener__()
-__save_count_node__.addComponentListener(__saveCountListener__)
+__save_count_node__.addControllerListener(__saveCountListener__)
 
 def update_buffer_log_folder():
     global __buffer_log_file__, __export_folder__, __buffer_logger__, __history_log_file__, __history_logger__

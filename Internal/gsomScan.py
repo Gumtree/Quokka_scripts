@@ -55,22 +55,22 @@ __buffer_log_file__ += '/LogFile.txt'
 __buffer_logger__ = open(__buffer_log_file__, 'a')
 __history_logger__ = open(__history_log_file__, 'a')
 
-print 'Waiting for SICS connection'
-while sics.getSicsController() == None:
-    time.sleep(1)
-
-time.sleep(3)
-
-__scan_status_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/feedback/status')
-__scan_variable_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/scan_variable')
-__save_count_node__ = sics.getSicsController().findComponentController('/experiment/save_count')
-__file_name_node__ = sics.getSicsController().findComponentController('/experiment/file_name')
-__file_status_node__ = sics.getSicsController().findComponentController('/experiment/file_status')
-#saveCount = int(saveCountNode.getValue().getIntData())
-__cur_status__ = str(__scan_status_node__.getValue().getStringData())
-__file_name__ = str(__file_name_node__.getValue().getStringData())
-__data_file_timestamp__ = 0
-
+#print 'Waiting for SICS connection'
+#while sics.getSicsController() == None:
+#    time.sleep(1)
+#
+#time.sleep(3)
+#
+#__scan_status_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/feedback/status')
+#__scan_variable_node__ = sics.getSicsController().findComponentController('/commands/scan/runscan/scan_variable')
+#__save_count_node__ = sics.getSicsController().findComponentController('/experiment/save_count')
+#__file_name_node__ = sics.getSicsController().findComponentController('/experiment/file_name')
+#__file_status_node__ = sics.getSicsController().findComponentController('/experiment/file_status')
+##saveCount = int(saveCountNode.getValue().getIntData())
+#__cur_status__ = str(__scan_status_node__.getValue().getStringData())
+#__file_name__ = str(__file_name_node__.getValue().getStringData())
+#__data_file_timestamp__ = 0
+#
 class __Display_Runnable__(Runnable):
     
     def __init__(self):
@@ -80,107 +80,123 @@ class __Display_Runnable__(Runnable):
         global __UI__
         global __dispose_listener__
         __UI__.addDisposeListener(__dispose_listener__)
+#
+#
+#__file_to_add__ = None
+#__newfile_enabled__ = False
+#def add_dataset():
+#    global __newfile_enabled__, __data_file_timestamp__
+#    if not __newfile_enabled__ :
+#        return
+#    if __file_to_add__ is None:
+#        return
+#    
+#class __SaveCountListener__(DynamicControllerListenerAdapter):
+#    
+#    def __init__(self):
+#        self.saveCount = __save_count_node__.getValue().getIntData()
+#        pass
+#    
+#    def valueChanged(self, controller, newValue):
+#        global __file_to_add__
+#        newCount = int(newValue.getStringData());
+#        if newCount != self.saveCount:
+#            if newCount == 0:
+#                return
+#            try:
+#                __file_name_node__.getValue(True)
+#            except:
+#                pass
+#            try:
+#                checkFile = File(__file_name_node__.getValue().getStringData());
+#                checkFile = File(__data_folder__ + "/" + checkFile.getName());
+#                __file_to_add__ = checkFile.getAbsolutePath();
+#                if not checkFile.exists():
+#                    slog( "The target file :" + __file_to_add__ + " can not be found", True)
+#                    return
+#                add_dataset()
+#            except: 
+#                slog( 'failed to add dataset ' + __file_to_add__, True)
+#        self.saveCount = newCount;
+#                    
+#__saveCountListener__ = __SaveCountListener__()
+#__save_count_node__.addComponentListener(__saveCountListener__)
+#
+#class __FileStatusListener__(DynamicControllerListenerAdapter):
+#    
+#    def __init__(self):
+#        self.fileStatus = __file_status_node__.getValue().getStringData()
+#        pass
+#    
+#    def valueChanged(self, controller, newValue):
+#        global __file_to_add__
+#        newStatus = newValue.getStringData();
+#        if newStatus == "CLOSED" and (self.fileStatus == "OPEN" or self.fileStatus == "SAVING") :
+#            try:
+#                checkFile = File(__file_name_node__.getValue().getStringData());
+#                checkFile = File(__data_folder__ + "/" + checkFile.getName());
+#                __file_to_add__ = checkFile.getAbsolutePath();
+#                if not checkFile.exists():
+#                    slog( "The target file :" + __file_to_add__ + " can not be found", True)
+#                    return
+#                add_dataset()
+#            except: 
+#                slog( 'failed to add dataset ' + __file_to_add__, True)
+#        self.fileStatus = newStatus;
+#                    
+#__fileStatusListener__ = __FileStatusListener__()
+#__file_status_node__.addComponentListener(__fileStatusListener__)
+#
+#def update_buffer_log_folder():
+#    global __buffer_log_file__, __export_folder__, __buffer_logger__, __history_log_file__, __history_logger__
+#    __buffer_log_file__ = __export_folder__
+#    fi = File(__buffer_log_file__)
+#    if not fi.exists():
+#        if not fi.mkdirs():
+#            slog('Error: failed to make directory: ' + __buffer_log_file__, True)
+#    __history_log_file__ = __buffer_log_file__ + '/History.txt'
+#    __buffer_log_file__ += '/LogFile.txt'
+#    if __buffer_logger__:
+#        __buffer_logger__.close()
+#    __buffer_logger__ = open(__buffer_log_file__, 'a')
+#    if __history_logger__:
+#         __history_logger__.close()
+#    __history_logger__ = open(__history_log_file__, 'a')
+#
+#class __State_Monitor__(IStateMonitorListener):
+#    def __init__(self):
+#        pass
+#
+#    def stateChanged(state, infoMessage):
+#        print state
+#        print infoMessage
+#        pass
+#
+#
+#def __dispose__():
+#    pass
 
+def sample(val = None):
+    if not val is None :
+        if not type(val) is int or not type(val) is float:
+            val = float(str(val))
+        sics.drive('samplenumber', val)
+    raw = sics.get_raw_value('samplenumber')
+    return round(raw, 1)
 
-__file_to_add__ = None
-__newfile_enabled__ = False
-def add_dataset():
-    global __newfile_enabled__, __data_file_timestamp__
-    if not __newfile_enabled__ :
-        return
-    if __file_to_add__ is None:
-        return
+def update_group_ui(g):
+    __UI__.updateGroupUI(g.__group__)
     
-class __SaveCountListener__(DynamicControllerListenerAdapter):
+def scan_time(t, sample_name = None, thickness = None):
+    if not sample_name is None:
+        sics.execute('samplename ' + str(sample_name), 'scan')
     
-    def __init__(self):
-        self.saveCount = __save_count_node__.getValue().getIntData()
-        pass
+    if not thickness is None:
+        sics.execute('samplethickness ' + str(thickness), 'scan')
+
+#    quokka.scanBA(None, t, None, None)
+    quokka.scan(quokka.ACQUISITION_MODE.time, t)
     
-    def valueChanged(self, controller, newValue):
-        global __file_to_add__
-        newCount = int(newValue.getStringData());
-        if newCount != self.saveCount:
-            if newCount == 0:
-                return
-            try:
-                __file_name_node__.getValue(True)
-            except:
-                pass
-            try:
-                checkFile = File(__file_name_node__.getValue().getStringData());
-                checkFile = File(__data_folder__ + "/" + checkFile.getName());
-                __file_to_add__ = checkFile.getAbsolutePath();
-                if not checkFile.exists():
-                    slog( "The target file :" + __file_to_add__ + " can not be found", True)
-                    return
-                add_dataset()
-            except: 
-                slog( 'failed to add dataset ' + __file_to_add__, True)
-        self.saveCount = newCount;
-                    
-__saveCountListener__ = __SaveCountListener__()
-__save_count_node__.addComponentListener(__saveCountListener__)
-
-class __FileStatusListener__(DynamicControllerListenerAdapter):
-    
-    def __init__(self):
-        self.fileStatus = __file_status_node__.getValue().getStringData()
-        pass
-    
-    def valueChanged(self, controller, newValue):
-        global __file_to_add__
-        newStatus = newValue.getStringData();
-        if newStatus == "CLOSED" and (self.fileStatus == "OPEN" or self.fileStatus == "SAVING") :
-            try:
-                checkFile = File(__file_name_node__.getValue().getStringData());
-                checkFile = File(__data_folder__ + "/" + checkFile.getName());
-                __file_to_add__ = checkFile.getAbsolutePath();
-                if not checkFile.exists():
-                    slog( "The target file :" + __file_to_add__ + " can not be found", True)
-                    return
-                add_dataset()
-            except: 
-                slog( 'failed to add dataset ' + __file_to_add__, True)
-        self.fileStatus = newStatus;
-                    
-__fileStatusListener__ = __FileStatusListener__()
-__file_status_node__.addComponentListener(__fileStatusListener__)
-
-def update_buffer_log_folder():
-    global __buffer_log_file__, __export_folder__, __buffer_logger__, __history_log_file__, __history_logger__
-    __buffer_log_file__ = __export_folder__
-    fi = File(__buffer_log_file__)
-    if not fi.exists():
-        if not fi.mkdirs():
-            slog('Error: failed to make directory: ' + __buffer_log_file__, True)
-    __history_log_file__ = __buffer_log_file__ + '/History.txt'
-    __buffer_log_file__ += '/LogFile.txt'
-    if __buffer_logger__:
-        __buffer_logger__.close()
-    __buffer_logger__ = open(__buffer_log_file__, 'a')
-    if __history_logger__:
-         __history_logger__.close()
-    __history_logger__ = open(__history_log_file__, 'a')
-
-class __State_Monitor__(IStateMonitorListener):
-    def __init__(self):
-        pass
-
-    def stateChanged(state, infoMessage):
-        print state
-        print infoMessage
-        pass
-
-
-def __dispose__():
-    pass
-#    __scan_status_node__.removeComponentListener(__statusListener__)
-#    __m2_node__.removeComponentListener(__m2_listener__)
-#    __s1_node__.removeComponentListener(__s1_listener__)
-#    __s2_node__.removeComponentListener(__s2_listener__)
-#    __a2_node__.removeComponentListener(__a2_listener__)
-
 def __load_experiment_data__():
     basename = sicsext.getBaseFilename()
     fullname = str(System.getProperty('sics.data.path') + '/' + basename)
@@ -220,50 +236,50 @@ def slog(text, f_err = False):
         logln(text + '\n')
     logBook(text)
 
-class BatchStatusListener(SicsProxyListenerAdapter):
-    
-    def __init__(self):
-        pass
-    
-    def proxyConnected(self):
-        pass
-
-    def proxyConnectionReqested(self):
-        pass
-
-    def proxyDisconnected(self):
-        pass
-
-    def messageReceived(self, message, channelId):
-        if str(channelId) == 'rawBatch':
-            logBook(message)
-
-    def messageSent(self, message, channelId):
-        pass
-
-try:
-    sics.SicsCore.getSicsManager().proxy().removeProxyListener(__batch_status_listener__)
-except:
-    pass
-__batch_status_listener__ = BatchStatusListener()
-sics.SicsCore.getSicsManager().proxy().addProxyListener(__batch_status_listener__)
-
-def __dataset_added__(fns = None):
-    pass
-
-class SICSConsoleEventHandler(ConsoleEventHandler):
-    
-    def __init__(self, topic):
-        ConsoleEventHandler.__init__(self, topic)
-    
-    def handleEvent(self, event):
-        data = str(event.getProperty('sentMessage'))
-        logBook(data)
-
-__sics_console_event_handler_sent__ = SICSConsoleEventHandler('org/gumtree/ui/terminal/telnet/sent')
-__sics_console_event_handler_received__ = SICSConsoleEventHandler('org/gumtree/ui/terminal/telnet/received')
-__sics_console_event_handler_sent__.activate()
-__sics_console_event_handler_received__.activate()
+#class BatchStatusListener(SicsProxyListenerAdapter):
+#    
+#    def __init__(self):
+#        pass
+#    
+#    def proxyConnected(self):
+#        pass
+#
+#    def proxyConnectionReqested(self):
+#        pass
+#
+#    def proxyDisconnected(self):
+#        pass
+#
+#    def messageReceived(self, message, channelId):
+#        if str(channelId) == 'rawBatch':
+#            logBook(message)
+#
+#    def messageSent(self, message, channelId):
+#        pass
+#
+#try:
+#    sics.SicsCore.getSicsManager().proxy().removeProxyListener(__batch_status_listener__)
+#except:
+#    pass
+#__batch_status_listener__ = BatchStatusListener()
+#sics.SicsCore.getSicsManager().proxy().addProxyListener(__batch_status_listener__)
+#
+#def __dataset_added__(fns = None):
+#    pass
+#
+#class SICSConsoleEventHandler(ConsoleEventHandler):
+#    
+#    def __init__(self, topic):
+#        ConsoleEventHandler.__init__(self, topic)
+#    
+#    def handleEvent(self, event):
+#        data = str(event.getProperty('sentMessage'))
+#        logBook(data)
+#
+#__sics_console_event_handler_sent__ = SICSConsoleEventHandler('org/gumtree/ui/terminal/telnet/sent')
+#__sics_console_event_handler_received__ = SICSConsoleEventHandler('org/gumtree/ui/terminal/telnet/received')
+#__sics_console_event_handler_sent__.activate()
+#__sics_console_event_handler_received__.activate()
 
 class __Dispose_Listener__(DisposeListener):
     
@@ -377,6 +393,10 @@ class SampleSetup():
                 res.append(s.idx)
         return res
     
+    def is_sample_enabled(self, idx):
+        s = self.get_sample_setup(idx)
+        return s.is_enabled()
+        
     def get_sample_setup(self, idx):
         return self.samples[idx - 1]
         
@@ -393,7 +413,26 @@ class SampleSetup():
         self.name.dispose()
         self.thickness.dispose()
         self.btn_apply.dispose()
-
+        
+    def to_rep(self):
+        samples = []
+        for s in self.samples:
+            item = dict()
+            item["idx"] = s.idx
+            item["enabled"] = s.is_enabled()
+            item["name"] = s.name.value
+            item["thickness"] = s.thickness.value
+            samples.append(item)
+        return samples
+    
+    def from_rep(self, rep):
+        for item in rep:
+            idx = item["idx"]
+            s = self.samples[idx - 1]
+            s.enable.value = item["enabled"]
+            s.name.value = item["name"]
+            s.thickness.value = item["thickness"]
+        
 class SampleItemSetup():
     def __init__(self, idx):
         self.idx = idx
@@ -417,6 +456,10 @@ class SampleItemSetup():
         
     def is_enabled(self):
         return self.enable.value
+
+def is_sample_enabled(idx):
+    global __sample_setup__
+    return __sample_setup__.is_sample_enabled(idx)
     
 def get_sample_name(idx):
     global __sample_setup__
@@ -441,7 +484,7 @@ def apply_sample_selection():
     update_progress()
     
 class WorkflowBlock():
-    def __init__(self):
+    def __init__(self, fwb = None, empty = False):
         global __workflow_seq__
 #        self.wid = uuid.uuid1()
         self.wid = get_next_wid()
@@ -491,7 +534,7 @@ class WorkflowBlock():
         ctext.title = 'configuration'
         gc.add(cenabled, ctitle, ctext, cload, csave, ctest, cremove)
         #gs = Group('samples')
-        gt = SampleTable(self.wid)
+        gt = SampleTable(self.wid, fwb = fwb, empty = empty)
         gt.group.colspan = 4
         gc.add(gt.group)
         cnew = Act('insert_block(' + str(self.wid) + ')', 'Add New Block Below')
@@ -501,6 +544,14 @@ class WorkflowBlock():
         cnew.independent = True
         globals()[str(cnew.name)] = cnew
         gc.add(cnew)
+#        cadd = Act('copy_entry(' + str(self.wid) + ', 1)', 'add line')
+#        cadd.name = 'cadd_' + str(self.wid)
+#        cadd.tool_tip = 'Click to add/insert a new block below'
+#        cadd.colspan = 4
+#        cadd.independent = True
+#        globals()[str(cadd.name)] = cadd
+#        gc.add(cadd)
+        
         self.group = gc
         self.enabled = cenabled
         self.remove = cremove
@@ -518,6 +569,12 @@ class WorkflowBlock():
 #    def update_title(self):
 #        self.group.name = str(self.title.value)
 #        self.group.title = str(self.title.value)
+    
+    def copy_entry(self, id):
+        self.table.copy_entry(id)
+
+    def remove_entry(self, id):
+        self.table.remove_entry(id)
         
     def set_enabled(self):
         flag = self.enabled.value
@@ -610,13 +667,18 @@ class WorkflowBlock():
         rep['scatt_time'] = self.table.scatt_time.value
         rep['trans_enabled'] = self.table.t3.value
         rep['scatt_enabled'] = self.table.t5.value
-        for id in self.table.samples:
-            sp = self.table.samples[id]
-            rep['gsom_' + str(id)] = sp.gsom.value
-            rep['trans_enabled_' + str(id)] = sp.do_trans.value
-            rep['trans_time_' + str(id)] = sp.trans_time.value
-            rep['scatt_enabled_' + str(id)] = sp.do_scatt.value
-            rep['scatt_time_' + str(id)] = sp.scatt_time.value
+        sps = []
+        for s in self.table.samples:
+            id = s.sid
+            item = dict()
+            item['sid'] = s.sid
+            item['gsom'] = s.gsom.value
+            item['do_trans'] = s.do_trans.value
+            item['trans_time'] = s.trans_time.value
+            item['do_scatt'] = s.do_scatt.value
+            item['scatt_time'] = s.scatt_time.value
+            sps.append(item)
+        rep["samples"] = sps
         return rep
     
     def from_rep(self, rep):
@@ -653,29 +715,30 @@ class WorkflowBlock():
             self.table.t5.value = rep['scatt_enabled']
         else:
             self.table.t5.value = True
-        for id in self.table.samples:
-            sp = self.table.samples[id]
+        sps = rep["samples"]
+        for sp in sps:
             try:
-                if rep.has_key('name_' + str(id)):
-                    sp.gsom.value = rep['gsom_' + str(id)]
-                else:
-                    sp.gsom.value = 0
-                if rep.has_key('trans_enabled_' + str(id)):
-                    sp.do_trans.value = rep['trans_enabled_' + str(id)]
-                else:
-                    sp.do_trans.value = True
-                if rep.has_key('trans_time_' + str(id)): 
-                    sp.trans_time.value = rep['trans_time_' + str(id)]
-                else:
-                    sp.trans_time.value = 60
-                if rep.has_key('scatt_enabled_' + str(id)): 
-                    sp.do_scatt.value = rep['scatt_enabled_' + str(id)]
-                else:
-                    sp.do_scatt.value = True
-                if rep.has_key('scatt_time_' + str(id)): 
-                    sp.scatt_time.value = rep['scatt_time_' + str(id)]
-                else:
-                    sp.scatt_time.value = 60
+                self.table.add_sample_from_rep(sp)
+#                if rep.has_key('name_' + str(id)):
+#                    sp.gsom.value = rep['gsom_' + str(id)]
+#                else:
+#                    sp.gsom.value = 0
+#                if rep.has_key('trans_enabled_' + str(id)):
+#                    sp.do_trans.value = rep['trans_enabled_' + str(id)]
+#                else:
+#                    sp.do_trans.value = True
+#                if rep.has_key('trans_time_' + str(id)): 
+#                    sp.trans_time.value = rep['trans_time_' + str(id)]
+#                else:
+#                    sp.trans_time.value = 60
+#                if rep.has_key('scatt_enabled_' + str(id)): 
+#                    sp.do_scatt.value = rep['scatt_enabled_' + str(id)]
+#                else:
+#                    sp.do_scatt.value = True
+#                if rep.has_key('scatt_time_' + str(id)): 
+#                    sp.scatt_time.value = rep['scatt_time_' + str(id)]
+#                else:
+#                    sp.scatt_time.value = 60
             except:
                 sp.gsom.value = 0 
                 sp.do_trans.value = False 
@@ -759,8 +822,8 @@ class WorkflowBlock():
             try:
                 span = Element('span')
                 span.set('class', 'class_span_tablefoot')
-                span.text = 'L1=%.1f, L2=%.1f' % (sics.get_raw_value('gs_l1'), \
-                                                  sics.get_raw_value('gs_l2_det'))
+                span.text = 'L1=%.1f, L2=%.1f' % (sics.get_raw_value('l1'), \
+                                                  sics.get_raw_value('l2'))
                 html += tostring(span)
             except:
                 pass
@@ -771,30 +834,45 @@ class WorkflowBlock():
         self.table.enable_samples(sample_idxs)
         
 class Sample():
-    def __init__(self, idx):
+    _id = 0
+    def __init__(self, wid, sid, gsom = 0, 
+                 trans = __default_transmission_time__, 
+                 scatt = __default_scattering_time__, 
+                 do_trans = True,
+                 do_scatt = True,
+                 fsample = None):
         global __default_scattering_time__
-        self.idx = idx
-        s1_idx = Par('label', str(idx))
+        self.id = Sample._id
+        Sample._id += 1
+        self.wid = wid
+        self.sid = sid
+        s1_idx = Par('label', str(sid))
         s1_idx.width = 24
 #        s1_name = Par('string', '')
 #        s1_name.title = ''
-        s1_gsom = Par('float', 0)
+        s1_gsom = Par('float', gsom)
         s1_gsom.title = ''
         s1_gsom.width = 20
-        s1_trans = Par('bool', True, command = 'update_progress()')
+        s1_trans = Par('bool', do_trans, command = 'update_progress()')
         s1_trans.title = ''
-        s1_trans_time = Par('float', __default_transmission_time__, command = 'update_progress()')
+        s1_trans_time = Par('float', trans, command = 'update_progress()')
         s1_trans_time.title = ''
         s1_trans_time.width = 20
         s1_trans_res = Par('label', ' ' * 17)
         s1_trans_res.width = 120
-        s1_scatt = Par('bool', True, command = 'update_progress()')
+        s1_scatt = Par('bool', do_scatt, command = 'update_progress()')
         s1_scatt.title = ''
-        s1_scatt_time = Par('float', __default_scattering_time__, command = 'update_progress()')
+        s1_scatt_time = Par('float', scatt, command = 'update_progress()')
         s1_scatt_time.title = ''
         s1_scatt_time.width = 20
         s1_scatt_res = Par('label', ' ' * 17)
         s1_scatt_res.width = 120
+        s1_add = Act('copy_entry({}, {})'.format(self.wid, self.id), '+ADD')
+        s1_add.name = 'add_{}_{}'.format(self.wid, self.id)
+        globals()[str(s1_add.name)] = s1_add
+        s1_remove = Act('remove_entry({}, {})'.format(self.wid, self.id), '-DEL')
+        s1_remove.name = 'remove_{}_{}'.format(self.wid, self.id)
+        globals()[str(s1_remove.name)] = s1_remove
         self.id_label = s1_idx
         self.gsom = s1_gsom
         self.do_trans = s1_trans
@@ -809,6 +887,15 @@ class Sample():
         self.scatt_stop_time = 0
         self.actual_trans_time = 0
         self.actual_scatt_time = 0
+        self.add = s1_add
+        self.remove = s1_remove
+        
+        if fsample != None:
+            s1_gsom.value = fsample.gsom.value
+            s1_trans.value = fsample.do_trans.value
+            s1_trans_time.value = fsample.trans_time.value
+            s1_scatt.value = fsample.do_scatt.value
+            s1_scatt_time.value = fsample.scatt_time.value
         
     def dispose(self):
         self.id_label.dispose()
@@ -819,14 +906,16 @@ class Sample():
         self.do_scatt.dispose()
         self.scatt_time.dispose()
         self.scatt_res.dispose()
+        self.add.dispose()
+        self.remove.dispose()
         
     def run_transmission(self):
         global _counting_status
         global _driving_status
         global __is_collection_interrupted__
         if self.do_trans.value and len(self.trans_res.value.strip()) == 0:
-            slog('start transmission collection for sample number ' + str(self.idx))
-            sn = get_sample_name(self.idx)
+            slog('start transmission collection for sample number ' + str(self.sid))
+            sn = get_sample_name(self.sid)
             if len(str(sn)) > 0:
                 slog('transmission: ' + str(sn))
 #            self.trans_res.value = _counting_status
@@ -834,28 +923,38 @@ class Sample():
             self.trans_start_time = time.time()
             self.trans_res.highlight = True
             try:
-                if sample() != self.idx :
+                if sample() != self.sid :
                     act_next.enabled = True
                     self.trans_res.value = _driving_status
-                    slog('driving sample to ' + str(self.idx))
-                    sample(self.idx)
+                    slog('driving sample to ' + str(self.sid))
+                    sample(self.sid)
             except:
                 act_next.enabled = False
                 act_pause.enabled = False
                 slog('driving sample failed', True)
                 self.trans_stop_time = time.time()
                 raise
+            gsom = self.gsom.value
+            slog('drive gsom to {}'.format(gsom))
+            try:
+                sics.drive('gsom', gsom)
+            except:
+                slog('failed to drive gsom to {}'.format(gosm), True)
             try:
                 self.trans_res.value = _counting_status
                 act_next.enabled = True
                 act_pause.enabled = True
                 old_filename = get_base_filename()
-                scan10(self.idx, self.trans_time.value, get_sample_name(self.idx), \
-                       get_sample_thickness(self.idx))
+#                scan10(self.sid, self.trans_time.value, get_sample_name(self.sid), \
+#                       get_sample_thickness(self.sid))
+                scan_time(self.trans_time.value, get_sample_name(self.sid), \
+                       get_sample_thickness(self.sid))
                 self.trans_res.value = get_new_filename(old_filename)
                 step_progress()
                 self.trans_res.highlight = False
-            except :
+            except Exception, ex:
+                traceback.print_exc()
+                slog(str(ex), True)
                 try:
                     detector_start = sics.get_stable_value('/instrument/detector/start_time').getIntData()
                     if detector_start > self.trans_start_time + 1:
@@ -892,15 +991,15 @@ class Sample():
                         traceback.print_exc(file=sys.stdout)
                         slog('error reading detector time', True)
                 self.trans_stop_time = time.time()
-            slog('transmission collection is finished for sample number ' + str(self.idx))
+            slog('transmission collection is finished for sample number ' + str(self.sid))
                 
     def run_scattering(self):
         global _counting_status
         global _driving_status
         global __is_collection_interrupted__
         if self.do_scatt.value and len(self.scatt_res.value.strip()) == 0:
-            slog('start scattering collection for sample number ' + str(self.idx))
-            sn = get_sample_name(self.idx)
+            slog('start scattering collection for sample number ' + str(self.sid))
+            sn = get_sample_name(self.sid)
             if len(str(sn)) > 0:
                 slog('scattering: ' + str(sn))
 #            self.scatt_res.value = _counting_status
@@ -908,11 +1007,11 @@ class Sample():
             self.scatt_start_time = time.time()
             self.scatt_res.highlight = True
             try:
-                if sample() != self.idx :
+                if sample() != self.sid :
                     act_next.enabled = True
                     self.scatt_res.value = _driving_status
-                    slog('driving sample to ' + str(self.idx))
-                    sample(self.idx)
+                    slog('driving sample to ' + str(self.sid))
+                    sample(self.sid)
             except:
                 act_next.enabled = False
                 act_pause.enabled = False
@@ -924,8 +1023,10 @@ class Sample():
                 act_next.enabled = True
                 act_pause.enabled = True
                 old_filename = get_base_filename()
-                scan10(self.idx, self.scatt_time.value, get_sample_name(self.idx), \
-                       get_sample_thickness(self.idx))
+#                scan10(self.sid, self.scatt_time.value, get_sample_name(self.sid), \
+#                       get_sample_thickness(self.sid))
+                scan_time(self.scatt_time.value, get_sample_name(self.sid), \
+                       get_sample_thickness(self.sid))
                 self.scatt_res.value = get_new_filename(old_filename)
                 step_progress()
                 self.scatt_res.highlight = False
@@ -970,7 +1071,7 @@ class Sample():
                         slog('error reading detector time', True)
 #                self.scatt_res.highlight = False
                 self.scatt_stop_time = time.time()
-            slog('scattering collection is finished for sample number ' + str(self.idx))
+            slog('scattering collection is finished for sample number ' + str(self.sid))
             
     def set_enabled(self, flag):
         self.id_label.enabled = flag
@@ -1057,9 +1158,9 @@ class Sample():
     def append_xml(self, parent):
         if len(self.trans_res.value.strip()) > 0 or len(self.scatt_res.value.strip()) > 0:
             sp = SubElement(parent, 'sample')
-            sp.set('index', str(self.idx))
-            sp.set('name', get_sample_name(self.idx).strip())
-            sp.set('thickness', str(get_sample_thickness(self.idx)))
+            sp.set('index', str(self.sid))
+            sp.set('name', get_sample_name(self.sid).strip())
+            sp.set('thickness', str(get_sample_thickness(self.sid)))
             trans = SubElement(sp, 'transmission')
             text = self.trans_res.value.strip()
             trans.set('runID', get_run_id(text))
@@ -1087,9 +1188,9 @@ class Sample():
         if len(self.trans_res.value.strip()) > 0 or len(self.scatt_res.value.strip()) > 0:
             tr = Element('tr')
             td = SubElement(tr, 'td')
-            td.text = str(self.idx)
+            td.text = str(self.sid)
             td = SubElement(tr, 'td')
-            td.text = str(get_sample_name(self.idx).strip())
+            td.text = str(get_sample_name(self.sid).strip())
             td = SubElement(tr, 'td')
             text = get_short_pdfname(self.trans_res.value.strip())
             if text.startswith('*'):
@@ -1129,32 +1230,35 @@ def get_short_pdfname(fn):
     return fn
     
 class SampleTable():
-    def __init__(self, wid, name = 'Samples'):
+    def __init__(self, wid, name = 'Samples', fwb = None, 
+                 empty = False):
         self.wid = wid
-        self.samples = dict()
+        self.samples = []
         self.group = Group(name)
         self.group.hideTitle = True
-        self.group.numColumns = 8
+        self.numColumns = 10
+        self.sizeHeader = 11
+        self.group.numColumns = 10
         self.group.colspan = 4
         trans_setup = Par('string', '')
         trans_setup.title = 'transmission setup'
-        trans_setup.colspan = 4
+        trans_setup.colspan = 5
         trans_setup.height = 40
         scatt_setup = Par('string', '')
         scatt_setup.title = 'scattering setup'
-        scatt_setup.colspan = 3
+        scatt_setup.colspan = 5
         scatt_setup.height = 40
-        space1 = Par('space')
+#        space1 = Par('space')
         
         trans_time = Par('float', '60', command='change_trans_time(' \
                          + str(wid) + ')')
         trans_time.title = 'transmission time'
-        trans_time.colspan = 4
+        trans_time.colspan = 5
         scatt_time = Par('float', '120', command='change_scatt_time(' \
                          + str(wid) + ')')
         scatt_time.title = 'scattering time'
-        scatt_time.colspan = 3
-        space2 = Par('space')
+        scatt_time.colspan = 5
+#        space2 = Par('space')
         
         tit_1 = Par('label', 'idx')
         tit_1.width = 24
@@ -1172,12 +1276,15 @@ class SampleTable():
         tit_5.title = ''
         tit_6 = Par('label', 'Scattering')
         tit_6.colspan = 2
+        space3 = Par('space')
+        space3.colspan = 2
         self.trans_time = trans_time
         self.scatt_time = scatt_time
         self.trans_setup = trans_setup
         self.scatt_setup = scatt_setup
-        self.space1 = space1
-        self.space2 = space2
+#        self.space1 = space1
+#        self.space2 = space2
+        self.space3 = space3
         self.t1 = tit_1
 #        self.t2 = tit_2
         self.tit_gsom = tit_gsom
@@ -1187,16 +1294,28 @@ class SampleTable():
         self.t5 = tit_5
         self.t6 = tit_6
         self.group.add(trans_setup, scatt_setup, \
-                       space1, trans_time, \
-                       scatt_time, space2, \
+                       trans_time, \
+                       scatt_time,  \
                        tit_1, tit_gsom, tit_3, \
-                       tit_4, tit_5, tit_6)
+                       tit_4, tit_5, tit_6, space3)
 #        for i in xrange(__number_of_sample__) :
 #            self.add_sample(i + 1)
         sns = get_enabled_sample_idx()
-        for i in sns:
-            self.add_sample(i)
         self.enabled_sample_idxs = sns
+        if fwb is None:
+            if not empty:
+                for i in sns:
+                    self.add_sample(i)
+        else:
+            ftable = fwb.table
+            for s in ftable.samples:
+                self.add_sample(s.sid, s)
+            tit_3.value = ftable.t3.value
+            tit_5.value = ftable.t5.value
+            trans_time.value = ftable.trans_time.value
+            scatt_time.value = ftable.scatt_time.value
+            trans_setup.value = ftable.trans_setup.value
+            scatt_setup.value = ftable.scatt_setup.value
         self.trans_config_start_time = 0
         self.trans_config_stop_time = 0
         self.scatt_config_start_time = 0
@@ -1206,24 +1325,136 @@ class SampleTable():
         self.scatt_start_time = 0
         self.scatt_stop_time = 0
         
-    def add_sample(self, id):
-        sample = Sample(id)
-        self.samples[id] = sample
+    def add_sample(self, sid, fsample = None):
+        sample = Sample(self.wid, sid, fsample = fsample)
+#        self.samples[sample.id] = sample
+        self.samples.append(sample)
 #        sample.do_trans.command = 'redo_trans(' + str(self.wid) + ', ' + str(id) + ')'
 #        sample.do_scatt.command = 'redo_scatt(' + str(self.wid) + ', ' + str(id) + ')'
-        self.group.add(sample.id_label, sample.gsom, sample.do_trans, sample.trans_time, \
-                 sample.trans_res, sample.do_scatt, sample.scatt_time, sample.scatt_res)
+        self.group.add(sample.id_label, sample.gsom, \
+                       sample.do_trans, sample.trans_time, \
+                       sample.trans_res, sample.do_scatt, \
+                       sample.scatt_time, sample.scatt_res, 
+                       sample.add, sample.remove)
     
-    def enable_samples(self, sample_idxs):
-        for idx in self.enabled_sample_idxs:
-            sample = self.samples.get(idx)
-            if not sample is None:
-                sample.dispose()
-            self.samples[idx] = None
-        self.enabled_sample_idxs = sample_idxs
-        for idx in sample_idxs:
-            self.add_sample(idx)
-        
+    def enable_samples(self, sids):
+#        for idx in self.enabled_sample_idxs:
+#            sample = self.samples.get(idx)
+#            if not sample is None:
+#                sample.dispose()
+#            self.samples[idx] = None
+#        self.enabled_sample_idxs = sample_idxs
+#        for idx in sample_idxs:
+#            self.add_sample(idx)
+        tr = []
+        s_existed = []
+        for s in self.samples:
+            sid = s.sid
+            if sid in sids:
+                if not sid in s_existed:
+                    s_existed.append(sid)
+            else:
+                tr.append(s)
+        for s in tr:
+            self.remove_entry(s)
+        for sid in s_existed:
+            sids.remove(sid)
+        for sid in sids:
+            iid = 0
+            for s in self.samples:
+                if s.sid <= sid:
+                    iid += 1
+                else:
+                    break
+            self.insert_entry(iid, sid)
+    
+    def get_sample(self, id):
+        for s in self.samples:
+            if s.id == id:
+                return s
+        return None
+    
+    def get_sample_index(self, id):
+        idx = 0
+        for s in self.samples:
+            if s.id == id:
+                return idx
+            idx += 1
+        return -1
+    
+    def insert_entry(self, idx, sid):
+        sample = Sample(self.wid, sid)
+        self.samples.insert(idx, sample)
+        self.group.insert(int(self.sizeHeader + idx * self.numColumns), 
+                          sample.id_label, sample.gsom, \
+                          sample.do_trans, sample.trans_time, \
+                          sample.trans_res, sample.do_scatt, \
+                          sample.scatt_time, sample.scatt_res, \
+                          sample.add, sample.remove)
+    
+    def add_sample_from_rep(self, rep):
+        sid = rep["sid"]
+        sample = Sample(self.wid, sid, rep["gsom"], 
+                        rep["trans_time"], 
+                        rep["scatt_time"], 
+                        rep["do_trans"], 
+                        rep["do_scatt"])
+        self.samples.append(sample)
+        self.group.add(sample.id_label, sample.gsom, \
+                       sample.do_trans, sample.trans_time, \
+                       sample.trans_res, sample.do_scatt, \
+                       sample.scatt_time, sample.scatt_res, \
+                       sample.add, sample.remove)
+                
+    def copy_entry(self, id):
+        s = self.get_sample(id)
+        if s:
+            idx = self.get_sample_index(id)
+            sample = Sample(self.wid, s.sid, s.gsom.value, 
+                            s.trans_time.value, 
+                            s.scatt_time.value, 
+                            s.do_trans.value, 
+                            s.do_scatt.value)
+            self.samples.insert(idx + 1, sample)
+            slog(str(self.sizeHeader + (idx + 1) * self.numColumns))
+            self.group.insert(int(self.sizeHeader + (idx + 1) * self.numColumns), 
+                              sample.id_label, sample.gsom, \
+                              sample.do_trans, sample.trans_time, \
+                              sample.trans_res, sample.do_scatt, \
+                              sample.scatt_time, sample.scatt_res, \
+                              sample.add, sample.remove)
+        else:
+            sample = Sample(self.wid, 1)
+            self.group.add(sample.id_label, sample.gsom, \
+                           sample.do_trans, sample.trans_time, \
+                           sample.trans_res, sample.do_scatt, \
+                           sample.scatt_time, sample.scatt_res, \
+                           sample.add, sample.remove)
+            self.samples.append(sample)
+
+    def remove_entry(self, item):
+        if type(item) is int:
+            id = item
+            s = self.get_sample(id)
+        else:
+            s = item
+            id = s.id
+        slog("try to remove {}".format(id))
+        if s:
+            slog("remove entry {}".format(id))
+            self.samples.remove(s)
+            s.dispose()
+            self.group.remove(s.id_label)
+            self.group.remove(s.gsom)
+            self.group.remove(s.do_trans)
+            self.group.remove(s.trans_time)
+            self.group.remove(s.trans_res)
+            self.group.remove(s.do_scatt)
+            self.group.remove(s.scatt_time)
+            self.group.remove(s.scatt_res)
+            self.group.remove(s.add)
+            self.group.remove(s.remove)
+            
     def test_run(self):
         slog('test running transmission setup')
         test_exec(self.trans_setup.value)
@@ -1257,32 +1488,32 @@ class SampleTable():
         return self.need_to_run_trans() or self.need_to_run_scatt()
         
     def need_to_run_trans(self):
-        for i in self.samples:
-            if self.samples[i].need_to_run_trans():
+        for s in self.samples:
+            if s.need_to_run_trans():
                 return True
         return False
 
     def need_to_run_scatt(self):
-        for i in self.samples:
-            if self.samples[i].need_to_run_scatt():
+        for s in self.samples:
+            if s.need_to_run_scatt():
                 return True
         return False
 
     def get_job_count(self):
         ct = 0
-        for i in self.samples:
-            if self.samples[i].do_trans.value:
+        for s in self.samples:
+            if s.do_trans.value:
                 ct += 1
-            if self.samples[i].do_scatt.value:
+            if s.do_scatt.value:
                 ct += 1
         return ct
         
     def get_done_count(self):
         ct = 0
-        for i in self.samples:
-            if self.samples[i].do_trans.value and len(self.samples[i].trans_res.value.strip()) > 0:
+        for s in self.samples:
+            if s.do_trans.value and len(s.trans_res.value.strip()) > 0:
                 ct += 1
-            if self.samples[i].do_scatt.value and len(self.samples[i].scatt_res.value.strip()) > 0:
+            if s.do_scatt.value and len(s.scatt_res.value.strip()) > 0:
                 ct += 1
         return ct
     
@@ -1300,23 +1531,23 @@ class SampleTable():
                     t += _trans_setup_time - past
                 else:
                     pass
-                for i in self.samples:
-                    t += self.samples[i].get_trans_time_estimation()
+                for s in self.samples:
+                    t += s.get_trans_time_estimation()
                 if self.need_to_run_scatt():
                     if len(self.scatt_setup.value.strip()) > 0 :
                         t += _scatt_setup_time
-                    for i in self.samples:
-                        t += self.samples[i].get_scatt_time_estimation()
+                    for s in self.samples:
+                        t += s.get_scatt_time_estimation()
                 else:
                     pass
             elif self.trans_start_time != 0 and self.trans_stop_time == 0:
-                for i in self.samples:
-                    t += self.samples[i].get_trans_time_estimation()
+                for s in self.samples:
+                    t += s.get_trans_time_estimation()
                 if self.need_to_run_scatt():
                     if len(self.scatt_setup.value.strip()) > 0 :
                         t += _scatt_setup_time
-                    for i in self.samples:
-                        t += self.samples[i].get_scatt_time_estimation()
+                    for s in self.samples:
+                        t += s.get_scatt_time_estimation()
                 else:
                     pass
             elif self.scatt_config_start_time != 0 and self.scatt_config_stop_time == 0:
@@ -1325,43 +1556,43 @@ class SampleTable():
                     t += _scatt_setup_time - past
                 else:
                     pass
-                for i in self.samples:
-                    t += self.samples[i].get_scatt_time_estimation()
+                for s in self.samples:
+                    t += s.get_scatt_time_estimation()
                 if self.need_to_run_trans():
                     if len(self.trans_setup.value.strip()) > 0 :
                         t += _trans_setup_time
-                    for i in self.samples:
-                        t += self.samples[i].get_trans_time_estimation()
+                    for s in self.samples:
+                        t += s.get_trans_time_estimation()
                 else:
                     pass
             elif self.scatt_start_time != 0 and self.scatt_stop_time == 0:
-                for i in self.samples:
-                    t += self.samples[i].get_scatt_time_estimation()
+                for s in self.samples:
+                    t += s.get_scatt_time_estimation()
                 if self.need_to_run_trans():
                     if len(self.trans_setup.value.strip()) > 0 :
                         t += _trans_setup_time
-                    for i in self.samples:
-                        t += self.samples[i].get_trans_time_estimation()
+                    for s in self.samples:
+                        t += s.get_trans_time_estimation()
                 else:
                     pass
             else:
                 if self.need_to_run_scatt() :
                     if len(self.scatt_setup.value.strip()) > 0 :
                         t += _scatt_setup_time
-                    for i in self.samples:
-                        t += self.samples[i].get_scatt_time_estimation()
+                    for s in self.samples:
+                        t += s.get_scatt_time_estimation()
                 if self.need_to_run_trans():
                     if len(self.trans_setup.value.strip()) > 0 :
                         t += _trans_setup_time
-                    for i in self.samples:
-                        t += self.samples[i].get_trans_time_estimation()
+                    for s in self.samples:
+                        t += s.get_trans_time_estimation()
             return t
         else:
             tt = 0
             st = 0
-            for i in self.samples:
-                tt += self.samples[i].get_trans_time_estimation()
-                st += self.samples[i].get_scatt_time_estimation()
+            for s in self.samples:
+                tt += s.get_trans_time_estimation()
+                st += s.get_scatt_time_estimation()
             if tt > 0:
                 if len(self.trans_setup.value.strip()) > 0 :
                     tt += _trans_setup_time
@@ -1388,8 +1619,8 @@ class SampleTable():
             self.trans_stop_time = 0
             self.trans_start_time = time.time()
             try:
-                for i in sorted(self.samples):
-                    self.samples[i].run_transmission()
+                for s in self.samples:
+                    s.run_transmission()
             finally:
                 self.trans_stop_time = time.time()
             self.run_trans()
@@ -1412,8 +1643,8 @@ class SampleTable():
             self.scatt_stop_time = 0
             self.scatt_start_time = time.time()
             try:
-                for i in sorted(self.samples):
-                    self.samples[i].run_scattering()
+                for s in self.samples:
+                    s.run_scattering()
             finally:
                 self.scatt_stop_time = time.time()
             self.run_scatt()
@@ -1427,9 +1658,9 @@ class SampleTable():
         self.trans_stop_time = 0
         self.scatt_start_time = 0
         self.scatt_stop_time = 0
-        for i in self.samples:
-            self.samples[i].reset_trans_result()
-            self.samples[i].reset_scatt_result()
+        for s in self.samples:
+            s.reset_trans_result()
+            s.reset_scatt_result()
         
     def set_enabled(self, flag):
         self.t1.enabled = flag
@@ -1442,28 +1673,28 @@ class SampleTable():
         self.scatt_time.enabled = flag
         self.trans_setup.enabled = flag
         self.scatt_setup.enabled = flag
-        for i in self.samples:
-            self.samples[i].set_enabled(flag)
+        for s in self.samples:
+            s.set_enabled(flag)
             
     def update_trans_time(self):
-        for i in self.samples:
-            self.samples[i].trans_time.value = self.trans_time.value
+        for s in self.samples:
+            s.trans_time.value = self.trans_time.value
 
     def update_scatt_time(self):
-        for i in self.samples:
-            self.samples[i].scatt_time.value = self.scatt_time.value
+        for s in self.samples:
+            s.scatt_time.value = self.scatt_time.value
         
     def toggle_trans_enabled(self):
-        for i in self.samples:
-            self.samples[i].do_trans.value = self.t3.value
+        for s in self.samples:
+            s.do_trans.value = self.t3.value
 
     def toggle_scatt_enabled(self):
-        for i in self.samples:
-            self.samples[i].do_scatt.value = self.t5.value
+        for s in self.samples:
+            s.do_scatt.value = self.t5.value
         
     def dispose(self):
-        for i in self.samples:
-            self.samples[i].dispose()
+        for s in self.samples:
+            s.dispose()
         self.t1.dispose()
         self.tit_gsom.dispose()
         self.t3.dispose()
@@ -1475,13 +1706,13 @@ class SampleTable():
         self.group.dispose()
         self.trans_setup.dispose()
         self.scatt_setup.dispose()
-        self.space1.dispose()
-        self.space2.dispose()
+#        self.space1.dispose()
+#        self.space2.dispose()
+        self.space3.dispose()
         
     def append_xml(self, parent):
-        for i in sorted(self.samples):
-            sp = self.samples[i]
-            sp.append_xml(parent)
+        for s in self.samples:
+            s.append_xml(parent)
 
     def get_html(self, title):
         table = Element('table')
@@ -1523,9 +1754,8 @@ class SampleTable():
         th.set("style", "width: 30%;")
         th.text = 'Comment'
         
-        for i in sorted(self.samples):
-            sp = self.samples[i]
-            elmt = sp.get_html_elmt()
+        for s in self.samples:
+            elmt = s.get_html_elmt()
             if not elmt is None:
                 table.append(elmt)
             
@@ -1690,7 +1920,7 @@ def insert_block(wid):
     if idx < 0:
         add_block()
     else:
-        wb = WorkflowBlock()
+        wb = WorkflowBlock(old)
         workflow_list.insert(idx + 1, wb)
         slog('block #' + str(wb.seq) + ' inserted')
         try:
@@ -1699,20 +1929,20 @@ def insert_block(wid):
             config_name = old.title.value
             if not config_name.startswith(_default_config_name):
                 wb.title.value = old.title.value
-            wb.table.t3.value = old.table.t3.value
-            wb.table.t5.value = old.table.t5.value
-            wb.table.trans_time.value = old.table.trans_time.value
-            wb.table.scatt_time.value = old.table.scatt_time.value
-            wb.table.trans_setup.value = old.table.trans_setup.value
-            wb.table.scatt_setup.value = old.table.scatt_setup.value
-            for i in wb.table.samples:
-                sample = wb.table.samples[i]
-                old_sample = old.table.samples[i]
-                sample.gsom.value = old_sample.gsom.value
-                sample.do_trans.value = old_sample.do_trans.value
-                sample.trans_time.value = old_sample.trans_time.value
-                sample.do_scatt.value = old_sample.do_scatt.value
-                sample.scatt_time.value = old_sample.scatt_time.value
+#            wb.table.t3.value = old.table.t3.value
+#            wb.table.t5.value = old.table.t5.value
+#            wb.table.trans_time.value = old.table.trans_time.value
+#            wb.table.scatt_time.value = old.table.scatt_time.value
+#            wb.table.trans_setup.value = old.table.trans_setup.value
+#            wb.table.scatt_setup.value = old.table.scatt_setup.value
+#            for i in wb.table.samples:
+#                sample = wb.table.samples[i]
+#                old_sample = old.table.samples[i]
+#                sample.gsom.value = old_sample.gsom.value
+#                sample.do_trans.value = old_sample.do_trans.value
+#                sample.trans_time.value = old_sample.trans_time.value
+#                sample.do_scatt.value = old_sample.do_scatt.value
+#                sample.scatt_time.value = old_sample.scatt_time.value
         finally:
             __UI__.updateUI()
     update_progress()
@@ -1723,7 +1953,7 @@ def add_block():
     old = None
     if len(workflow_list) > 0 :
         old = workflow_list[-1]
-    wb = WorkflowBlock()
+    wb = WorkflowBlock(fwb = old)
     workflow_list.append(wb)
     slog("add new workflow block " + str(wb.seq))
     try:
@@ -1732,22 +1962,24 @@ def add_block():
             config_name = old.title.value
             if not config_name.startswith(_default_config_name):
                 wb.title.value = old.title.value
-            wb.table.t3.value = old.table.t3.value
-            wb.table.t5.value = old.table.t5.value
-            wb.table.trans_time.value = old.table.trans_time.value
-            wb.table.scatt_time.value = old.table.scatt_time.value
-            wb.table.trans_setup.value = old.table.trans_setup.value
-            wb.table.scatt_setup.value = old.table.scatt_setup.value
-            for i in wb.table.samples:
-                sample = wb.table.samples[i]
-                old_sample = old.table.samples[i]
-                sample.gsom.value = old_sample.gsom.value
-                sample.do_trans.value = old_sample.do_trans.value
-                sample.trans_time.value = old_sample.trans_time.value
-                sample.do_scatt.value = old_sample.do_scatt.value
-                sample.scatt_time.value = old_sample.scatt_time.value
+#            wb.table.t3.value = old.table.t3.value
+#            wb.table.t5.value = old.table.t5.value
+#            wb.table.trans_time.value = old.table.trans_time.value
+#            wb.table.scatt_time.value = old.table.scatt_time.value
+#            wb.table.trans_setup.value = old.table.trans_setup.value
+#            wb.table.scatt_setup.value = old.table.scatt_setup.value
+#            for i in wb.table.samples:
+#                sample = wb.table.samples[i]
+#                old_sample = old.table.samples[i]
+#                sample.gsom.value = old_sample.gsom.value
+#                sample.do_trans.value = old_sample.do_trans.value
+#                sample.trans_time.value = old_sample.trans_time.value
+#                sample.do_scatt.value = old_sample.do_scatt.value
+#                sample.scatt_time.value = old_sample.scatt_time.value
     finally:
         __UI__.updateUI()
+        update_progress()
+
 
 def run_scan():
     global _is_running
@@ -1770,7 +2002,7 @@ def run_scan():
     _is_running = True
     _start_timestamp = time.time()
     try:
-        path = get_project_path('scripts') + '/gumtree_autosave'
+        path = get_project_path('Quokka') + '/gumtree_autosave'
         if not os.path.exists(path):
             os.makedirs(path)
         path += '/workflow_' + strftime("%Y-%m-%dT%H-%M-%S", localtime()) + '.pkl'
@@ -1918,27 +2150,35 @@ def save_config(wid):
         slog('cancel saving configuration')
     
 def load_workflow():
-    global workflow_list
+    global workflow_list, __sample_setup__
     fn = selectLoadFile(['*.pkl'], None)
     if fn is None:
         return
-    wl = None
+    d = None
     try :
         file = open(fn, 'rb')
-        wl = pickle.load(file)
+        d = pickle.load(file)
     finally:
         file.close()
     try:
-        if not wl is None and len(wl) > 0:
-            if len(wl) > len(workflow_list) :
-                for i in xrange(len(wl) - len(workflow_list)):
-                    workflow_list.append(WorkflowBlock())
-            elif len(wl) < len(workflow_list) :
-                for i in xrange(len(workflow_list) - len(wl)):
-                    rmv = workflow_list.pop()
-                    rmv.dispose()
+        if not d is None:
+#            if len(wl) > len(workflow_list) :
+#                for i in xrange(len(wl) - len(workflow_list)):
+#                    workflow_list.append(WorkflowBlock())
+#            elif len(wl) < len(workflow_list) :
+#                for i in xrange(len(workflow_list) - len(wl)):
+#                    rmv = workflow_list.pop()
+#                    rmv.dispose()
+            samples = d["samples"]
+            __sample_setup__.from_rep(samples)
+            wl = d["blocks"]
+            for i in xrange(len(workflow_list)):
+                rmv = workflow_list.pop()
+                rmv.dispose()
             for i in xrange(len(wl)):
-                workflow_list[i].from_rep(wl[i])
+                workflow_list.append(WorkflowBlock(empty = True))
+            for b in wl:
+                workflow_list[i].from_rep(b)
             slog('workflow loaded from ' + str(fn))
         else:
             slog('invalid workflow file at ' + str(fn), True)
@@ -1947,7 +2187,7 @@ def load_workflow():
         update_time()
 
 def export_workflow(path = None):
-    global workflow_list
+    global workflow_list, __sample_setup__
     if path is None:
         path = selectSaveFile(['*.pkl'])
         if path == None:
@@ -1962,11 +2202,15 @@ def export_workflow(path = None):
             return
     slog('workflow exported to ' + path)
     file = open(path, 'wb')
+    samples = __sample_setup__.to_rep()
     wf_rep = []
     for wb in workflow_list:
         wf_rep.append(wb.to_rep())
+    d = dict()
+    d['samples'] = samples
+    d['blocks'] = wf_rep
     try:
-        pickle.dump(wf_rep, file)
+        pickle.dump(d, file)
     except:
         traceback.print_exc(__writer__)
     finally:
@@ -2116,7 +2360,21 @@ def test_exec(text):
         exec(text)
     except:
         slog(str(traceback.format_exc().splitlines()[-1]), f_err = True)
-         
+
+def copy_entry(wid, id):
+    wb = get_workflow_block(wid)
+    if not wb is None:
+        wb.copy_entry(id)
+        update_group_ui(wb.group)
+        update_progress()
+
+def remove_entry(wid, id):
+    wb = get_workflow_block(wid)
+    if not wb is None:
+        slog("remove wb")
+        wb.remove_entry(id)
+        update_group_ui(wb.group)
+        
 #def upload_html(wid):
 #    bl = get_workflow_block(wid)
 #    if not bl is None:

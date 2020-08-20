@@ -474,7 +474,6 @@ def get_enabled_sample_idx():
     return __sample_setup__.get_enabled_idx()
 
 def apply_sample_selection():
-    slog('apply')
     global __sample_setup__
     sns = __sample_setup__.get_enabled_idx()
     for wb in workflow_list:
@@ -869,9 +868,11 @@ class Sample():
         s1_scatt_res.width = 120
         s1_add = Act('copy_entry({}, {})'.format(self.wid, self.id), '+ADD')
         s1_add.name = 'add_{}_{}'.format(self.wid, self.id)
+        s1_add.independent = True
         globals()[str(s1_add.name)] = s1_add
         s1_remove = Act('remove_entry({}, {})'.format(self.wid, self.id), '-DEL')
         s1_remove.name = 'remove_{}_{}'.format(self.wid, self.id)
+        s1_remove.independent = True
         globals()[str(s1_remove.name)] = s1_remove
         self.id_label = s1_idx
         self.gsom = s1_gsom
@@ -939,7 +940,7 @@ class Sample():
             try:
                 sics.drive('gsom', gsom)
             except:
-                slog('failed to drive gsom to {}'.format(gosm), True)
+                slog('failed to drive gsom to', True)
             try:
                 self.trans_res.value = _counting_status
                 act_next.enabled = True
@@ -1192,6 +1193,8 @@ class Sample():
             td = SubElement(tr, 'td')
             td.text = str(get_sample_name(self.sid).strip())
             td = SubElement(tr, 'td')
+            td.text = str('%.4f' % self.gsom.value)
+            td = SubElement(tr, 'td')
             text = get_short_pdfname(self.trans_res.value.strip())
             if text.startswith('*'):
                 font = SubElement(td, 'font')
@@ -1416,7 +1419,6 @@ class SampleTable():
                             s.do_trans.value, 
                             s.do_scatt.value)
             self.samples.insert(idx + 1, sample)
-            slog(str(self.sizeHeader + (idx + 1) * self.numColumns))
             self.group.insert(int(self.sizeHeader + (idx + 1) * self.numColumns), 
                               sample.id_label, sample.gsom, \
                               sample.do_trans, sample.trans_time, \
@@ -1728,30 +1730,33 @@ class SampleTable():
         th.set('colspan', '2')
         th.text = strftime("%Y-%m-%dT%H:%M:%S", localtime())
         th = SubElement(tr, 'th')
-        th.set('colspan', '5')
+        th.set('colspan', '6')
         th.text = title
         
         tr = SubElement(table, 'tr')
         th = SubElement(tr, 'th')
-        th.set("style", "width: 8%;")
-        th.text = 'Position'
+        th.set("style", "width: 4%;")
+        th.text = 'Pos'
         th = SubElement(tr, 'th')
         th.set("style", "width: 18%;")
-        th.text = 'Sample Name'
+        th.text = 'Name'
+        th = SubElement(tr, 'th')
+        th.set("style", "width: 10%;")
+        th.text = 'gsom'
         th = SubElement(tr, 'th')
         th.set("style", "width: 14%;")
         th.text = 'Transmission'
         th = SubElement(tr, 'th')
-        th.set("style", "width: 8%;")
+        th.set("style", "width: 10%;")
         th.text = 'Preset'
         th = SubElement(tr, 'th')
         th.set("style", "width: 14%;")
         th.text = 'Scattering'
         th = SubElement(tr, 'th')
-        th.set("style", "width: 8%;")
+        th.set("style", "width: 10%;")
         th.text = 'Preset'
         th = SubElement(tr, 'th')
-        th.set("style", "width: 30%;")
+        th.set("style", "width: 20%;")
         th.text = 'Comment'
         
         for s in self.samples:

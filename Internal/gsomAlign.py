@@ -7,12 +7,157 @@ from gumpy.commons.logger import n_logger
 from gumpy.commons import sics
 from Internal import sicsext
 from java.lang import Double
+from java.io import File
 # Script control setup area
 # script info
 __script__.title = 'GSOM Alignment'
 __script__.version = ''
 #pact = Act('previous_step()', '<- Previous Step')
+
+class RegionEventListener(MaskEventListener):
     
+    def __init__(self):
+        MaskEventListener.__init__(self)
+    
+    def mask_added(self, mask):
+        pass
+            
+    def mask_removed(self, mask):
+        global DS
+        update_mask_list()
+        process(DS)
+    
+    def mask_updated(self, mask):
+        global __mask_updated__
+        update_mask_list()
+        __mask_updated__ = True
+        
+regionListener = RegionEventListener()
+
+class MousePressListener(AWTMouseListener):
+    def __init__(self):
+        AWTMouseListener.__init__(self)
+    
+    def mouse_released(self, event):
+        global __mask_updated__
+        global DS
+        if __mask_updated__ :
+            process(DS)
+            __mask_updated__ = False
+    
+mouse_press_listener = MousePressListener()
+
+__inc_masks__ = []
+__exc_masks__ = []
+
+def load_mask_prof():
+    global __inc_masks__, __exc_masks__, SAVED_INC_MASK_PRFN, \
+            SAVED_EXC_MASK_PRFN, SAVED_MASK_PRFN
+    s_mask = get_prof_value(SAVED_MASK_PRFN)
+    if not s_mask is None and s_mask.strip() != '':
+        reg_list.value = s_mask
+    reg_list.title = 'mask list'
+    reg_list.enabled = False
+    inc_masks = get_prof_value(SAVED_INC_MASK_PRFN)
+    if not inc_masks is None and inc_masks.strip() != '':
+        __inc_masks__ = eval(inc_masks)
+    exc_masks = get_prof_value(SAVED_EXC_MASK_PRFN)
+    if not exc_masks is None and exc_masks.strip() != '':
+        __exc_masks__ = eval(exc_masks)
+
+def save_mask_prof():
+    global __inc_masks__, __exc_masks__, SAVED_EXC_MASK_PRFN, \
+            SAVED_INC_MASK_PRFN, SAVED_MASK_PRFN
+    set_prof_value(SAVED_MASK_PRFN , str(reg_list.value))
+    set_prof_value(SAVED_INC_MASK_PRFN , str(__inc_masks__))
+    set_prof_value(SAVED_EXC_MASK_PRFN , str(__exc_masks__))
+    save_pref()
+    
+def update_mask_list():
+    if Plot3.ndim > 0:
+        reg_list.value = mask2str(Plot3.get_masks())
+        inte_masks(Plot3.ds, Plot3.get_masks())
+        
+def inte_masks(ds, masks):
+    global __inc_masks__
+    global __exc_masks__
+    __inc_masks__ = []
+    __exc_masks__ = []
+    x_axis = ds.axes[-1]
+    y_axis = ds.axes[-2]
+
+    for mask in masks:
+        y_iMin = int((mask.minY - y_axis[0]) / (y_axis[-1] - y_axis[0]) \
+                     * (y_axis.size - 1))
+        if y_iMin < 0 :
+            y_iMin = 0
+        if y_iMin >= y_axis.size:
+            continue
+        y_iMax = int((mask.maxY - y_axis[0]) / (y_axis[-1] - y_axis[0]) \
+                     * (y_axis.size - 1)) + 1
+        if y_iMax < 0:
+            continue
+        x_iMin = int((mask.minX - x_axis[0]) / (x_axis[-1] - x_axis[0]) \
+                     * (x_axis.size - 1))
+        if x_iMin < 0:
+            x_iMin = 0;
+        if x_iMin >= x_axis.size:
+            continue
+        x_iMax = int((mask.maxX - x_axis[0]) / (x_axis[-1] - x_axis[0]) \
+                     * (x_axis.size - 1)) + 1
+        if x_iMax < 0:
+            continue
+        if mask.isInclusive() :
+            __inc_masks__.append([x_iMin, x_iMax, y_iMin, y_iMax])
+        else:
+            __exc_masks__.append([x_iMin, x_iMax, y_iMin, y_iMax])
+
+def str2maskstr(value):
+    items = value.split(';')
+    res = []
+    for item in items:
+        name = item[0:item.index('[')];
+        rstr = item[item.index('[') + 1 : item.index(']')]
+        range = rstr.split(',')
+        range.append(name)
+        res.append(range)
+    return res
+
+def str2mask(value):
+    items = value.split(';')
+    masks = []
+    for item in items:
+        name = item[0:item.index('[')];
+        rstr = item[item.index('[') + 1 : item.index(']')]
+        range = rstr.split(',')
+        mask = RectangleMask(True, float(range[0]), float(range[2]), \
+                             float(range[1]) - float(range[0]), \
+                             float(range[3]) - float(range[2]))
+        mask.name = name
+        masks.append(mask)
+    return masks
+
+def mask2str(masks):
+    res = ''
+    for mask in masks:
+        res += mask.name
+        res += '[' + str(mask.minX) + ',' + str(mask.maxX) + ',' \
+                + str(mask.minY) + ',' + str(mask.maxY) + ']'
+        if masks.indexOf(mask) < len(masks) - 1:
+            res += ';'
+    return res
+
+def add_dataset(f):
+    global __DATASOURCE__
+    try:
+        print(str(f))
+        __DATASOURCE__.removeDataset(str(f))
+        __DATASOURCE__.addDataset(str(f), False)
+    except:
+        print 'error in adding dataset: ' + f
+
+DS = None
+
 G1 = Group('Scan on gsom')
 device_name = Par('string', 'gsom', options = ['gsom', 'dummy_motor'], 
                   command = 'update_axis_name()')
@@ -52,9 +197,7 @@ def update_axis_name():
 G1.add(device_name, scan_start, scan_stop, number_of_points, scan_mode, scan_preset, act1)
 
 G2 = Group('Fitting')
-data_name = Par('string', 'bm2_counts', \
-               options = ['total_counts', 'bm1_counts', \
-                          'bm2_counts'])
+data_name = 'total_counts'
 normalise = Par('bool', True)
 axis_name = Par('string', '')
 axis_name.enabled = True
@@ -66,7 +209,7 @@ FWHM = Par('float', 'NaN')
 fact = Act('fit_curve()', 'Fit Again')
 #offset_done = Par('bool', False)
 #act3 = Act('offset_s2()', 'Set Device Zero Offset')
-G2.add(data_name, normalise, axis_name, auto_fit, fit_min, 
+G2.add(normalise, axis_name, auto_fit, fit_min, 
        fit_max, peak_pos, FWHM, fact)
 
 G3 = Group('Plot 2')
@@ -90,6 +233,8 @@ reg_enabled = Par('bool', True)
 reg_enabled.title = 'region enabled'
 reg_list = Par('string', '')
 G4.add(reg_enabled, reg_list)
+
+load_mask_prof()
 
 def scan(dname, start, stop, np, mode, preset):
     device_name.value = dname
@@ -148,41 +293,47 @@ def __run_script__(fns):
     __std_run_script__(fns)
 
 def load_experiment_data():
+    global mouse_press_listener, regionListener
     basename = sicsext.getBaseFilename()
     fullname = str(System.getProperty('sics.data.path') + '/' + basename)
     df.datasets.clear()
-    ds = df[fullname]
-    dname = str(data_name.value)
-    data = SimpleData(ds[dname])
-#    data = ds[str(data_name.value)]
-    axis = SimpleData(ds[str(axis_name.value)])
-    if data.size > axis.size:
-        data = data[:axis.size]
-    if normalise.value :
-        if dname == 'bm1_counts':
-            tname = 'bm1_time'
-        elif dname == 'bm2_counts':
-            tname = 'bm2_time'
-        else:
-            tname = 'detector_time'
-        norm = ds[tname]
-        if norm != None and hasattr(norm, '__len__'):
-            avg = norm.sum() / len(norm)
-            niter = norm.item_iter()
-            if niter.next() <= 0:
-                niter.set_curr(1)
-            data = data / norm * avg
-
-    ds2 = Dataset(data, axes=[axis])
-    ds2.title = ds.id
-    ds2.location = fullname
-    fit_min.value = axis.min()
-    fit_max.value = axis.max()
-    Plot1.set_dataset(ds2)
-    Plot1.x_label = axis_name.value
-    Plot1.y_label = str(data_name.value)
-    Plot1.title = str(data_name.value) + ' vs ' + axis_name.value
-    Plot1.pv.getPlot().setMarkerEnabled(True)
+    f = File(fullname)
+    if f.exists():
+        ds = df[fullname]
+        add_dataset(f.getAbsolutePath())
+        process(ds)
+    else:
+        log('file not found: ' + fullname)
+#    dname = 'total_counts'
+#    data = SimpleData(ds[dname])
+#    axis = SimpleData(ds[str(axis_name.value)])
+#    if data.size > axis.size:
+#        data = data[:axis.size]
+#    if normalise.value :
+#        if dname == 'bm1_counts':
+#            tname = 'bm1_time'
+#        elif dname == 'bm2_counts':
+#            tname = 'bm2_time'
+#        else:
+#            tname = 'detector_time'
+#        norm = ds[tname]
+#        if norm != None and hasattr(norm, '__len__'):
+#            avg = norm.sum() / len(norm)
+#            niter = norm.item_iter()
+#            if niter.next() <= 0:
+#                niter.set_curr(1)
+#            data = data / norm * avg
+#
+#    ds2 = Dataset(data, axes=[axis])
+#    ds2.title = ds.id
+#    ds2.location = fullname
+#    fit_min.value = axis.min()
+#    fit_max.value = axis.max()
+#    Plot1.set_dataset(ds2)
+#    Plot1.x_label = axis_name.value
+#    Plot1.y_label = data_name
+#    Plot1.title = data_name + ' vs ' + axis_name.value
+#    Plot1.pv.getPlot().setMarkerEnabled(True)
     
 
 def intg(ds):
@@ -190,13 +341,19 @@ def intg(ds):
         ds = ds.get_reduced(1)
     di = ds.intg(0)
     Plot3.set_dataset(di)
+    if len(Plot3.get_masks()) == 0:
+        if reg_list.value != None and reg_list.value.strip() != '':
+            masks = str2maskstr(reg_list.value)
+            for mask in masks:
+                Plot3.add_mask_2d(float(mask[0]), float(mask[1]), \
+                                  float(mask[2]), float(mask[3]), \
+                                  mask[4], mask[4].startswith('I'))
     
 def import_to_plot2():
-    global Plot2
-    dss = __DATASOURCE__.getSelectedDatasets()
-    for dinfo in dss:
-        loc = dinfo.getLocation()
-        ds = df[str(loc)]
+    global Plot2, Plot1
+    dss = Plot1.ds
+    if len(dss) > 0:
+        ds = dss[0]
         if not allow_duplication.value:
             did = str(ds.id)
             if to_remove.options.__contains__(did):
@@ -207,37 +364,14 @@ def import_to_plot2():
                         rlist.remove(did)
                         to_remove.options = rlist
                         break
-        dname = str(data_name.value)
-        data = SimpleData(ds[dname])
-        if normalise.value :
-            if dname == 'bm1_counts':
-                tname = 'bm1_time'
-            elif dname == 'bm2_counts':
-                tname = 'bm2_time'
-            else:
-                tname = 'detector_time'
-            norm = ds[tname]
-            if norm != None and hasattr(norm, '__len__'):
-                avg = norm.sum() / len(norm)
-                niter = norm.item_iter()
-                if niter.next() <= 0:
-                    niter.set_curr(1)
-                data = data / norm * avg
-        if axis_name.value:
-            axis = SimpleData(ds[str(axis_name.value)])
-        else :
-            axis_name.value = ds.axes[0].name
-            axis = SimpleData(ds[str(axis_name.value)])
-        if data.size > axis.size:
-            data = data[:axis.size]
-        ds2 = Dataset(data, axes=[axis])
-        ds2.title = ds.id
-        Plot2.add_dataset(ds2)
+#        ds2 = Dataset(data, axes=[axis])
+#        ds2.title = ds.id
+        Plot2.add_dataset(ds)
         Plot2.x_label = axis_name.value
-        Plot2.y_label = dname
+        Plot2.y_label = 'total_counts'
         Plot2.title = 'Overlay'
         rlist = copy(to_remove.options)
-        rlist.append(str(ds2.title))
+        rlist.append(str(ds.title))
         to_remove.options = rlist
 
 def remove_curve():
@@ -253,29 +387,6 @@ def remove_curve():
             rlist.remove(to_remove.value)
             to_remove.options = rlist
             break
-
-def remove_peak():
-    global Plot3
-    ds = Plot3.ds
-    if ds is None or len(ds) == 0:
-        log('Warning: no data in Plot3.\n')
-        return
-    if peak_at.value is None or peak_at.value == '':
-        log('Warning: please select the index of the peak to remove.\n')
-        return
-    ds0 = ds[0]
-    idx = int(peak_at.value)
-    if ds0.size == 1 and idx == 0:
-        Plot3.clear()
-        peak_at.options = []
-    else:
-        nds = delete(ds0, idx)
-        Plot3.set_dataset(nds)
-        rlist = []
-        for i in xrange(nds.size):
-            rlist.append(str(i))
-        peak_at.options = rlist
-    log('peak ' + str(idx) + ' is removed.\n')
 
 def plot2_fit_curve():
     global Plot2
@@ -343,6 +454,65 @@ def remove_all_curves():
 def __dataset_added__(fns = None):
     pass
     
+def process(ds):
+    global Plot1, Plot2, Plot3, DS, data_name
+    log('process data')
+    axis_name.value = ds.axes[0].name
+    if ds.ndim == 4:
+        ds = ds.get_reduced(1)
+    dname = 'total_counts'
+    if dname == 'total_counts' and reg_enabled.value and len(__inc_masks__) + len(__exc_masks__) > 0:
+        if len(__exc_masks__) > 0:
+            res = copy(ds)
+            for mask in __exc_masks__:
+                res[:, mask[2]:mask[3], mask[0]:mask[1]] = 0
+        else :
+            res = copy(ds)
+        if len(__inc_masks__) > 0:
+            log('apply inclusive masks')
+            r = dataset.instance(res.shape, dtype=int)
+            for mask in __inc_masks__:
+                r[:, mask[2]:mask[3], mask[0]:mask[1]] = res[:, mask[2]:mask[3], mask[0]:mask[1]]
+        else :
+            r = res
+        data = r.sum(0)
+    else:
+        data = ds[dname]
+    if normalise.value :
+        tname = 'detector_time'
+        norm = ds[tname]
+        if norm != None and hasattr(norm, '__len__'):
+            avg = norm.sum() / len(norm)
+            niter = norm.item_iter()
+            if niter.next() <= 0:
+                niter.set_curr(1)
+            data = data / norm * avg
+
+    axis = ds.get_metadata(str(axis_name.value))
+    if not hasattr(axis, '__len__'):
+        axis = SimpleData([axis], title = (axis_name.value))
+    ds2 = Dataset(data, axes=[axis])
+    ds2.title = ds.id
+    ds2.location = ds.location
+    fit_min.value = axis.min()
+    fit_max.value = axis.max()
+    Plot1.set_dataset(ds2)
+    Plot1.x_label = axis_name.value
+    Plot1.y_label = dname
+    Plot1.title = dname + ' vs ' + axis_name.value
+    Plot1.pv.getPlot().setMarkerEnabled(True)
+    peak_pos.value = float('NaN')
+    FWHM.value = float('NaN')
+    if auto_fit.value :
+        fit_curve()
+    intg(ds)
+    DS = ds
+    Plot3.set_awt_mouse_listener(mouse_press_listener)
+    Plot3.set_mask_listener(regionListener)
+    if reg_enabled.value:
+        save_mask_prof()
+
+    
 def __std_run_script__(fns):
     # Use the provided resources, please don't remove.
     global Plot1
@@ -352,54 +522,17 @@ def __std_run_script__(fns):
     if (fns is None or len(fns) == 0) :
         print 'no input datasets'
     else :
-        for fn in fns:
+        if len(fns) > 0:
+            fn = fns[0]
             # load dataset with each file name
-            ds = Plot1.ds
+#            ds = Plot1.ds
 #            if ds != None and len(ds) > 0:
 #                if ds[0].location == fn:
 #                    return
             df.datasets.clear()
             ds = df[fn]
-            axis_name.value = ds.axes[0].name
-            dname = str(data_name.value)
-            if dname == 'total_counts':
-#                data = ds.sum(0)
-                data = ds[dname]
-            else:
-                data = ds[dname]
-            if normalise.value :
-                if dname == 'bm1_counts':
-                    tname = 'bm1_time'
-                elif dname == 'bm2_counts':
-                    tname = 'bm2_time'
-                else:
-                    tname = 'detector_time'
-                norm = ds[tname]
-                if norm != None and hasattr(norm, '__len__'):
-                    avg = norm.sum() / len(norm)
-                    niter = norm.item_iter()
-                    if niter.next() <= 0:
-                        niter.set_curr(1)
-                    data = data / norm * avg
-        
-            axis = ds.get_metadata(str(axis_name.value))
-            if not hasattr(axis, '__len__'):
-                axis = SimpleData([axis], title = (axis_name.value))
-            ds2 = Dataset(data, axes=[axis])
-            ds2.title = ds.id
-            ds2.location = fn
-            fit_min.value = axis.min()
-            fit_max.value = axis.max()
-            Plot1.set_dataset(ds2)
-            Plot1.x_label = axis_name.value
-            Plot1.y_label = dname
-            Plot1.title = dname + ' vs ' + axis_name.value
-            Plot1.pv.getPlot().setMarkerEnabled(True)
-            peak_pos.value = float('NaN')
-            FWHM.value = float('NaN')
-            if auto_fit.value :
-                fit_curve()
-            intg(ds)
+            
+            process(ds)
             
 def auto_run():
     pass

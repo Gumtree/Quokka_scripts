@@ -2445,17 +2445,14 @@ def __dataset_selected__(datasets):
     global __selected_dataset__
     __selected_dataset__ = datasets
     dfs = __DATASOURCE__.getSelectedDatasets()
-    __INFOTEXT__.clear()
     for df in dfs:
         fid = df.getFileID() + ': '
-        __INFOTEXT__.appendText(fid, 'bold')
         des = ''
         if df.getTitle() != None:
             des += df.getTitle() + '\n'
         if df.getDescription() != None:
             des += ' ' * len(fid) + df.getDescription() + '\n'
         des += '\n'
-        __INFOTEXT__.appendText(des)
     
 # This function is called when pushing the Run button in the control UI.
 def __run_script__(fns):

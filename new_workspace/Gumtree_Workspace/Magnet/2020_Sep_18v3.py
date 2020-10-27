@@ -1,0 +1,201 @@
+from gumpy.commons import sics
+from bragg.quokka import quokka
+
+sics.clearInterrupt()
+
+_mode = quokka.ACQUISITION_MODE.time
+
+def drive_to_config2():
+    slog('run instrument to config 2')
+    config.wavelength = 5
+    config.wavelength_spread = 0.1
+    config.det = 7200
+    config.det_offset = 0
+    config.srce = 180
+    config.guide = 'g5'
+    config.apx = -72
+    config.bs = 2
+    config.beamcenterx = 89.227
+    config.beamcenterz = 95.9224
+    config.drive()
+    driveBsx(35,0)
+    driveBsz(256)
+    sics.drive('att', 0)
+    
+def drive_to_config1():
+    slog('run instrument to config 1')
+    config.wavelength = 7
+    config.wavelength_spread = 0.1
+    config.det = 7200
+    config.det_offset = 0
+    config.srce = 180
+    config.guide = 'p1'
+    config.bs = 2
+    config.beamcenterx = 91.87
+    config.beamcenterz = 95.57
+    config.drive()
+    driveBsx(38,0)
+    driveBsz(258)
+    sics.drive('att', 0)
+    
+def set_pol_on():
+    slog('set polarisation on')
+    sics.set('/instrument/flipper/set_flip_on', 1)
+    time.sleep(45)
+    
+def set_pol_off():
+    slog('set polarisation off')
+    sics.set('/instrument/flipper/set_flip_on', 0)
+    
+def on_off_collection(temp, field, preset, drivefield = True):
+    slog('on and off collection for {}'.format(preset))
+    sics.drive('tc2_temp0_setpoint', temp)
+    if drivefield:
+        slog('drive field to {}'.format(field))
+        sics.drive('ma1_magnet_setpoint', field)
+    else:
+        slog('skip driving field')
+    set_pol_on()
+    quokka.scan(_mode, preset)
+    slog('file saved at {}'.format(sics.get_base_filename()))
+    set_pol_off()
+    quokka.scan(_mode, preset)
+    slog('file saved at {}'.format(sics.get_base_filename()))
+    
+def temp_ramp_collection(temp, preset):
+    slog('drive temp to {}K, collect for {}'.format(temp, preset))
+    set_pol_off()
+    slog('drive temp')
+    sics.run('tc2_temp0_setpoint', temp)
+    slog('start collection')
+    quokka.scan(_mode, preset)
+    slog('file saved at {}'.format(sics.get_base_filename()))
+    
+def field_collection(field, preset, drivefield = True):
+    slog('drive field to {}, collect for {}'.format(field, preset))
+    if drivefield:
+        slog('drive field to {}'.format(field))
+        sics.drive('ma1_magnet_setpoint', field)
+    else:
+        slog('skip driving field')
+#this line has been changed to reflect that not want to measure
+#polarised neutrons if field is opposite direction to field
+#   if field == 0:
+    if field > 0:
+        quokka.scan(_mode, preset)
+        slog('file saved at {}'.format(sics.get_base_filename()))
+    else:
+        set_pol_on()
+        quokka.scan(_mode, preset)
+        slog('file saved at {}'.format(sics.get_base_filename()))
+        set_pol_off()
+        quokka.scan(_mode, preset)
+        slog('file saved at {}'.format(sics.get_base_filename()))
+        
+def unpolarised_collection(preset):
+    slog('unpolarised collection for {} seconds'.format(preset))
+    quokka.scan(_mode, preset)
+    slog('file saved at {}'.format(sics.get_base_filename()))
+        
+# config(1) is polarised
+# config(2) is unpolarised
+
+def run():
+#    VTI already at 150 K
+#    Field = 0 T
+#    UNPOLARISED
+    
+    drive_to_config2()
+
+#    150 K
+    sics.run('tc1_pres8_setpoint', 10)
+    sics.run('tc1_temp0_setpoint', 150)
+    temp_ramp_collection(150, 3600)
+    sics.drive('tc2_temp0_setpoint', 150)
+    sics.run('tc1_pres8_setpoint', 1)
+    
+#    MEASURE UNPOLARISED, 0 T
+    
+    unpolarised_collection(1200) # do not check field, just collect
+    
+#    MEASURE POLARISED, 0 T
+         
+    drive_to_config1()
+    on_off_collection(150, 0, 3600, False) # do not check field, just collect
+    
+#    MEASURE POLARISED, MULTIPLE FIELDS
+    
+    field_collection(-0.002, 7200)
+    field_collection(-0.05, 7200)
+    field_collection(-0.2, 7200)
+    field_collection(-1, 7200)
+    field_collection(-7, 7200)
+    field_collection(-1, 7200)
+        
+#    UNPOLARISED
+    
+    drive_to_config2()
+    unpolarised_collection(1200) # do not check field, just collect
+    
+#    On heating, set pressure to 0 and set temperature of sample, not VTI
+#    180 K
+    
+    sics.run('tc1_pres8_setpoint', 0)
+    sics.run('tc1_temp0_setpoint', 180)
+    temp_ramp_collection(180, 1.5*3600)
+    sics.drive('tc2_temp0_setpoint', 180)
+    
+#    MEASURE POLARISED, -1 T
+    
+    drive_to_config1()
+    on_off_collection(180, -1, 7200, False) # do not check field, just collect
+    
+#    MEASURE UNPOLARISED, -1 T
+        
+    drive_to_config2()
+    unpolarised_collection(1200) # do not check field, just collect
+    
+#    200 K
+    
+    sics.run('tc1_pres8_setpoint', 0)
+    sics.run('tc1_temp0_setpoint', 200)
+    temp_ramp_collection(200, 1.5*3600)
+    sics.drive('tc2_temp0_setpoint', 200)
+    
+#    MEASURE POLARISED, -1 T
+    
+    drive_to_config1()
+    on_off_collection(200, -1, 7200, False) # do not check field, just collect
+    
+#    MEASURE UNPOLARISED, -1 T
+        
+    drive_to_config2()
+    unpolarised_collection(1200) # do not check field, just collect
+
+#    300 K
+    
+    sics.run('tc1_pres8_setpoint', 0)
+    sics.run('tc1_temp0_setpoint', 300)
+    temp_ramp_collection(300, 3*3600)
+    sics.drive('tc2_temp0_setpoint', 300)
+    
+#    MEASURE POLARISED, -1 T
+    
+    drive_to_config1()
+    on_off_collection(300, -1, 7200, False) # do not check field, just collect
+    
+#    MEASURE UNPOLARISED, -1 T
+        
+    drive_to_config2()
+    unpolarised_collection(1200) # do not check field, just collect
+    
+#def test():
+    #drive_to_config1()
+    #on_off_collection(300, 0.1, 10)
+    
+    #drive_to_config2()
+    #temp_ramp_collection(300, 120)
+    
+    #field_collection(0.2, 10)
+    
+#run()

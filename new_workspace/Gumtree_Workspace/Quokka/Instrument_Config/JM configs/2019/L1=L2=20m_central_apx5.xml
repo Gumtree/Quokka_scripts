@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="New fast scripts" Group="JM configs/2019" Id="#0-1" Name="L1=L2=20m_central_apx5" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 5&#13;
+config.wavelength_spread = 0.1&#13;
+#config.wavelength_spread = 0.064&#13;
+config.det = 19250&#13;
+config.det_offset = 0&#13;
+config.srce = 150&#13;
+config.guide = 'ga'&#13;
+config.apx = -23&#13;
+config.bs = 2&#13;
+config.beamcenterx = 90.6965&#13;
+config.beamcenterz = 95.0184&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="90" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(36, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="0" Id="#0-3" MaxTime="1800" MinTime="5" TargetDetectorCounts="1000000" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(36,0)&#13;
+driveBsz(252.0)</SetupScript>
+  </Scattering>
+</Configuration>

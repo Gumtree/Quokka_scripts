@@ -13,10 +13,10 @@ config.beamcenterx = 90.6555&#13;
 config.beamcenterz = 94.6116&#13;
 config.drive()</SetupScript>
   <Transmission AttenuationAngle="0" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
-    <SetupScript>driveBsx(15, 300)</SetupScript>
+    <SetupScript>driveBsx(15, 295)</SetupScript>
   </Transmission>
   <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="30" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
-    <SetupScript>driveBsx(315,0)&#13;
+    <SetupScript>driveBsx(310,0)&#13;
 driveBsz(259.0)</SetupScript>
   </Scattering>
 </Configuration>

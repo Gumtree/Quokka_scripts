@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="New fast scripts" Enabled="false" Group="EPG/FAST" Id="#0-1" Name="p5_8m_BIGSOURCE_central_apx10_7A_SFON" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 7&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 7200&#13;
+config.det_offset = 0&#13;
+config.srce = 180&#13;
+config.guide = 'p5'&#13;
+sics.set('/instrument/flipper/set_flip_on', 1)&#13;
+#config.apx = -72&#13;
+config.bs = 2&#13;
+config.beamcenterx = 91.87&#13;
+config.beamcenterz = 95.57&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="180" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(38, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="60" Id="#0-3" MaxTime="2700" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(38,0)&#13;
+driveBsz(258)</SetupScript>
+  </Scattering>
+</Configuration>

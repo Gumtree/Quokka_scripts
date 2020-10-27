@@ -14,7 +14,7 @@
 #	norm_attr
 ######################################################
 
-A1	=	$entry/header/A1%N1	
+A1                          =    $entry/header/A1%N1	
 A1A2DIST	=	$entry/header/A1A2_distance%N1	
 A2	=	$entry/header/A2%N1	
 access                   	=	 $entry/instrument/status/access	
@@ -128,6 +128,7 @@ monitor1_counts	=	$entry/monitor/bm1_counts
 monitor2_counts	=	$entry/monitor/bm2_counts	
 monitor3_counts	=	$entry/monitor/bm3_counts	
 motioncontrol            	=	 $entry/instrument/status/motioncontrol	
+msom 			= 	$entry/sample/msom
 notes	=	$entry/data/notes	
 operate                  	=	 $entry/instrument/status/operate	
 pc1                      	=	 $entry/instrument/collimator/pc1	
@@ -174,6 +175,9 @@ samthet						=	 $entry/sample/sample_theta
 sample_phi					=	 $entry/sample/sample_phi
 sample_chi					=	 $entry/sample/sample_chi
 sample_thet					=	 $entry/sample/sample_theta
+samgi						=	 $entry/sample/samgi
+vgap						=	 $entry/sample/vgap
+gsom                        =    $entry/sample/gsom
 scanStep	=	$entry/data/stth	
 secondary                	=	 $entry/instrument/status/secondary	
 section_1                	=	 $entry/instrument/collimator/section_1	

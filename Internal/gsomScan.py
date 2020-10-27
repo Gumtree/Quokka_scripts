@@ -27,6 +27,7 @@ from xml.etree.ElementTree import Element, SubElement, ElementTree, tostring
 from gumpy.commons.logger import n_logger
 from gumpy.lib import enum
 import random
+from copy import copy
 
 # Script control setup area
 # script info
@@ -180,7 +181,19 @@ def sample(val = None):
     if not val is None :
         if not type(val) is int or not type(val) is float:
             val = float(str(val))
-        sics.drive('samplenumber', val)
+        ct = 0
+        while ct < 5:
+            try:
+                sics.drive('samplenumber', val)
+                break
+            except SicsExecutionException, e:
+                em = str(e.getMessage())
+                if em.lower().__contains__('interrupt'):
+                    raise
+                slog('retry driving sample number to {}'.format(val), True)
+                time.sleep(5)
+                ct += 1
+            
     raw = sics.get_raw_value('samplenumber')
     return round(raw, 1)
 
@@ -320,6 +333,7 @@ sics.ready = True
 
 # Use below example to create a button
 __number_of_sample__ = 20
+__sample_holders__ = [5, 6, 8, 10, 11, 13, 15, 16, 18]
 __sample_setup__ = None
 
 #try:
@@ -372,8 +386,9 @@ class SampleSetup():
         self.thick_title = tit_thick
         self.group.add(tit_1, tit_2, tit_thick)
         self.samples = []
-        for i in xrange(__number_of_sample__) :
-            self.add_sample(i + 1)
+#        for i in xrange(__number_of_sample__) :
+        for i in __sample_holders__:
+            self.add_sample(i)
         btn_apply = Act('apply_sample_selection()', 'Apply Sample Selection')
         btn_apply.colspan = 3
         btn_apply.name = 'btn_apply'
@@ -398,7 +413,8 @@ class SampleSetup():
         return s.is_enabled()
         
     def get_sample_setup(self, idx):
-        return self.samples[idx - 1]
+        idx = __sample_holders__.index(idx)
+        return self.samples[idx]
         
     def get_sample_name(self, idx):
         s = self.get_sample_setup(idx)
@@ -428,7 +444,7 @@ class SampleSetup():
     def from_rep(self, rep):
         for item in rep:
             idx = item["idx"]
-            s = self.samples[idx - 1]
+            s = self.get_sample_setup(idx)
             s.enable.value = item["enabled"]
             s.name.value = item["name"]
             s.thickness.value = item["thickness"]
@@ -477,8 +493,7 @@ def apply_sample_selection():
     global __sample_setup__
     sns = __sample_setup__.get_enabled_idx()
     for wb in workflow_list:
-        print('wb ' + str(wb.wid))
-        wb.enable_samples(sns)
+        wb.enable_samples(copy(sns))
     __UI__.updateUI()
     update_progress()
     
@@ -672,6 +687,8 @@ class WorkflowBlock():
             item = dict()
             item['sid'] = s.sid
             item['gsom'] = s.gsom.value
+            item['samx'] = s.samx.value
+            item['samz'] = s.samz.value
             item['do_trans'] = s.do_trans.value
             item['trans_time'] = s.trans_time.value
             item['do_scatt'] = s.do_scatt.value
@@ -740,6 +757,8 @@ class WorkflowBlock():
 #                    sp.scatt_time.value = 60
             except:
                 sp.gsom.value = 0 
+                sp.samx.value = ''
+                sp.samz.value = ''
                 sp.do_trans.value = False 
                 if rep.has_key('trans_time'):
                     sp.trans_time.value = rep['trans_time']
@@ -835,6 +854,7 @@ class WorkflowBlock():
 class Sample():
     _id = 0
     def __init__(self, wid, sid, gsom = 0, 
+                 samx = '', samz = '', 
                  trans = __default_transmission_time__, 
                  scatt = __default_scattering_time__, 
                  do_trans = True,
@@ -852,6 +872,12 @@ class Sample():
         s1_gsom = Par('float', gsom)
         s1_gsom.title = ''
         s1_gsom.width = 20
+        s1_samx = Par('str', samx)
+        s1_samx.title = ''
+        s1_samx.width = 20
+        s1_samz = Par('str', samz)
+        s1_samz.title = ''
+        s1_samz.width = 20
         s1_trans = Par('bool', do_trans, command = 'update_progress()')
         s1_trans.title = ''
         s1_trans_time = Par('float', trans, command = 'update_progress()')
@@ -876,6 +902,8 @@ class Sample():
         globals()[str(s1_remove.name)] = s1_remove
         self.id_label = s1_idx
         self.gsom = s1_gsom
+        self.samx = s1_samx
+        self.samz = s1_samz
         self.do_trans = s1_trans
         self.trans_time = s1_trans_time
         self.trans_res = s1_trans_res
@@ -893,6 +921,8 @@ class Sample():
         
         if fsample != None:
             s1_gsom.value = fsample.gsom.value
+            s1_samx.value = fsample.samx.value
+            s1_samz.value = fsample.samz.value
             s1_trans.value = fsample.do_trans.value
             s1_trans_time.value = fsample.trans_time.value
             s1_scatt.value = fsample.do_scatt.value
@@ -901,6 +931,8 @@ class Sample():
     def dispose(self):
         self.id_label.dispose()
         self.gsom.dispose()
+        self.samx.dispose()
+        self.samz.dispose()
         self.do_trans.dispose()
         self.trans_time.dispose()
         self.trans_res.dispose()
@@ -940,7 +972,16 @@ class Sample():
             try:
                 sics.drive('gsom', gsom)
             except:
-                slog('failed to drive gsom to', True)
+                slog('failed to drive gsom to {}'.format(gsom), True)
+                raise
+            samx = self.samx.value
+            if samx and samx.strip():
+                slog('drive samx to {}'.format(samx))
+                sics.drive('samx', float(samx))
+            samz = self.samz.value
+            if samz and samz.strip():
+                slog('drive samz to {}'.format(samz))
+                sics.drive('samz', float(samz))
             try:
                 self.trans_res.value = _counting_status
                 act_next.enabled = True
@@ -1019,6 +1060,21 @@ class Sample():
                 slog('driving sample failed', True)
                 self.scatt_stop_time = time.time()
                 raise
+            gsom = self.gsom.value
+            slog('drive gsom to {}'.format(gsom))
+            try:
+                sics.drive('gsom', gsom)
+            except:
+                slog('failed to drive gsom to {}'.format(gsom), True)
+                raise
+            samx = self.samx.value
+            if samx and samx.strip():
+                slog('drive samx to {}'.format(samx))
+                sics.drive('samx', float(samx))
+            samz = self.samz.value
+            if samz and samz.strip():
+                slog('drive samz to {}'.format(samz))
+                sics.drive('samz', float(samz))
             try:
                 self.scatt_res.value = _counting_status
                 act_next.enabled = True
@@ -1077,6 +1133,8 @@ class Sample():
     def set_enabled(self, flag):
         self.id_label.enabled = flag
         self.gsom.enabled = flag
+        self.samx.enabled = flag
+        self.samz.enabled = flag
         self.do_trans.enabled = flag
         self.trans_time.enabled = flag
         self.trans_res.enabled = flag
@@ -1239,34 +1297,36 @@ class SampleTable():
         self.samples = []
         self.group = Group(name)
         self.group.hideTitle = True
-        self.numColumns = 10
-        self.sizeHeader = 11
-        self.group.numColumns = 10
+        self.numColumns = 12
+        self.sizeHeader = 13
+        self.group.numColumns = 12
         self.group.colspan = 4
         trans_setup = Par('string', '')
         trans_setup.title = 'transmission setup'
-        trans_setup.colspan = 5
+        trans_setup.colspan = 6
         trans_setup.height = 40
         scatt_setup = Par('string', '')
         scatt_setup.title = 'scattering setup'
-        scatt_setup.colspan = 5
+        scatt_setup.colspan = 6
         scatt_setup.height = 40
 #        space1 = Par('space')
         
         trans_time = Par('float', '60', command='change_trans_time(' \
                          + str(wid) + ')')
         trans_time.title = 'transmission time'
-        trans_time.colspan = 5
+        trans_time.colspan = 6
         scatt_time = Par('float', '120', command='change_scatt_time(' \
                          + str(wid) + ')')
         scatt_time.title = 'scattering time'
-        scatt_time.colspan = 5
+        scatt_time.colspan = 6
 #        space2 = Par('space')
         
         tit_1 = Par('label', 'idx')
         tit_1.width = 24
 #        tit_2 = Par('label', 'Sample Name')
         tit_gsom = Par('label', 'gsom')
+        tit_samx = Par('label', 'samx')
+        tit_samz = Par('label', 'samz')
 #        tit_gsom.colspan = 2
         
         tit_3 = Par('bool', True, command='toggle_trans_enabled(' \
@@ -1291,6 +1351,8 @@ class SampleTable():
         self.t1 = tit_1
 #        self.t2 = tit_2
         self.tit_gsom = tit_gsom
+        self.tit_samx = tit_samx
+        self.tit_samz = tit_samz
 #        self.thick_title = tit_thick
         self.t3 = tit_3
         self.t4 = tit_4
@@ -1299,7 +1361,8 @@ class SampleTable():
         self.group.add(trans_setup, scatt_setup, \
                        trans_time, \
                        scatt_time,  \
-                       tit_1, tit_gsom, tit_3, \
+                       tit_1, tit_gsom, \
+                       tit_samx, tit_samz, tit_3, \
                        tit_4, tit_5, tit_6, space3)
 #        for i in xrange(__number_of_sample__) :
 #            self.add_sample(i + 1)
@@ -1335,6 +1398,7 @@ class SampleTable():
 #        sample.do_trans.command = 'redo_trans(' + str(self.wid) + ', ' + str(id) + ')'
 #        sample.do_scatt.command = 'redo_scatt(' + str(self.wid) + ', ' + str(id) + ')'
         self.group.add(sample.id_label, sample.gsom, \
+                       sample.samx, sample.samz, \
                        sample.do_trans, sample.trans_time, \
                        sample.trans_res, sample.do_scatt, \
                        sample.scatt_time, sample.scatt_res, 
@@ -1390,6 +1454,7 @@ class SampleTable():
         self.samples.insert(idx, sample)
         self.group.insert(int(self.sizeHeader + idx * self.numColumns), 
                           sample.id_label, sample.gsom, \
+                          sample.samx, sample.samz, \
                           sample.do_trans, sample.trans_time, \
                           sample.trans_res, sample.do_scatt, \
                           sample.scatt_time, sample.scatt_res, \
@@ -1398,12 +1463,15 @@ class SampleTable():
     def add_sample_from_rep(self, rep):
         sid = rep["sid"]
         sample = Sample(self.wid, sid, rep["gsom"], 
+                        rep["samx"],
+                        rep["samz"],  
                         rep["trans_time"], 
                         rep["scatt_time"], 
                         rep["do_trans"], 
                         rep["do_scatt"])
         self.samples.append(sample)
         self.group.add(sample.id_label, sample.gsom, \
+                       sample.samx, sample.samz, \
                        sample.do_trans, sample.trans_time, \
                        sample.trans_res, sample.do_scatt, \
                        sample.scatt_time, sample.scatt_res, \
@@ -1413,7 +1481,10 @@ class SampleTable():
         s = self.get_sample(id)
         if s:
             idx = self.get_sample_index(id)
-            sample = Sample(self.wid, s.sid, s.gsom.value, 
+            sample = Sample(self.wid, s.sid, 
+                            s.gsom.value, 
+                            s.samx.value, 
+                            s.samz.value, 
                             s.trans_time.value, 
                             s.scatt_time.value, 
                             s.do_trans.value, 
@@ -1421,6 +1492,7 @@ class SampleTable():
             self.samples.insert(idx + 1, sample)
             self.group.insert(int(self.sizeHeader + (idx + 1) * self.numColumns), 
                               sample.id_label, sample.gsom, \
+                              sample.samx, sample.samz, \
                               sample.do_trans, sample.trans_time, \
                               sample.trans_res, sample.do_scatt, \
                               sample.scatt_time, sample.scatt_res, \
@@ -1428,6 +1500,7 @@ class SampleTable():
         else:
             sample = Sample(self.wid, 1)
             self.group.add(sample.id_label, sample.gsom, \
+                           sample.samx, sample.samx, \
                            sample.do_trans, sample.trans_time, \
                            sample.trans_res, sample.do_scatt, \
                            sample.scatt_time, sample.scatt_res, \
@@ -1448,6 +1521,8 @@ class SampleTable():
             s.dispose()
             self.group.remove(s.id_label)
             self.group.remove(s.gsom)
+            self.group.remove(s.samx)
+            self.group.remove(s.samz)
             self.group.remove(s.do_trans)
             self.group.remove(s.trans_time)
             self.group.remove(s.trans_res)
@@ -1667,6 +1742,8 @@ class SampleTable():
     def set_enabled(self, flag):
         self.t1.enabled = flag
         self.tit_gsom.enabled = flag
+        self.tit_samx.enabled = flag
+        self.tit_samz.enabled = flag
         self.t3.enabled = flag
         self.t4.enabled = flag
         self.t5.enabled = flag
@@ -1699,6 +1776,8 @@ class SampleTable():
             s.dispose()
         self.t1.dispose()
         self.tit_gsom.dispose()
+        self.tit_samx.dispose()
+        self.tit_samz.dispose()
         self.t3.dispose()
         self.t4.dispose()
         self.t5.dispose()
@@ -1991,7 +2070,7 @@ def run_scan():
     global _start_timestamp
     is_ready = False
     try:
-        is_ready = sics.getValue('/instrument/sis/status/ready').getStringData() == 'TRUE'
+        is_ready = sics.getValue('/instrument/status/ready').getStringData() == 'TRUE'
     except:
         pass
     if not is_ready:
@@ -2007,7 +2086,7 @@ def run_scan():
     _is_running = True
     _start_timestamp = time.time()
     try:
-        path = get_project_path('Quokka') + '/gumtree_autosave'
+        path = get_project_path('Local') + '/gumtree_autosave'
         if not os.path.exists(path):
             os.makedirs(path)
         path += '/workflow_' + strftime("%Y-%m-%dT%H-%M-%S", localtime()) + '.pkl'
@@ -2182,8 +2261,10 @@ def load_workflow():
                 rmv.dispose()
             for i in xrange(len(wl)):
                 workflow_list.append(WorkflowBlock(empty = True))
+            i = 0
             for b in wl:
                 workflow_list[i].from_rep(b)
+                i += 1
             slog('workflow loaded from ' + str(fn))
         else:
             slog('invalid workflow file at ' + str(fn), True)

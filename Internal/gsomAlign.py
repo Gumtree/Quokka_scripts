@@ -1,18 +1,23 @@
-import inspect
 from java.lang import System
 import time
 import math
+from gumpy.vis.event import MouseListener, MaskEventListener, AWTMouseListener
 from gumpy.nexus.fitting import Fitting, GAUSSIAN_FITTING
 from gumpy.commons.logger import n_logger
 from gumpy.commons import sics
 from Internal import sicsext
 from java.lang import Double
 from java.io import File
+from copy import copy
 # Script control setup area
 # script info
 __script__.title = 'GSOM Alignment'
 __script__.version = ''
 #pact = Act('previous_step()', '<- Previous Step')
+
+SAVED_MASK_PRFN = 'quokka.savedMasks'
+SAVED_INC_MASK_PRFN = 'quokka.savedIncMasks'
+SAVED_EXC_MASK_PRFN = 'quokka.savedExcMasks'
 
 class RegionEventListener(MaskEventListener):
     
@@ -161,6 +166,7 @@ DS = None
 G1 = Group('Scan on gsom')
 device_name = Par('string', 'gsom', options = ['gsom', 'dummy_motor'], 
                   command = 'update_axis_name()')
+sample_name = Par('string', '')
 scan_start = Par('float', 0)
 scan_stop = Par('float', 0)
 number_of_points = Par('int', 0)
@@ -178,6 +184,9 @@ def scan_device():
     axis_name.value = aname
     slog('runscan ' + str(device_name.value) + ' ' + str(scan_start.value) + ' ' + str(scan_stop.value) \
                     + ' ' + str(number_of_points.value) + ' ' + str(scan_mode.value) + ' ' + str(scan_preset.value))
+    sn = str(sample_name.value)
+    if len(sn.strip()) > 0:
+        sics.execute('samplename ' + sn.strip())
     sicsext.runscan(device_name.value, scan_start.value, scan_stop.value, number_of_points.value, 
                     scan_mode.value, scan_preset.value, load_experiment_data, True, \
                     'HISTOGRAM_XY')
@@ -194,7 +203,7 @@ def scan_device():
 def update_axis_name():
     axis_name.value = device_name.value
         
-G1.add(device_name, scan_start, scan_stop, number_of_points, scan_mode, scan_preset, act1)
+G1.add(device_name, sample_name, scan_start, scan_stop, number_of_points, scan_mode, scan_preset, act1)
 
 G2 = Group('Fitting')
 data_name = 'total_counts'
@@ -499,7 +508,7 @@ def process(ds):
     Plot1.set_dataset(ds2)
     Plot1.x_label = axis_name.value
     Plot1.y_label = dname
-    Plot1.title = dname + ' vs ' + axis_name.value
+    Plot1.title = 'QKK%07d ' % ds.id + dname + ' vs ' + axis_name.value
     Plot1.pv.getPlot().setMarkerEnabled(True)
     peak_pos.value = float('NaN')
     FWHM.value = float('NaN')
@@ -509,6 +518,7 @@ def process(ds):
     DS = ds
     Plot3.set_awt_mouse_listener(mouse_press_listener)
     Plot3.set_mask_listener(regionListener)
+    Plot3.title = 'QKK%07d integration' % ds.id
     if reg_enabled.value:
         save_mask_prof()
 

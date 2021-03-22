@@ -9,8 +9,8 @@ config.srce = 150&#13;
 config.guide = 'ga'&#13;
 config.apx = -23&#13;
 config.bs = 2&#13;
-config.beamcenterx = 89.6221&#13;
-config.beamcenterz = 94.6325&#13;
+config.beamcenterx = 90.601&#13;
+config.beamcenterz = 94.8364&#13;
 config.drive()</SetupScript>
   <Transmission AttenuationAngle="90" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
     <SetupScript>driveBsx(38, 100)</SetupScript>

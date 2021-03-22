@@ -35,9 +35,9 @@ def runscan(scan_variable, scan_start, scan_stop, numpoints, mode, preset, comm 
     execute('hset ' + cpath + '/force ' + str(force), channel)
 
     # Monitor status
-    while(scanController.getCommandStatus().equals(CommandStatus.BUSY)):
-        # Don't do anything before scan is ready
-        time.sleep(0.1)
+#    while(scanController.getCommandStatus().equals(CommandStatus.BUSY)):
+#        # Don't do anything before scan is ready
+#        time.sleep(0.1)
     
     # Wait 1 sec to make the setting settle
     time.sleep(1)

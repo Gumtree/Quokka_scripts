@@ -485,13 +485,14 @@ class SampleItemSetup():
 #        s1_samx = Par('float', __samx_values__.get(str(idx)))
         s1_samx = Par('float', 0)
         s1_samx.title = ''
-        s1_samx.width = 40
+        s1_samx.width = 80
         s1_name = Par('string', '')
         s1_name.title = ''
+        s1_name.width = 320
 #        s1_name.width = 150
         s1_thickness = Par('float', 0)
         s1_thickness.title = ''
-        s1_thickness.width = 150
+        s1_thickness.width = 120
         self.enable = s1_enable
         self.samx = s1_samx
         self.name = s1_name

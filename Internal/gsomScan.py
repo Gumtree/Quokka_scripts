@@ -178,28 +178,11 @@ class __Display_Runnable__(Runnable):
 #    pass
 
 def drive_sample(val = None):
-#    if not val is None :
+    global __sample_setup__
+    if not val is None :
 #        if not type(val) is int or not type(val) is float:
-#            val = float(str(val))
-#        ct = 0
-#        while ct < 5:
-#            try:
-#                sics.drive('samplenumber', val)
-#                break
-#            except SicsExecutionException, e:
-#                em = str(e.getMessage())
-#                if em.lower().__contains__('interrupt'):
-#                    raise
-#                slog('retry driving sample number to {}'.format(val), True)
-#                time.sleep(5)
-#                ct += 1
-#            
-#    raw = sics.get_raw_value('samplenumber')
-#    return round(raw, 1)
-     if not val is None :
-#        if not type(val) is int or not type(val) is float:
-        val = str(val)
-        sv = __samx_values__.get(val)
+        sv = __samx_values__.get(str(val))
+        sv += __sample_setup__.get_samx_offset(val)
         if not sv is None :
             raw = sics.get_raw_value('samx')
             pre = sics.get_raw_value('samx precision')
@@ -399,8 +382,9 @@ class SampleSetup():
         self.group.colspan = 4
         tit_1 = Par('label', 'idx')
         tit_1.width = 40
-        title_samx = Par('label', 'samx')
-        title_samx.width = 40
+        tit_1.title = 'Index'
+        title_samx = Par('label', 'samx Offset')
+        title_samx.width = 80
         tit_2 = Par('label', 'Sample Name')
 #        tit_2.width = 150
         tit_thick = Par('label', 'Thickness (cm)')
@@ -438,6 +422,7 @@ class SampleSetup():
         return s.is_enabled()
         
     def get_sample_setup(self, idx):
+        global __sample_holders__
         idx = __sample_holders__.index(idx)
         return self.samples[idx]
         
@@ -448,6 +433,13 @@ class SampleSetup():
     def get_sample_thickness(self, idx):
         s = self.get_sample_setup(idx)
         return s.thickness.value
+    
+    def get_samx_offset(self, idx):
+        try:
+            s = self.get_sample_setup(idx)
+        except ValueError, e:
+            raise ValueError('sample {} out of index'.format(idx))
+        return s.samx.value
         
     def dispose(self):
 #        self.enable.dispose()
@@ -491,7 +483,8 @@ class SampleItemSetup():
         s1_enable = Par('bool', False)
         s1_enable.title = '%6d    ' % idx
         s1_enable.width = 40
-        s1_samx = Par('float', __samx_values__.get(str(idx)))
+#        s1_samx = Par('float', __samx_values__.get(str(idx)))
+        s1_samx = Par('float', 0)
         s1_samx.title = ''
         s1_samx.width = 40
         s1_name = Par('string', '')

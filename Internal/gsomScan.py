@@ -380,9 +380,8 @@ class SampleSetup():
         self.group = Group("Samples Setup")
         self.group.numColumns = 4
         self.group.colspan = 4
-        tit_1 = Par('label', 'idx')
+        tit_1 = Par('label', 'Index')
         tit_1.width = 40
-        tit_1.title = 'Index'
         title_samx = Par('label', 'samx Offset')
         title_samx.width = 80
         tit_2 = Par('label', 'Sample Name')

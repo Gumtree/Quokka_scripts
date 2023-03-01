@@ -36,8 +36,8 @@ __script__.version = '1.0'
 
 sics.ready = False
 
-__data_folder__ = 'W:/data/current'
-__export_folder__ = 'W:/data/current/reports'
+__data_folder__ = 'Z:/cycle/current/data/sics'
+__export_folder__ = 'Z:/cycle/current/data/sics/reports'
 __buffer_log_file__ = __export_folder__
 Dataset.__dicpath__ = get_absolute_path('/Internal/path_table')
 System.setProperty('sics.data.path', __data_folder__)
@@ -488,7 +488,7 @@ class SampleItemSetup():
         s1_samx.width = 80
         s1_name = Par('string', '')
         s1_name.title = ''
-        s1_name.width = 320
+        s1_name.width = 480
 #        s1_name.width = 150
         s1_thickness = Par('float', 0)
         s1_thickness.title = ''

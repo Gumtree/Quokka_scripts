@@ -508,7 +508,7 @@ def process(ds):
     Plot1.set_dataset(ds2)
     Plot1.x_label = axis_name.value
     Plot1.y_label = dname
-    Plot1.title = 'QKK%07d ' % ds.id + dname + ' vs ' + axis_name.value
+    Plot1.title = str(ds.samplename) + ' QKK%07d ' % ds.id + dname + ' vs ' + axis_name.value
     Plot1.pv.getPlot().setMarkerEnabled(True)
     peak_pos.value = float('NaN')
     FWHM.value = float('NaN')

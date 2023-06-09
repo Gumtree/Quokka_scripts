@@ -21,6 +21,8 @@ number_of_points = Par('int', 0)
 scan_mode = Par('string', 'time', options = ['time', 'MONITOR_1'])
 scan_mode.enabled = True
 scan_preset = Par('int', 0)
+save_file = Par('string', 'normal HDF file', 
+                options = ['normal HDF file', 'scratch.nx.hdf'])
 act1 = Act('scan_device()', 'Scan on Device')
 def scan_device():
     aname = device_name.value
@@ -32,9 +34,12 @@ def scan_device():
     axis_name.value = aname
     slog('runscan ' + str(device_name.value) + ' ' + str(scan_start.value) + ' ' + str(scan_stop.value) \
                     + ' ' + str(number_of_points.value) + ' ' + str(scan_mode.value) + ' ' + str(scan_preset.value))
+    savetype = 'save'
+    if save_file.value == 'scratch.nx.hdf':
+        savetype = 'nosave'
     sicsext.runscan(device_name.value, scan_start.value, scan_stop.value, number_of_points.value, 
                     scan_mode.value, scan_preset.value, load_experiment_data, True, \
-                    'HISTOGRAM_XY')
+                    'HISTOGRAM_XY', savetype)
     time.sleep(2)
     peak_pos.value = float('NaN')
     FWHM.value = float('NaN')
@@ -45,13 +50,15 @@ def scan_device():
         n_logger.log_plot(Plot1, footer = footer)
     else :
         n_logger.log_plot(Plot1)
+    pop_drive()
     
 devices = sicsext.getDrivables()
 device_name.options = devices
 def update_axis_name():
     axis_name.value = device_name.value
         
-G1.add(device_name, scan_start, scan_stop, number_of_points, scan_mode, scan_preset, act1)
+G1.add(device_name, scan_start, scan_stop, number_of_points, 
+       scan_mode, scan_preset, save_file, act1)
 
 G2 = Group('Fitting')
 data_name = Par('string', 'total_counts', \
@@ -134,6 +141,17 @@ def fit_curve():
 #        traceback.print_exc(file = sys.stdout)
         log('can not fit\n')
 
+def pop_drive():
+    peak = peak_pos.value
+    if (peak >= scan_start.value and peak <= scan_stop.value) or \
+        (peak >= scan_stop.value and peak <= scan_start.value):
+        rp = open_question('found peak at {}, do you want to drive {} to the peak position?'
+                           .format(peak, device_name.value))
+        if rp:
+            log('drive {} to peak {}'.format(device_name.value, peak))
+            sics.drive(device_name.value, peak)
+    else :
+        open_information('failed to find peak in the scan range.')
 
 # This function is called when pushing the Run button in the control UI.
 def __run_script__(fns):
@@ -157,7 +175,7 @@ def load_experiment_data():
         elif dname == 'bm2_counts':
             tname = 'bm2_time'
         else:
-            tname = 'detector_time'
+            tname = 'bm1_counts'
         norm = ds[tname]
         if norm != None and hasattr(norm, '__len__'):
             avg = norm.sum() / len(norm)
@@ -345,6 +363,7 @@ def __std_run_script__(fns):
 #                if ds[0].location == fn:
 #                    return
             df.datasets.clear()
+            log('load file ' + fn)
             ds = df[fn]
             axis_name.value = ds.axes[0].name
             dname = str(data_name.value)
@@ -359,9 +378,10 @@ def __std_run_script__(fns):
                 elif dname == 'bm2_counts':
                     tname = 'bm2_time'
                 else:
-                    tname = 'detector_time'
+                    tname = 'bm1_counts'
                 norm = ds[tname]
                 if norm != None and hasattr(norm, '__len__'):
+                    log('normalised against ' + tname)
                     avg = norm.sum() / len(norm)
                     niter = norm.item_iter()
                     if niter.next() <= 0:
@@ -385,6 +405,7 @@ def __std_run_script__(fns):
             FWHM.value = float('NaN')
             if auto_fit.value :
                 fit_curve()
+            
             
 def auto_run():
     pass

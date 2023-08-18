@@ -41,6 +41,9 @@ def scan_device():
     except:
         pass
     axis_name.value = aname
+    savetype = 'save'
+    if save_file.value == 'scratch.nx.hdf':
+        savetype = 'nosave'
     slog('runscan ' + str(device_name.value) + ' ' + str(scan_start.value) + ' ' + str(scan_stop.value) \
                     + ' ' + str(number_of_points.value) + ' ' + str(scan_mode.value) + ' ' + str(scan_preset.value))
     sicsext.runscan(device_name.value, scan_start.value, scan_stop.value, number_of_points.value, 

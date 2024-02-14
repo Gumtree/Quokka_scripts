@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Enabled="false" Group="EPG/FAST" Id="#0-1" Name="NEW_L1=20m_L2=1p3m_offset_LARRY_MASK3" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 5&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 510&#13;
+config.det_offset = 300&#13;
+config.srce = 150&#13;
+config.guide = 'ga'&#13;
+config.apx = -183&#13;
+config.bs = 5&#13;
+config.beamcenterx = 29.3809&#13;
+config.beamcenterz = 96.315&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="210" Id="#0-2" MaxTime="60" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(43.5, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="0" Id="#0-3" MaxTime="180" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(43.5,0)&#13;
+
+driveBsz(262.5)</SetupScript>
+  </Scattering>
+</Configuration>

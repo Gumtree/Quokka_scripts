@@ -10,8 +10,8 @@ config.srce = 180&#13;
 config.guide = 'g7'&#13;
 config.apx = -98&#13;
 config.bs = 2&#13;
-config.beamcenterx = 90.87&#13;
-config.beamcenterz = 96.21&#13;
+config.beamcenterx = 89.89&#13;
+config.beamcenterz = 96.31&#13;
 config.drive()</SetupScript>
   <Transmission AttenuationAngle="270" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
     <SetupScript>driveBsx(37, 80)</SetupScript>

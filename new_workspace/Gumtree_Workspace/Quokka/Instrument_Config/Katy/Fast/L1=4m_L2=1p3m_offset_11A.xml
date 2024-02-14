@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Group="Katy/Fast" Id="#0-1" Name="L1=4m_L2=1p3m_offset_11A" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 11&#13;
+config.wavelength_spread = 0.1&#13;
+#config.wavelength_spread = 0.064&#13;
+config.det = 510&#13;
+config.det_offset = 400&#13;
+config.srce = 180&#13;
+config.guide = 'g7'&#13;
+config.apx = -125&#13;
+config.bs = 3&#13;
+config.beamcenterx = 90.69&#13;
+config.beamcenterz = 96.30&#13;
+config.drive()</SetupScript>
+  <Transmission Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(39, 70)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="300" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(39.0,0)&#13;
+
+driveBsz(262.0)</SetupScript>
+  </Scattering>
+</Configuration>

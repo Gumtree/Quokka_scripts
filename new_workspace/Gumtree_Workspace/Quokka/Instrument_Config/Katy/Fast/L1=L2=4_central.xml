@@ -4,21 +4,21 @@
   <SetupScript>config.wavelength = 5&#13;
 config.wavelength_spread = 0.1&#13;
 config.det = 3200&#13;
-config.det_offset = 0&#13;
+config.det_offset = -5&#13;
 config.srce = 180&#13;
 config.guide = 'g7'&#13;
-config.apx = -72&#13;
-config.bs = 1&#13;
-config.beamcenterx = 92.39&#13;
-config.beamcenterz = 95.06&#13;
+config.apx = -98&#13;
+config.bs = 2&#13;
+config.beamcenterx = 90.64&#13;
+config.beamcenterz = 96.14&#13;
 &#13;
 config.drive()</SetupScript>
-  <Transmission Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+  <Transmission AttenuationAngle="270" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
     <SetupScript>driveBsx(37, 100)</SetupScript>
   </Transmission>
   <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="300" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
-    <SetupScript>driveBsx(23,0)&#13;
+    <SetupScript>driveBsx(39,0)&#13;
 
-driveBsz(258)</SetupScript>
+driveBsz(260)</SetupScript>
   </Scattering>
 </Configuration>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="P9563 Apx 25mm" Group="CMW" Id="#0-1" Name="20220618_L1=20 L2=20m_central_apx25mm GISANS" xmlns="http://www.gumtree.org/msw">
+  <SetupScript># Drive attenuator to safe value&#13;
+#config.att = 330&#13;
+config.wavelength = 6&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 19250&#13;
+config.det_offset = 0&#13;
+config.srce = 120&#13;
+config.guide = 'ga'&#13;
+config.apx = -215&#13;
+config.bs = 2&#13;
+config.beamcenterx = 93.26&#13;
+config.beamcenterz = 95.21&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="240" Id="#0-2" MaxTime="60">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(34, 100)&#13;
+# Drive attenuator to 300&#13;
+driveAtt(300) # !!! Warning: it is not recommended to manually drive the attenuator</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="300">
+    <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+# Move the beamstop in&#13;
+driveBsx(20, 0)&#13;
+driveBsz(251)</SetupScript>
+  </Scattering>
+</Configuration>

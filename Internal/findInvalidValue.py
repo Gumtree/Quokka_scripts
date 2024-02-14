@@ -26,15 +26,18 @@ def search_files():
 #    if math.isnan(new_val):
 #        print 'can not replace to NaN value'
 #        return
-    
+    count = 0
+    oc = 0
     for n in __selected_dataset__:
         df.datasets.clear()
         ds = df[str(n)]
         p = '$entry' + arg_path.value
         node = ds[str(p)]
         if node == inv_value:
-            print 'found ' + n
-    print 'done'
+            print n
+            count += 1
+        oc += 1
+    print 'found {} ones with invalid diameter value out of {} files.'.format(count, oc)
     
 
 # Use below example to create a button
@@ -52,18 +55,20 @@ def patch_value():
         print 'can not replace to NaN value'
         return
     
+    ct = 0
     for n in __selected_dataset__:
         df.datasets.clear()
         ds = df[str(n)]
         p = '$entry' + arg_path.value
         node_value = ds[str(p)]
         if node_value == inv_value:
-            print "patching " + n
+            print "patching {} with new value {}".format(n, new_value)
             node = ds.get_metadata(str(p))
             node[0] = new_value
             new_path = folder + '/' + ds.name
             ds.save_copy(new_path)
-    print 'done'
+            ct += 1
+    print 'done, patched {} files.'.format(ct)
     
 # Use below example to create a new Plot
 # Plot4 = Plot(title = 'new plot')

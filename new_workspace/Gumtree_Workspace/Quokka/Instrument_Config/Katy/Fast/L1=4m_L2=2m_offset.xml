@@ -10,13 +10,13 @@ config.srce = 180&#13;
 config.guide = 'g7'&#13;
 config.apx = -98&#13;
 config.bs = 3&#13;
-config.beamcenterx = 29.93&#13;
-config.beamcenterz = 96.11&#13;
+config.beamcenterx = 29.75&#13;
+config.beamcenterz = 96.06&#13;
 config.drive()</SetupScript>
   <Transmission AttenuationAngle="210" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
     <SetupScript>driveBsx(37, 80)</SetupScript>
   </Transmission>
-  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="120" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="900" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
     <SetupScript>driveBsx(37,0)&#13;
 
 driveBsz(259)</SetupScript>

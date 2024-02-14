@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="msw.xsl"?>
 <Configuration Description="New fast scripts" Group="Katy/Fast" Id="#0-1" Name="L1=L2=20m_central" xmlns="http://www.gumtree.org/msw">
-  <SetupScript>config.wavelength = 6&#13;
+  <SetupScript>sics.execute('hset /instrument/velocity_selector/setspeed 23589')&#13;
+sics.execute('hset /instrument/velocity_selector/wavelength 6.01')&#13;
+#config.wavelength = 6&#13;
 config.wavelength_spread = 0.1&#13;
 config.det = 19250&#13;
 config.det_offset = 0&#13;
@@ -9,14 +11,14 @@ config.srce = 150&#13;
 config.guide = 'ga'&#13;
 config.apx = -98&#13;
 config.bs = 2&#13;
-config.beamcenterx = 90.24&#13;
-config.beamcenterz = 94.00&#13;
+config.beamcenterx = 89.70&#13;
+config.beamcenterz = 95.58&#13;
 config.drive()</SetupScript>
-  <Transmission AttenuationAngle="180" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+  <Transmission AttenuationAngle="90" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
     <SetupScript>driveBsx(37, 100)</SetupScript>
   </Transmission>
   <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="3600" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
-    <SetupScript>driveBsx(39,0)&#13;
-driveBsz(249.0)</SetupScript>
+    <SetupScript>driveBsx(38, 0)&#13;
+driveBsz(248)</SetupScript>
   </Scattering>
 </Configuration>

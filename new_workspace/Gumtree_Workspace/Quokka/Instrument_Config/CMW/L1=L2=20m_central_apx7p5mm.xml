@@ -1,29 +1,32 @@
-<au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
-  <name>L1=L2=20m_central_apx7p5mm</name>
-  <description>20160816_CMW apx_7p5, srec_50</description>
-  <initScript># Drive attenuator to safe value&#xd;
-#config.att = 330&#xd;
-#config.wavelength = 5&#xd;
-#config.wavelength_spread = 0.1&#xd;
-config.det = 19250&#xd;
-config.det_offset = 0&#xd;
-config.srce = 150&#xd;
-config.guide = &apos;ga&apos;&#xd;
-#config.apx = -47&#xd;
-config.bs = 2&#xd;
-config.beamcenterx = 94.6478&#xd;
-config.beamcenterz = 94.5575 &#xd;
-config.drive()&#xd;
-</initScript>
-  <preTransmissionScript># Move the beamstop out&#xd;
-driveBsx(39, 100)&#xd;
-# Drive attenuator to 240&#xd;
-driveAtt(240)</preTransmissionScript>
-  <preScatteringScript># Drive attenuator to safe value&#xd;
-driveAtt(330)&#xd;
-# Move the beamstop in&#xd;
-driveBsx(39, 0)&#xd;
-driveBsz(252.0)</preScatteringScript>
-  <startingAttenuation>0</startingAttenuation>
-  <file>D:\Gumtree\git\Quokka_scripts\Gumtree_Workspace\Quokka\Instrument_Config\CMW\L1=L2=20m_central_apx7p5mm.xml</file>
-</au.gov.ansto.bragg.quokka.experiment.model.InstrumentConfigTemplate>
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="20211206_CMW apx_7p5, skyr" Group="CMW" Id="#0-1" Name="L1=L2=20m_central_apx7p5mm" xmlns="http://www.gumtree.org/msw">
+  <SetupScript># Drive attenuator to safe value&#13;
+config.att = 210&#13;
+config.wavelength = 5&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 19250&#13;
+config.det_offset = 0&#13;
+config.srce = 150&#13;
+config.guide = 'ga'&#13;
+config.apx = -47&#13;
+config.bs = 1&#13;
+config.beamcenterx = 94.6478&#13;
+config.beamcenterz = 94.5575 &#13;
+config.drive()</SetupScript>
+  <Transmission Id="#0-2">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(39, 100)&#13;
+# Drive attenuator to 240&#13;
+driveAtt(240) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3">
+    <SetupScript># Drive attenuator to safe value&#13;
+driveAtt(330) # !!! Warning: it is not recommended to manually drive the attenuator&#13;
+# Move the beamstop in&#13;
+driveBsx(39, 0)&#13;
+driveBsz(252.0)&#13;
+</SetupScript>
+  </Scattering>
+</Configuration>

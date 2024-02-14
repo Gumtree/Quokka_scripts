@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="msw.xsl"?>
 <Configuration Description="New fast scripts" Group="Katy/Guide align" Id="#0-1" Name="L1=4_L2=20m_central_apx10" xmlns="http://www.gumtree.org/msw">
-  <SetupScript>config.wavelength = 5&#13;
+  <SetupScript>sics.execute('hset /instrument/velocity_selector/setspeed 28300')&#13;
+sics.execute('hset /instrument/velocity_selector/wavelength 5')&#13;
+#config.wavelength = 5&#13;
 config.wavelength_spread = 0.064&#13;
 config.det = 19250&#13;
 config.det_offset = 0&#13;

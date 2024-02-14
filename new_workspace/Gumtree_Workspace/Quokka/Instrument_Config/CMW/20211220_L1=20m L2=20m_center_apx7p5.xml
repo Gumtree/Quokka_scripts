@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="DB9562" Enabled="false" Group="CMW" Id="#0-1" Name="20211220_L1=20m L2=20m_center_apx7p5" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 6&#13;
+config.wavelength_spread = 0.1&#13;
+#config.det = 19250&#13;
+#config.det_offset = 0&#13;
+config.srce = 30&#13;
+config.guide = 'ga'&#13;
+#config.apx = -47&#13;
+config.bs = 1&#13;
+config.beamcenterx = 89.9803&#13;
+config.beamcenterz = 94.3299&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="60" Id="#0-2" MaxTime="0">
+    <SetupScript># Move the beamstop out&#13;
+driveBsx(28, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="7200" TargetDetectorCounts="1000000">
+    <SetupScript>driveBsx(28,0)&#13;
+driveBsz(240.0)</SetupScript>
+  </Scattering>
+</Configuration>

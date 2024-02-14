@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="New fast scripts" Group="EPG/FAST" Id="#0-1" Name="NEW_L1=L2=20m_central_apx2p5_7Angstrom" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 7&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 19250&#13;
+config.det_offset = 0&#13;
+config.srce = 150&#13;
+config.guide = 'ga'&#13;
+config.apx = 0&#13;
+config.bs = 2&#13;
+config.beamcenterx = 89.8789&#13;
+config.beamcenterz = 94.784&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="60" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(39, 150)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="0" Id="#0-3" MaxTime="120" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(39,0)&#13;
+driveBsz(244.5)</SetupScript>
+  </Scattering>
+</Configuration>

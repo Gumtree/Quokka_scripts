@@ -8,15 +8,15 @@ config.det_offset = -5&#13;
 config.srce = 180&#13;
 config.guide = 'g4'&#13;
 config.apx = -98&#13;
-config.bs = 2&#13;
-config.beamcenterx = 90.78&#13;
-config.beamcenterz = 95.56&#13;
+config.bs = 1&#13;
+config.beamcenterx = 89.9&#13;
+config.beamcenterz = 95.6&#13;
 config.drive()</SetupScript>
   <Transmission AttenuationAngle="210" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
     <SetupScript>driveBsx(38, 100)</SetupScript>
   </Transmission>
   <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="7200" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
-    <SetupScript>driveBsx(37,0)&#13;
-driveBsz(259)</SetupScript>
+    <SetupScript>driveBsx(28,0)&#13;
+driveBsz(257)</SetupScript>
   </Scattering>
 </Configuration>

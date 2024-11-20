@@ -73,6 +73,7 @@ axis_name.enabled = True
 axis_lock = Par('bool', False, command = 'lock_axis()')
 axis_lock.title = 'Lock Axis'
 auto_fit = Par('bool', True)
+opposite_peak = Par('bool', False)
 fit_min = Par('float', 'NaN')
 fit_max = Par('float', 'NaN')
 peak_pos = Par('float', 'NaN')
@@ -81,7 +82,7 @@ fact = Act('fit_curve()', 'Fit Again')
 #offset_done = Par('bool', False)
 #act3 = Act('offset_s2()', 'Set Device Zero Offset')
 G2.add(data_name, normalise, axis_name, axis_lock, auto_fit, 
-       fit_min, fit_max, peak_pos, FWHM, fact)
+       opposite_peak, fit_min, fit_max, peak_pos, FWHM, fact)
 
 G3 = Group('Plot 2')
 allow_duplication = Par('bool', False)
@@ -132,6 +133,9 @@ def fit_curve():
         if d.title == 'fitting':
             Plot1.remove_dataset(d)
     d0 = ds[0]
+    if opposite_peak.value:
+        d_max = d0.max()
+        d0 = d_max - d0
     fitting = Fitting(GAUSSIAN_FITTING)
     try:
         fitting.set_histogram(d0, fit_min.value, fit_max.value)
@@ -142,6 +146,8 @@ def fit_curve():
         if val == val:
             fitting.set_param('sigma', math.fabs(val / 2.35482))
         res = fitting.fit()
+        if opposite_peak.value:
+            res = d_max - res
         res.var[:] = 0
         res.title = 'fitting'
         Plot1.add_dataset(res)

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="New fast scripts" Group="EPG/FAST" Id="#0-1" Name="L1=20m_L2=3p5m_central_5A_apx7p5_NO_TILT_STAGE" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>sics.execute('hset /instrument/velocity_selector/setspeed 28300')&#13;
+sics.execute('hset /instrument/velocity_selector/wavelength 5')&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 2700&#13;
+config.det_offset = 0&#13;
+config.srce = 150&#13;
+config.guide = 'ga'&#13;
+config.apx = -47&#13;
+config.bs = 3&#13;
+config.beamcenterx = 89.3802&#13;
+config.beamcenterz = 96.4242&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="180" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(35.5, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="300" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(35.5, 0)&#13;
+driveBsz(260.5)</SetupScript>
+  </Scattering>
+</Configuration>

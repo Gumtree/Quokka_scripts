@@ -545,7 +545,8 @@ except:
 
 # load the bin file (filename, time bin with [seconds])
 
-loader = QuokkaBinLoader(r'C:/Gumtree/temp/bins/DAQ_2022-11-02T15-10-32/DATASET_0/EOS.bin', 10)
+#loader = QuokkaBinLoader(r'C:/Gumtree/temp/bins/DAQ_2022-11-02T15-10-32/DATASET_0/EOS.bin', 10)
+loader = QuokkaBinLoader(r'Z:\cycle\167\data\histserv\DAQ_2025-11-25T14-16-29\DATASET_0\EOS.bin', 10800)
 
 # show content as normal 2d-histogram
 loader.loadHistogram()
@@ -556,7 +557,8 @@ loader.setCenter(centerX = 92.6689, centerY = 97.2932) # center dose not affect 
 loader.loadTimeHistogram()
 loader.showTimeHistogram()
 
-loader.setManualTimeBins([0, 60])
+#loader.setManualTimeBins([0, 60])
+loader.setEqualTimeBins(1200)                 # 600 seconds time bins
 
 #bins = [0, 20]
 
@@ -572,10 +574,11 @@ loader.setManualTimeBins([0, 60])
 
 
 #loader.setEqualTimeBins(10)
-loader.setManualTimeBins([58,60,62,64,66,68,70.5,72.5,74.5,76.5,78.5,80.5,83,85,87,89,91,93,95.5])
+#loader.setManualTimeBins([58,60,62,64,66,68,70.5,72.5,74.5,76.5,78.5,80.5,83,85,87,89,91,93,95.5])
 #loader.setGeometricTimeBins(10,0)
 #loader.exportDatasets(r'U:\data\proposal\04676\EVENT_MODE_DATA\DAQ_2016-03-13T16-13-21\QKK0002277.nx.hdf')
-loader.exportDatasets(r'C:/Gumtree/temp/bins/QKK0032596.nx.hdf')
+#loader.exportDatasets(r'C:/Gumtree/temp/bins/QKK0032596.nx.hdf')
+loader.exportDatasets(r'C:\Gumtree\temp\QKK0082608.nx.hdf')
 
 print 'done'
 

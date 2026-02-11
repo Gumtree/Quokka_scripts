@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Group="Josh" Id="#0-1" Name="L1=L2=8m_central_NVS_test" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>#config.wavelength = 6&#13;
+#config.wavelength_spread = 0.1&#13;
+#config.wavelength_spread = 0.064</SetupScript>
+  <Transmission AttenuationAngle="210" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>#driveBsx(26.5, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="1800" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>#driveBsx(39,0)&#13;
+#driveBsz(251)</SetupScript>
+  </Scattering>
+</Configuration>

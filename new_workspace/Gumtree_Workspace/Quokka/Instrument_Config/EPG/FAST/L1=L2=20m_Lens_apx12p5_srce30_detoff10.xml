@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="New fast scripts BNL" Group="EPG/FAST" Id="#0-1" Name="L1=L2=20m_Lens_apx12p5_srce30_detoff10" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 8.1&#13;
+config.wavelength_spread = 0.1&#13;
+config.det = 19250&#13;
+config.det_offset = 10&#13;
+config.srce = 30&#13;
+config.guide = 'lens'&#13;
+config.apx = -98&#13;
+config.bs = 5&#13;
+config.beamcenterx = 102.56&#13;
+config.beamcenterz = 92.966&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="60" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(48, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="0" Id="#0-3" MaxTime="2400" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(47.5,0)&#13;
+driveBsz(243)</SetupScript>
+  </Scattering>
+</Configuration>

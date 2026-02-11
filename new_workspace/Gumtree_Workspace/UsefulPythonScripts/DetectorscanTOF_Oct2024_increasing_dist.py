@@ -16,7 +16,8 @@ type = 'TOTAL_HISTOGRAM_T'
 user = 'Gumtree'
 password = 'Gumtree'
 #directory = 'U:/data/proposal/00100/2015/NVS_Cal_OCT2015'
-directory = r'W:\data\proposal\00105\2023\NVS_Feb2023'
+#TO DO: CHANGE DIRECTORY 
+directory = r'W:\data\proposal\00105\2024\November2024_tasks\wavelength'
 
 # Fetch data from the HM server via HTTP
 def saveHM(filename):
@@ -52,8 +53,9 @@ def run():
 		sics.set('/instrument/detector/detector_y/speed', 53)
 		driveDet(x)
 		scan('time', 60)
-		saveHM('TOF_NVS40_15726_plus8p5_ga_apx2p5_80Hz_att0_27022023_' + str(x) + '.hdf')
-		x = x + 500
+		# TO DO CHANGE FILE NAME
+		saveHM('TOF_NVS40_15923_0tilt_ga_apx2p5_80Hz_att0_' + str(x) + '.hdf')
+		x = x + 1000
 		
 		
 		

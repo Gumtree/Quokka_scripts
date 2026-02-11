@@ -599,7 +599,7 @@ def __std_run_script__(fns):
     else :
         fn = fns[0]
         df.datasets.clear()
-        ds = df[fn]
+        ds = df[str(fn)]
         if ds.ndim == 4:
             shape = ds.shape
             DS = zeros([shape[0], shape[2], shape[3]])

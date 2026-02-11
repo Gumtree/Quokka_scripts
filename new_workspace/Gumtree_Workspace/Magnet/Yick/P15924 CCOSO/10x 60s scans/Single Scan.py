@@ -1,9 +1,6 @@
-#run att 0
-
 histmem mode time
-histmem preset 180
-
+histmem preset 300
 newfile HISTOGRAM_XY
-histmem start block
+histmem start
 save
 histmem stop

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="For Sensitivity" Group="JM configs/2019" Id="#0-1" Name="L1=L2=4_central_apx5_VS_Mag" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>sics.execute('hset /instrument/velocity_selector/setspeed 28300')&#13;
+sics.execute('hset /instrument/velocity_selector/wavelength 5')&#13;
+config.wavelength_spread = 0.14&#13;
+#config.wavelength = 5&#13;
+#config.wavelength_spread = 0.1&#13;
+#config.wavelength_spread = 0.064&#13;
+config.det = 3200&#13;
+config.det_offset = 0&#13;
+config.srce = 180&#13;
+config.guide = 'g7'&#13;
+config.apx = -23&#13;
+config.bs = 2&#13;
+config.beamcenterx = 90.17&#13;
+config.beamcenterz = 96.10&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="270" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(38, 100)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="0" Id="#0-3" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(38,0)&#13;
+
+driveBsz(260)</SetupScript>
+  </Scattering>
+</Configuration>

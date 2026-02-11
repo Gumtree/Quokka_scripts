@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="msw.xsl"?>
+<Configuration Description="New fast scripts" Group="Josh" Id="#0-1" Name="L1=L2=12m_offset" xmlns="http://www.gumtree.org/msw">
+  <SetupScript>config.wavelength = 5.5&#13;
+#config.wavelength_spread = 0.1&#13;
+config.det = 11200&#13;
+config.det_offset = 400&#13;
+config.srce = 180&#13;
+config.guide = 'g3'&#13;
+config.apx = -98&#13;
+config.bs = 2&#13;
+config.beamcenterx = 10.867&#13;
+config.beamcenterz = 95.4245&#13;
+config.drive()</SetupScript>
+  <Transmission AttenuationAngle="240" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(38, 90)</SetupScript>
+  </Transmission>
+  <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="1800" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(37,0)&#13;
+driveBsz(256)</SetupScript>
+  </Scattering>
+</Configuration>

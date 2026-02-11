@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="msw.xsl"?>
 <Configuration Description="New fast scripts" Group="Katy/for Flux" Id="#0-1" Name="L1=4_L2=20m_central" xmlns="http://www.gumtree.org/msw">
-  <SetupScript>sics.execute('hset /instrument/velocity_selector/setspeed 23589')&#13;
-sics.execute('hset /instrument/velocity_selector/wavelength 6.01')&#13;
+  <SetupScript>#sics.execute('hset /instrument/velocity_selector/setspeed 25476')&#13;
+#sics.execute('hset /instrument/velocity_selector/wavelength 5.02')&#13;
+&#13;
 config.wavelength = 6&#13;
 config.wavelength_spread = 0.1&#13;
 config.det = 19250&#13;

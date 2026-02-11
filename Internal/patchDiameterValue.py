@@ -12,7 +12,7 @@ apx_name = 'apx'
 
 act2 = Act('search_files()', 'Search')
 def search_files():
-    inv_value = arg_value.value
+    inv_value = 99999.0
     if math.isnan(inv_value) :
         print 'can not search for NaN value'
         return

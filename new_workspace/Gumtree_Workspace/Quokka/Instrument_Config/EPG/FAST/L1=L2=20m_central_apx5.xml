@@ -9,14 +9,14 @@ config.srce = 150&#13;
 config.guide = 'ga'&#13;
 config.apx = -23&#13;
 config.bs = 2&#13;
-config.beamcenterx = 90.601&#13;
-config.beamcenterz = 94.8364&#13;
+config.beamcenterx = 100.485&#13;
+config.beamcenterz = 94.8389&#13;
 config.drive()</SetupScript>
-  <Transmission AttenuationAngle="90" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
-    <SetupScript>driveBsx(38, 100)</SetupScript>
+  <Transmission AttenuationAngle="120" Id="#0-2" MaxTime="60" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
+    <SetupScript>driveBsx(39, 100)</SetupScript>
   </Transmission>
-  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="0" Id="#0-3" MaxTime="60" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
-    <SetupScript>driveBsx(38,0)&#13;
-driveBsz(251.0)</SetupScript>
+  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="0" Id="#0-3" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+    <SetupScript>driveBsx(39,0)&#13;
+driveBsz(251)</SetupScript>
   </Scattering>
 </Configuration>

@@ -1,0 +1,12 @@
+histmem preset 60
+histmem mode time
+
+newfile HISTOGRAM_XY
+drive tc1_driveable 4
+drive tc1_driveable2 4
+wait 10
+histmem start block
+save
+histmem stop
+
+

@@ -446,6 +446,9 @@ try:
 except:
     pass
 
+# claim HMS time of flight frame size
+BinLoadHelper.FILE_FRAME_LENGTH = 40000
+
 # load the bin file
 loader = QuokkaBinLoader(r'D:\Data\DSC data temp\DSC streamed temp\DAQ_2013-10-04T11-31-52_Test10\DATASET_0\EOS.bin', 30)
 

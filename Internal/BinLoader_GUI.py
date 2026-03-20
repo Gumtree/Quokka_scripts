@@ -548,8 +548,16 @@ centre_x.title = 'Centre X'
 centre_y = Par('float', 94, command = 'set_dirty_flag()')
 centre_y.title = 'Centre Z'
 
+g1i = Group('Show the intensity vs time plot')
+g1i_enabled = Par('bool', True)
+g1i_enabled.title = 'is enabled'
+num_bins = Par('int', 100)
+num_bins.title = 'number of time bins'
+g1i.add(g1i_enabled, num_bins)
+
 load_act = Act('load_files()', 'Load files')
-gl.add(event_file, HDF_file, centre_x, centre_y, load_act)
+gl.add(event_file, HDF_file, centre_x, centre_y, g1i, 
+       load_act)
 
 gp = Group('Parameters from HDF file')
 gp.numColumns = 2
@@ -683,7 +691,27 @@ def load_files():
     bsz.value = hdf.BSZmm
     
     _event_dirty_flag = False
+    
+    if g1i_enabled.value:
+        plot_intensity()
+    else:
+        Plot3.clear()
 
+def plot_intensity():
+    nbs = num_bins.value
+    h = _quokka_loader._helper
+    tt = h.getBeamTime()
+    if nbs > int(tt):
+        nbs = int(tt)
+    cs = h.countEventsPerBins(nbs)
+    axis = array.arange(float(nbs)) * (tt / nbs)
+    ds = Dataset(cs, axes=[axis], anames = ['time'])
+    ds.title = 'Counts'
+    ds.axes[0].title = 'time'
+    ds.axes[0].units = 'seconds'
+    Plot3.set_dataset(ds)
+    Plot3.title = 'Intensity vs time'
+    
 def export_files():
     global _quokka_loader, _event_dirty_flag
     if _quokka_loader is None or _event_dirty_flag:

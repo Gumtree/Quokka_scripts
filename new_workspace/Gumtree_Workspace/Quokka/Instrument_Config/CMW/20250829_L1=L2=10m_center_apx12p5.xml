@@ -10,8 +10,8 @@ config.srce = 180&#13;
 config.guide = 'g4'&#13;
 config.apx = -98&#13;
 config.bs = 2&#13;
-config.beamcenterx = 99.7171&#13;
-config.beamcenterz = 95.5192&#13;
+config.beamcenterx = 100.307&#13;
+config.beamcenterz = 96.6273&#13;
 config.drive()</SetupScript>
   <Transmission AttenuationAngle="330" Id="#0-2">
     <SetupScript># Move the beamstop out&#13;
@@ -19,6 +19,6 @@ driveBsx(37, 100)</SetupScript>
   </Transmission>
   <Scattering AttenuationAngle="0" Id="#0-3" MaxTime="1500" TargetDetectorCounts="1000000">
     <SetupScript>driveBsx(37,0)&#13;
-driveBsz(256)</SetupScript>
+driveBsz(257)</SetupScript>
   </Scattering>
 </Configuration>

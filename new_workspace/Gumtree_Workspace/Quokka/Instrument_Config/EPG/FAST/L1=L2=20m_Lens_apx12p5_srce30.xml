@@ -9,13 +9,13 @@ config.srce = 30&#13;
 config.guide = 'lens'&#13;
 config.apx = -98&#13;
 config.bs = 5&#13;
-config.beamcenterx = 101.08&#13;
-config.beamcenterz = 93.1188&#13;
+config.beamcenterx = 101.144&#13;
+config.beamcenterz = 92.966&#13;
 config.drive()</SetupScript>
   <Transmission AttenuationAngle="120" Id="#0-2" MinTime="1" TargetDetectorCounts="3" TargetMonitorCounts="2">
     <SetupScript>driveBsx(47.5, 100)</SetupScript>
   </Transmission>
-  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="0" Id="#0-3" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
+  <Scattering AttenuationAlgorithm="fixed attenuation" AttenuationAngle="0" Id="#0-3" MaxTime="1800" MinTime="5" TargetDetectorCounts="7" TargetMonitorCounts="6">
     <SetupScript>driveBsx(47.5,0)&#13;
 driveBsz(243)</SetupScript>
   </Scattering>

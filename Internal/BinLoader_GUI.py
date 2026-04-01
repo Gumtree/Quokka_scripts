@@ -384,7 +384,7 @@ class QuokkaBinLoader:
 #        self.HDF_REF.__iDictionary__.addEntry('detector_time', '$entry/instrument/detector/time' )
 #        self.HDF_REF.__iDictionary__.addEntry('bsx'   , '$entry/instrument/parameters/BeamCenterX')
 #        self.HDF_REF.__iDictionary__.addEntry('bsz'   , '$entry/instrument/parameters/BeamCenterZ')        
-        BinLoadHelper.FILE_FRAME_LENGTH = int(self.HDF_REF.time_of_flight.max())
+        BinLoadHelper.setFileFrameLength(int(self.HDF_REF.time_of_flight.max()))
 #        BinLoadHelper.FILE_FRAME_LENGTH = 20000
 
     def getFileNumber(self):
@@ -551,9 +551,9 @@ centre_y.title = 'Centre Z'
 g1i = Group('Show the intensity vs time plot')
 g1i_enabled = Par('bool', True)
 g1i_enabled.title = 'is enabled'
-num_bins = Par('int', 100)
-num_bins.title = 'number of time bins'
-g1i.add(g1i_enabled, num_bins)
+tbin_size = Par('int', 1)
+tbin_size.title = 'intensity bin size in seconds'
+g1i.add(g1i_enabled, tbin_size)
 
 load_act = Act('load_files()', 'Load files')
 gl.add(event_file, HDF_file, centre_x, centre_y, g1i, 
@@ -698,13 +698,16 @@ def load_files():
         Plot3.clear()
 
 def plot_intensity():
-    nbs = num_bins.value
+    nbs = tbin_size.value
     h = _quokka_loader._helper
     tt = h.getBeamTime()
-    if nbs > int(tt):
-        nbs = int(tt)
+    if nbs <= 0:
+        nbs = 1
     cs = h.countEventsPerBins(nbs)
-    axis = array.arange(float(nbs)) * (tt / nbs)
+#    axis = array.arange(float(nbs)) * (tt / nbs)
+    axis = array.arange(len(cs))
+    if nbs != 1:
+        axis = axis * nbs
     ds = Dataset(cs, axes=[axis], anames = ['time'])
     ds.title = 'Counts'
     ds.axes[0].title = 'time'
@@ -757,6 +760,8 @@ def __dispose__():
 
 #event_file.value = r'D:\temp\quokka\DAQ_2025-11-23T21-48-18\DATASET_0\EOS.bin'
 #HDF_file.value = r'D:\temp\quokka\QKK0282596.nx.hdf'
+event_file.value = r'Y:\quokka\gumtree\DAQ_2026-03-10T19-25-08\DATASET_0\EOS.bin'
+HDF_file.value = r'Y:\quokka\gumtree\QKK0087442.nx.hdf'
 #export_folder.value = r'D:\temp\quokka\r1'
 #equal_size.value = 3600
 # end of program

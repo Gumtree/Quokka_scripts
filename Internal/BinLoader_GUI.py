@@ -760,8 +760,8 @@ def __dispose__():
 
 #event_file.value = r'D:\temp\quokka\DAQ_2025-11-23T21-48-18\DATASET_0\EOS.bin'
 #HDF_file.value = r'D:\temp\quokka\QKK0282596.nx.hdf'
-event_file.value = r'Y:\quokka\gumtree\DAQ_2026-03-10T19-25-08\DATASET_0\EOS.bin'
-HDF_file.value = r'Y:\quokka\gumtree\QKK0087442.nx.hdf'
+#event_file.value = r'Y:\quokka\gumtree\DAQ_2026-03-10T19-25-08\DATASET_0\EOS.bin'
+#HDF_file.value = r'Y:\quokka\gumtree\QKK0087442.nx.hdf'
 #export_folder.value = r'D:\temp\quokka\r1'
 #equal_size.value = 3600
 # end of program
